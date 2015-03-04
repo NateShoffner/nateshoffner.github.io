@@ -1,0 +1,68 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+html, body, .container {
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+}
+
+.container {
+    display: table;
+    vertical-align: middle;
+}
+
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.avatar {
+    float: left;
+    width: 230px;
+    height: 230px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.linkbtn {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 12px;
+    padding-left: 12px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-right: 2px;
+    border-radius: 5px;
+    color: #FFF;
+    background-color: #08C;
+    display: inline-block;
+    line-height: 14px;
+}
+
+.simpleicon {
+    width: 64px;
+    height: 64px;
+    background: url("../img/simpleicons/sheet.png") no-repeat;
+    border-style: none;
+}
+
+
+.simpleicon-bitbucket { background-position: 0 0; width: 64px; height: 64px; }
+.simpleicon-email { background-position: -66px 0; width: 64px; height: 64px; }
+.simpleicon-facebook { background-position: -132px 0; width: 64px; height: 64px; }
+.simpleicon-github { background-position: -198px 0; width: 64px; height: 64px; }
+.simpleicon-linkedin { background-position: -264px 0; width: 64px; height: 64px; }
+.simpleicon-twitter { background-position: -330px 0; width: 64px; height: 64px; }
+
+
+.weblinks {
+    margin-top: 20px;
+}
