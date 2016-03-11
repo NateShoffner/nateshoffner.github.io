@@ -43,6 +43,9 @@
 - slug: 'registerhotkey'
   name: 'RegisterHotKey'
 
+- slug: 'jekyll'
+  name: 'Jekyll'
+
 - slug: 'pysnip'
   name: 'PySnip'
 
@@ -57,6 +60,9 @@
 
 - slug: 'punkbuster'
   name: 'PunkBuster'
+
+- slug: 'github'
+  name: 'GitHub'
 
 - slug: 'tomcat'
   name: 'Tomcat'
