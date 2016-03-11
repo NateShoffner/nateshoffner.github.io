@@ -1,4 +1,4 @@
-markdown: redcarpet
+markdown: kramdown
 highligher: pygments
 permalink: /:title
 title: Nate Shoffner
