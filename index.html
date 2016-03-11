@@ -1,37 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Nate Shoffner</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="vendor/css/bootstrap.min.css" rel="stylesheet">
-        <link href="assets/css/main.css" rel="stylesheet">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-        <!--[if lt IE 9]>
-                <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-        <!--[if IE]><link rel="shortcut icon" href="favicon.ico"><![endif]-->
-        <link rel="icon" href="favicon.ico" rel="shortcut icon">
-    </head>
-    <body>
-        <div class="container">
-            <div class="row vertical-center-row">
-                <div class="col-md-12">
-                    <img class="avatar" src="https://avatars.githubusercontent.com/nateshoffner" alt="Avatar">
-                    <h2>Nate Shoffner</h2>
-                    <h3>Developer. Guitarist. Pirate.</h3>
-                    <a href="http://nateshoffner.com" class="linkbtn">Homepage</a>
-                    <a href="http://nateshoffner.com/blog" class="linkbtn">Blog</a>
-                    <div class="weblinks">
-                        <a href="http://bitbucket.nateshoffner.com/"><img class="simpleicon simpleicon-bitbucket" alt="Bitbucket" src="assets/img/blank.gif"></a>
-                        <a href="https://github.com/nateshoffner"><img class="simpleicon simpleicon-github" alt="Github" src="assets/img/blank.gif"></a>
-                        <a href="https://twitter.com/nateshoffner"><img class="simpleicon simpleicon-twitter" alt="Twitter" src="assets/img/blank.gif"></a>
-                        <a href="http://www.facebook.com/nateshoffner"><img class="simpleicon simpleicon-facebook" alt="Facebook" src="assets/img/blank.gif"></a>
-                        <a href="http://www.linkedin.com/in/nateshoffner"><img class="simpleicon simpleicon-linkedin" alt="LinkedIn" src="assets/img/blank.gif"></a>
-                        <a href="mailto:nate.shoffner@gmail.com"><img class="simpleicon simpleicon-email" alt="Email" src="assets/img/blank.gif"></a>                
-                    </div>
+---
+layout: default
+---
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/octicons/2.0.2/octicons.min.css">
+<link rel="stylesheet" href="{{ site.baseurl }}/vendor/github-activity/github-activity.css">
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+<script type="text/javascript" src="{{ site.baseurl }}/vendor/github-activity/github-activity.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <p>I am a 26 year old software and web developer currently living in the United States. I am an avid computer enthusiast and enjoy developing software and web applications as well as working with hardware. In my free time I like to play guitar, work with circuitry, and play video games.</p>
+    </div>
+    <div class="col-md-6">
+        <h4 class="headline">Latest Blog Posts</h4>
+        <div class="post-excerpt-container">
+        {% for post in site.posts limit: 4 %}
+            {% include post_excerpt.html post=post excerpt_length=20 strip_html=true %}
+        {% endfor %}
+        </div>
+        <div class="text-center">
+            <a href="/blog/" class="btn btn-primary"><i class="fa fa-share"></i> View more blog posts</a>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <h4 class="headline">Recent Activity</h4>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#twitter"><i class="fa fa-twitter"></i> Twitter</a></li>
+            <li><a data-toggle="tab" href="#github"><i class="fa fa-github"></i> GitHub</a></li>   
+        </ul>
+        <div class="tab-content">      
+            <div id="twitter" class="tab-pane fade in active">
+                <div class="textwidget"><a class="twitter-timeline" href="https://twitter.com/NateShoffner" data-widget-id="404171662465069056">Tweets by @NateShoffner</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                 </div>
+            </div>             
+            <div id="github" class="tab-pane fade in">
+                <div id="github-feed"></div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+</div>
+
+<script type="text/javascript">
+GitHubActivity.feed({
+    username: "NateShoffner",
+    selector: "#github-feed",
+    limit: 4
+});
+</script>
+
+<style type="text/css">
+.gha-feed {
+    border-style: none;
+}
+
+.gha-header {
+    width: calc(100% - 2px);
+}
+
+.gha-footer {
+    width: calc(100% - 2px);
+    position: static;
+    height: auto;
+}
+
+#twitter-widget-0 {
+    height: 500px !important;
+}
+</style>
+
+<script id="dsq-count-scr" src="//{{ site.disqus_shortname }}.disqus.com/count.js" async></script>

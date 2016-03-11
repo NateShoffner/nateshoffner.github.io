@@ -1,0 +1,135 @@
+---
+layout: post
+title: Spadille 1.5 - Fashionably Late
+date: 2012-03-19 16:51:06.000000000 -04:00
+type: post
+categories:
+- Projects
+tags:
+- Ace of Spades
+- Spadille
+---
+
+<p>Wanna know something that makes you feel like a dead-beat?</p>
+
+<p><img src="{{ site.baseurl}}/assets/images/posts/spadillegooglesad.png" alt="Sad Spadille Google Suggestions" class="center-block" /></p>
+
+<p>Feels bad, man. It's been far too long since the last Spadille update. Let's change that. This update is long overdue and hopefully the amount of changes/new features will help compensate for it.</p>
+
+<a href="{{ site.baseurl}}/assets/images/posts/spadille1.5.png">
+    <img src="{{ site.baseurl}}/assets/images/posts/spadille1.5.png" alt="Spadille 1.5" class="center-block" />
+</a>
+
+<h5>Game Updater</h5>
+
+<p><a href="{{ site.baseurl}}/assets/images/posts/Spadlile1.5GameUpdater1.png"><img src="{{ site.baseurl}}/assets/images/posts/Spadlile1.5GameUpdater1.png" alt="Game Updater" class="center-block" /></a>One of the most requested additions has been a game updater. Recent versions of Spadille have shown that a new version was available, but only served as a link  to the Ace of Spades homepage. Now updates can be downloaded from within Spadille.</p>
+
+<h5><a href="{{ site.baseurl}}/assets/images/posts/Spadille1.5GameSettings.png"><img src="{{ site.baseurl}}/assets/images/posts/Spadille1.5GameSettings.png" alt="Game Settings" class="center-block" /></a>Game Settings + Keybinding</h5>
+
+<p>Ace of Spades 0.60 Beta added configurable controls via (rather arcane) scancodes. This utility will make changing controls much easier. Simply find the game action you want to change, and select a key from the drop-down list. Some of the key names may seem a bit cryptic, but every possible key is on there.</p>
+
+<p>A standalone version of the this utility can be found <a title="Ace of Spades Key Mapper" href="http://www.nateshoffner.com/2012/03/ace-of-spades-key-mapper/">here</a>.</p>
+
+<h4>Screenshots<a href="{{ site.baseurl}}/assets/images/posts/Spadille1.5ScreenshotManager.png"><img src="{{ site.baseurl}}/assets/images/posts/Spadille1.5ScreenshotManager.png" alt="Screenshot Manager" class="center-block" /></a></h4>
+<p>The screenshot functionality got a pretty big overhaul. The screenshot mechanism was re-written from scratch for better reliability. Users reported slow load times when dealing with large quantities (250+) of screenshots. Screenshots are now cached to reduce memory allocation as well as increase load times (not to mention better multi-threading). Last but not least is screenshot uploading. With a single click, you can upload screenshots to Imgur for easy sharing.</p>
+
+<img title=" " src="{{ site.baseurl}}/assets/images/posts/download32.png" alt="" width="32" height="32" />
+<h3><a href="http://www.nateshoffner.com/projects/spadille">Download Spadille 1.5</a></h3>
+
+<h4>Complete Change Log</h4>
+<p>- Filters are now tri-state (neutral, enforce, ignore)<br />
+ - Added support for third-part game modes (TDM, TOW, 1CTF, R1CTF, Kraken, Babel, Arena, IRPG, IPower)<br />
+ - Added searching by map name<br />
+ - Added searching by country<br />
+ - Added key mapping to game settings<br />
+ - Added JSON support<br />
+ - Updated GeoIP database<br />
+ - Fixed some obscure country names<br />
+ - Updated game settings for 0.75<br />
+ - Server browser redesigned<br />
+ - Removed in-game name dropdown<br />
+ - Improved memory management<br />
+ - Added game mode column<br />
+ - Added map name column<br />
+ - Updated serverlist parsing<br />
+ - Added support for server ports<br />
+ - Removed connect dialog from localhost connect<br />
+ - Joined servers are now immediately appended to recent listing<br />
+ - Fixed bug with software/favorites column not remaining sorted<br />
+ - Added search delay<br />
+ - Added option to remove borders from screenshots<br />
+ - IRC link opens Quakenet webchat if IRC client is not found<br />
+ - Added search character limit<br />
+ - Local pings can now be preserved between refreshes<br />
+ - Improved search (multiple word splits)<br />
+ - Removed clan prefix option<br />
+ - Made country flags optional<br />
+ - Fixed possible infinite recursion bug with Pyspades serverlist updating<br />
+ - Attempting to join multiple games now kills first instance (optional)<br />
+ - LOTS of refactoring<br />
+ - Added global blacklist integration<br />
+ - Added proper in-game name truncating<br />
+ - Update downloading is now asynchronous<br />
+ - Update downloading can now be cancelled<br />
+ - Added proper error handling for failed update download<br />
+ - Fixed bug when toggled columns are cut off on right<br />
+ - IP column is now hidden by default<br />
+ - Added country column/removed country flag from IP column<br />
+ - Added checking for local server when attempting to connect to localhost<br />
+ - Fixed bug with dialogs not remembering "do not show again" when cancelled<br />
+ - Implemented screenshot cache<br />
+ - Added more functionality to tray menu<br />
+ - Added proper AoS installation checking<br />
+ - Added feedback form<br />
+ - Completely redesigned mod manager/added more functionality<br />
+ - Mod manager now loadtime dispersed<br />
+ - Added server logging options<br />
+ - Removed filter counts<br />
+ - Added option for HTML encoding/decoding<br />
+ - Added server language options<br />
+ - Added client language options<br />
+ - Completely redesigned map manager/added more functionality<br />
+ - Fixed bug with inproper map save filename format<br />
+ - Fixed bug with saving corrupt maps<br />
+ - Added quick match button<br />
+ - Redesigned about dialog/updated credits<br />
+ - Made hit indicator disabling dynamic<br />
+ - Added support for float-based mouse sensitivity<br />
+ - Added new "first run" dialog<br />
+ - Column sort direction is now consistent between runtimes<br />
+ - Fixed bug with non-fixed ping strength indicators<br />
+ - Added menu option to refresh individual server data<br />
+ - Added option to join server on middle-click<br />
+ - Sever URLs are now case-insensitive<br />
+ - Added icon for vanilla servers<br />
+ - Added direct connect button to main window<br />
+ - Ping strength indicators are now color-coded<br />
+ - Updating pings now only applies to visible servers in list<br />
+ - Redesigned converter<br />
+ - Added automatic refreshing disabling after set number of failed attempts<br />
+ - Added error reporting<br />
+ - Added option to clear error log<br />
+ - Adding automatic detection for new game install<br />
+ - In-game name checking is now dynamic<br />
+ - Game version checking is now dynamic<br />
+ - Error log viewer is now dynamic<br />
+ - Missing GeoIP database now prevents further execution<br />
+ - Added option to upload error log to Pastebin.com<br />
+ - DDFontMake now included with installer<br />
+ - Added create new map option in map manager<br />
+ - Added option to periodically sync with global blacklist when hosting server<br />
+ - Rewrote PrtScr hooking mechanism<br />
+ - Added server counts in tabs<br />
+ - Added option to backup mods<br />
+ - Automatic refresh is now only disabled if server connection is successful<br />
+ - Added option to close to system tray<br />
+ - Removed deprecated Deuce name check<br />
+ - Only successful joins are added to history<br />
+ - Spadille now overrides "server full or misconfigured" error/offers retry option<br />
+ - Added image uploading/online library to screenshot manager<br />
+ - Improved game version detection reliability<br />
+ - Added option to launch Spadille on system startup<br />
+ - Added option to format title of Ace of Spades client<br />
+ - Added drop-down list to direct connect for recent connection<br />
+ - Added game updater<br />
+ - Added support for direct connect using server URL without prepending aos://</p>

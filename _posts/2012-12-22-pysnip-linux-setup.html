@@ -1,0 +1,60 @@
+---
+layout: post
+title: PySnip Linux Setup
+date: 2012-12-22 20:31:05.000000000 -05:00
+type: post
+categories:
+- Gaming
+- Projects
+tags:
+- Ace of Spades
+- Linux
+- PySnip
+- Python
+- Ubuntu
+---
+
+<p>This is just a small guide on how to setup PySnip on Linux. If you want to set it up on Windows, there is already a featured server <a href="https://code.google.com/p/pysnip/downloads/list" target="_blank">here</a>.</p>
+
+<p>This guide assumes basic experience with a terminal and your distro's package manager.</p>
+
+<p>Since Ubuntu seems to be the most common distro, I'll provide instructions that use apt-get. If you use a different distro/manager, please refer to your package-manager documentation for the appropriate commands.</p>
+
+<p>First, install the dependencies:</p>
+
+<pre>sudo apt-get install python2.7 python2.7-dev python-setuptools python-twisted mercurial gcc g++ zope.interface
+sudo python -m easy_install cython
+sudo python -m easy_install pil
+sudo python -m easy_install jinja2</pre>
+
+<p>Next, you can install screen if you'd like:</p>
+
+<pre>sudo apt-get install screen</pre>
+
+<p>Another optional feature is pygeoip, which will allow you to use the /from command, showing you where individual players are located geographically.</p>
+
+<p>Next you need to either clone the repository using Mercurial.</p>
+
+<pre>hg clone https://code.google.com/p/pysnip/
+cd pysnip
+sh build.sh</pre>
+
+<p>If you don't want to clone the repo, you can download an up-to-date zipped archive of the source <a href="https://code.google.com/p/pysnip/source/browse/" target="_blank">here</a>. Just download and extract as normal.</p>
+
+<p>Next you need to edit the configuration:</p>
+
+<pre>cd feature_server
+nano config.txt</pre>
+
+<p><strong>Make sure you change your admin password from the default one.</strong></p>
+
+<p>Finally, run the server:</p>
+
+<pre>sh run_server.sh</pre>
+
+<p>Or if you are using screen:</p>
+
+<pre>screen sh run_server.sh</pre>
+
+<p>For help, please refer to the <a href="https://code.google.com/p/pysnip/" target="_blank">Google Code</a> page or visit the <a href="http://www.buildandshoot.com/" target="_blank">Build and Shoot</a> forums.</p>
+

@@ -1,0 +1,18 @@
+- slug: 'gaming'
+  name: 'Gaming'
+
+- slug: 'rant'
+  name: 'Rant'
+
+- slug: 'personal'
+  name: 'Personal'
+
+- slug: 'programming'
+  name: 'Programming'
+
+- slug: 'c#'
+  name: 'C#'
+
+- slug: 'projects'
+  name: 'Projects'
+

@@ -1,0 +1,94 @@
+---
+layout: post
+title: '"Pretend You''re Xyzzy" Server Setup and Build Instructions'
+date: 2015-02-15 13:12:54.000000000 -05:00
+type: post
+categories: []
+tags:
+- Tomcat
+---
+
+<p>"Pretend You're Xyzzy" is a Cards Against Humanity clone that allows you to play online with others. It consists of a Tomcat/JSP server and web page clients.</p>
+
+<p><a href="{{ site.baseurl }}/assets/images/posts/xyzzy.png"><img src="{{ site.baseurl }}/assets/images/posts/xyzzy.png" alt="xyzzy" class="center-block" /></a></p>
+
+<p>At the time of writing this, the main server located at <a href="http://pretendyoure.xyz/" target="_blank">pretendyoure.xyz</a> appears to be down, so I decided to set up my own server for a group of friends and myself to play. Initially, there didn't seem to be much info on setting up the server. The <a href="https://github.com/ajanata/PretendYoureXyzzy" target="_blank">GitHub</a> had a very brief explanation:</p>
+
+<blockquote>This project has only been tested in Tomcat 7 and is known to not work in Tomcat 6 without some finagling. Currently, the only automated way to build is is using the Eclipse project.</blockquote>
+
+<p>While the setup isn't terribly complicated or anything, I figured I'd post some instructions on how to set things up since a lot of people seem to be having issues doing so and there don't seem to be any concise instructions on how to do so.</p>
+
+<p>These instructions are for a Debian-based installation, but are easily applicable to other distros/platforms as well.</p>
+
+<p>First you'll need Apache Tomcat 7 and you'll want to install the admin panel as well:</p>
+
+<pre>sudo apt-get install tomcat7 tomcat7-admin</pre>
+<p>Next, stop the Tomcat server for the time being so we can modify some permissions:</p>
+
+<pre>service tomcat7 stop</pre>
+<p>Next, we'll edit the users config so we can administrate the server:</p>
+
+<pre>sudo nano /etc/tomcat7/tomcat-users.xml</pre>
+<p>Add the following line in between the &lt;tomcat-users&gt; and &lt;/tomcat-users&gt; tags, replacing 'admin' and 'password' with your own secure credentials:</p>
+
+<pre>&lt;user username="admin" password="password" roles="manager-gui,admin-gui"/&gt;</pre>
+<p>Start the service back up:</p>
+
+<pre>service tomcat7 start</pre>
+<p>Now we want to install PostgreSQL for our database:</p>
+
+<pre>sudo apt-get install postgresql</pre>
+<p>Change over to the postgres user (already set up via the installation process):</p>
+
+<pre>sudo -i -u postgres</pre>
+<p>Then, run the following, replacing 'password' with a secure password of your choice:</p>
+
+<pre>createdb cahdb
+psql template1
+CREATE USER cah WITH PASSWORD 'password';
+GRANT ALL PRIVILEGES ON DATABASE "cahdb" to cah;
+\q
+exit</pre>
+<p>Finally, we need to download the cards database and import it:</p>
+
+<pre>wget https://raw.githubusercontent.com/ajanata/PretendYoureXyzzy/master/cah_cards.sql
+psql -h localhost -d cahdb -U cah -f cah_cards.sql</pre>
+<p>Now navigate to http://your_host:8080/manager/html and login.</p>
+
+<p>From here, you can upload your WAR file and deploy it.</p>
+
+<p>If your server does not seem to be loading/seems to be stalling, a possible reason could be Tomcat using a blocking entropy source for session IDs. To implement a non-blocking (and slightly less secure) entropy source, open/create a setenv.sh script in /usr/share/tomcat7/bin and add the following line:</p>
+
+<pre>JAVA_OPTS=" $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom "</pre>
+<p>Save and restart Tomcat.</p>
+
+<pre>service tomcat7 restart</pre>
+<p>Finally, you can access the app via http://your_host:8080/cah.</p>
+
+<p>You can download a pre-built/zipped version of cah.war <a href="{{ site.baseurl }}/assets/files/cah.zip">here</a>. The PostgreSQL parameters are as follows:</p>
+
+<pre>Username: cah
+Password: password
+Database: cahdb</pre>
+
+<p><strong>NOTE:</strong> Since this version uses insecure/public credentials, make sure to take necessary precautions to secure your server.</p>
+
+<p>If you'd prefer to build your own version, follow the instructions below.</p>
+
+<p>Building the .war file is fairly straightforward. Just download the source from Github via Git or just use the zip functionality.</p>
+
+<p>You will need the <a href="http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html" target="_blank">JRE v7u75</a> installed.</p>
+
+<p>Open <a href="https://eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/keplersr2" target="_blank">Eclipse (Java EE)</a> and open the project.</p>
+
+<p>Install Luna if you don't already have it buy going to Help-&gt;Install New Software. Choose "Luna". Select "Web, Xml, Java EE and OSGi Enterprise Development"<span class="Apple-converted-space">, install it and restart.</span></p>
+
+<p>Set Tomcat 7 as your runtime environment server.</p>
+
+<p>Make sure your build path uses the correct runtime environment as well.</p>
+
+<p>Database credentials can be changed in the hibernate.cfg.xml file.</p>
+
+<p>When all is well, you can go to File-&gt;Export-&gt;Web-&gt;WAR File.</p>
+
+<p>You can upload and deploy that file through the Tomcat admin panel and you're good to go!</p>

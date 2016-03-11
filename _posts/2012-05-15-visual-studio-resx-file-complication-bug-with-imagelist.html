@@ -1,0 +1,29 @@
+---
+layout: post
+title: Visual Studio - .resx file complication bug with ImageList
+date: 2012-05-15 12:31:46.000000000 -04:00
+type: post
+categories:
+- Programming
+tags:
+- ".resx"
+- ImageList
+- Visual Studio
+- WinForms
+---
+
+<p>Visual Studio's WinForm designer is outstanding in many ways. But recently I've found myself in a bit of a situation when using the designer along with an ImageList.</p>
+
+<p>Upon trying to compile, I received an error stating "<em>Error 322 Could not load file or assembly '&lt;referenced assembly here&gt;' or one of its dependencies. An attempt was made to load a program with an incorrect format. Line 283, position 5. WinForm.resx 283</em>". This lead me to viewing the resource file for the WinForm I was working. More specifically, it was showing me the ImageStream (base64 encoded) for the ImageList.</p>
+
+<p>Here are a few notes regarding my situation that might be relevant:</p>
+
+<ul>
+	<li>Using Visual Studio 2010 targeting .NET 2.0</li>
+	<li>Occurs using both Debug and Release modes</li>
+	<li>Solution platform - x86</li>
+	<li>Running Windows 7 Home Premium 64-bit</li>
+	<li>ImageList contains 5 16x16 PNG images with 32bit Bit Depth</li>
+	<li>The assembly it's supposedly failing to load is a class library I have created which has no referenced resources (at least not externally)</li>
+</ul>
+<p>Some quick Googling lead me to a Microsoft Connect <a href="https://connect.microsoft.com/VisualStudio/feedback/details/532584/error-when-compiling-resx-file-seems-related-to-beta2-bug-5252020" target="_blank">bug report</a> where the issue was supposedly resolved.....in early 2011. Some users have found some hacky workarounds involving modifying the ImageStream, but that wasn't the case for me. I eventually landed on a <a href="http://blogs.msdn.com/b/visualstudio/archive/2010/06/19/resgen-exe-error-an-attempt-was-made-to-load-a-program-with-an-incorrect-format.aspx" target="_blank">blog post</a> with a few possible workarounds with the first one being the easiest (in my situation, at least). All I had to do was change the referenced assembly from x86 to AnyCPU. It seemed to have done the trick and I haven't had any problems since. Hopefully this bug will actually be fixed/released by Microsoft, seeing as none of the workarounds are universally ideal for lots of project types.</p>

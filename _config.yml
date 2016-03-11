@@ -1,0 +1,14 @@
+markdown: redcarpet
+highligher: pygments
+permalink: /:title
+title: Nate Shoffner
+permalink: /blog/:year/:month/:title/
+paginate: 3
+paginate_path: /blog/page/:num
+url: http://nateshoffner.com
+blog_url: /blog
+gems:
+  - jekyll-paginate
+syntax_highlighter: rouge
+
+disqus_shortname: nateshoffner

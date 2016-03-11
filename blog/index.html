@@ -1,0 +1,40 @@
+---
+layout: default
+title: Blog
+---
+
+{% for post in paginator.posts %}
+    {% include post.html post=post show_comments=false clickable=true %}
+{% endfor %}
+
+{% if paginator.total_pages > 1 %}
+<nav class="post-pagination text-center">
+    <ul class="pagination">
+    {% if paginator.previous_page %}
+        <li><a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    {% endif %}
+    {% for page in (1..paginator.total_pages) %}
+        {% if page == paginator.page %}
+            <li class="active"><a href="#">{{ page }}</a></li>
+        {% elsif page == 1 %}
+            <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: 'page/:num', '' }}">{{ page }}</a></li>
+        {% else %}
+            <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
+        {% endif %}
+    {% endfor %}
+    {% if paginator.next_page %}
+        <li><a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+    {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+<script type="text/javascript" src="{{ site.base_url }}/vendor/fancybox/jquery.fancybox.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ site.base_url }}/vendor/fancybox/jquery.fancybox.css" media="screen" />
+
+<script type="text/javascript">
+    responsify_blog_images();
+    fancybox_blog_images();
+</script>
+
+<script id="dsq-count-scr" src="//{{ site.disqus_shortname }}.disqus.com/count.js" async></script>

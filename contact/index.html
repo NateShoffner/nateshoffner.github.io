@@ -1,0 +1,45 @@
+---
+layout: default
+title: Contact
+---
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div id="submit-alert" class="alert alert-success" role="alert" style="display:none;">Your message has been sent! I will try to respond to you as soon as possible. Thanks!</div>
+    </div>
+
+    <div id="contact-form-container" class="col-md-12">
+        <p>If you want to get in touch with me, just drop me a message. I’ll try to respond to you as soon as possible.</p>
+
+        <div class="col-md-offset-2">
+            <form id="contact-form" action="https://getsimpleform.com/messages?form_api_token=3f2306cce1b7f19684d755dc39404e14" method="post">
+                <div class="col-lg-9">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" class="form-control transparent" name="name" id="name" placeholder="Enter Name" value="" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" class="form-control transparent" id="email" name="email" placeholder="Enter Email" value="" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea name="message" id="message" class="form-control transparent" rows="5" required></textarea>
+                    </div>
+                    <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-submit pull-right">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$('#contact-form').submit(function(e) {
+    e.preventDefault();
+    $.post($(this).attr('action'), $(this).serialize());
+    $('#contact-form-container').hide();
+    $('#submit-alert').show();
+    return false;
+});
+</script>

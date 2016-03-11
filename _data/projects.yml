@@ -1,0 +1,41 @@
+- slug: tabster
+  name: Tabster
+  version: 1.6
+  updated: October 30th, 2013
+  description: 'Tabster is a guitar tab manager that stores tabs in a library for easy viewing, editing, and printing. It includes a built-in online tab search that provides access to over 800,000 tabs from Ultimate Guitar and easily download them and add them to your library.'
+  image: tabster-1.6.png
+  download: http://software.nateshoffner.com/download/tabster
+  platforms:
+    - Windows
+
+- slug: spadille
+  name: Spadille
+  version: 1.6
+  updated: August 28th, 2013
+  description: 'Spadille is a multi-purpose program for Ace of Spades. It features a server browser that allows favoriting, blacklisting, filtering, sorting and more as well as a mod manager, screenshot manager, config editor, and more.'
+  image: spadille-1.6.png
+  download: http://software.nateshoffner.com/download/spadille
+  platforms:
+    - Windows
+
+- slug: seachem-doser
+  name: Seachem Doser
+  version: 1.1
+  updated: December 23, 2015
+  description: 'Dosage calculator for Seachem gravel, planted, and reef products. Simply entire in your aquarium parameters.'
+  image: seachem-doser-1.1.png
+  download: https://play.google.com/store/apps/details?id=com.nateshoffner.seachemdoser
+  platforms:
+    - Android
+
+- slug: pysnip
+  name: PySnip
+  version: 1.1
+  updated: December 23, 2015
+  description: 'PySnip is an robust, open-source and cross-platform server implementation for Ace of Spades. It is fully customizable with extensions and scripts.'
+  image: pysnip.png
+  download: https://github.com/NateShoffner/PySnip/releases
+  platforms:
+    - Windows
+    - OSX
+    - Linux

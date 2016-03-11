@@ -1,0 +1,413 @@
+---
+layout: post
+title: C# - Global Hotkeys via GetAsyncKeyState
+date: 2013-10-13 16:44:42.000000000 -04:00
+type: post
+categories:
+- C#
+- Programming
+tags:
+- C#
+- GetAsyncKeyState
+- RegisterHotKey
+---
+
+<p>Here's a quick little class for implementing global hotkeys in C#/.NET 2.0+.</p>
+
+<p>As a bit of a preface, you could easily use <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms646309(v=vs.85).aspx" target="_blank">RegisterHotKey</a> and <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms646327(v=vs.85).aspx" target="_blank">UnregisterHotKey</a> respectively to accomplish something like this, but this has a few caveats:</p>
+
+<ul>
+    <li>You can't register a key that has already been previously registered.</li>
+    <li>Some keys are reserved and cannot be registered, such as F12.</li>
+    <li>Although hacks exist, it's not very ideal to easily implement with console applications due to the lack of a proper window handle.</li>
+</ul>
+
+<p>Alternatively, we can use another WinAPI function: <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms646293(v=vs.85).aspx" target="_blank">GetAsyncKeyState</a>. It requires a bit more manual work, but it's simple in the end.</p>
+
+<p><em>Note: Without getting into semantics about what constitutes a proper "hook", I'm just going to refer to the process of monitoring/polling key events via GetAsyncKeyState() as "hooking".</em></p>
+
+<p>To keep things simple, the actually hooking process will use the <a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.keys.aspx" target="_blank">Keys Enumeration</a> and will marshall their underlying integral type during the P/Invoke. When a key is pressed, we will trigger the KeyPressed event.</p>
+
+<h2>Modifier Keys</h2>
+<p>We don't want to limit the hooking to just basic keys, instead will allow optional modifier keys using the ModifierKeys enum.</p>
+
+{% highlight csharp %}
+[Flags]
+public enum ModifierKeys : uint
+{
+    None = 0,
+    Alt = 1,
+    Control = 2,
+    Shift = 4,
+}
+{% endhighlight %}
+
+<h2>Hooking &amp; Unhooking</h2>
+<p>To hook a key, call the Hook() method, supplying the Keys value as well as any optional modifier keys. Additionally, you can provide a delegate to use for a callback for when the key is pressed.</p>
+
+<p>To unhook a key, simple call the Unhook() method with the appropriate parameters and it will no longer be polled.</p>
+
+{% highlight csharp %}
+[Flags]
+var keyboard = new KeyboardHook();
+keyboard.Hook(Keys.PrintScreen);
+ 
+// do something
+ 
+keyboard.Unhook(Keys.PrintScreen);
+{% endhighlight %}
+
+<p>Internally, the hooked keys will be stored as KeyHook objects, which provide Keys and Modifiers properties.</p>
+
+{% highlight csharp %}
+private class KeyHook
+{
+    public KeyHook(Keys key, ModifierKeys modifiers, KeyHookDelegate pressed = null)
+    {
+        Key = key;
+        Modifiers = modifiers;
+        Pressed = pressed;
+    }
+ 
+    public Keys Key { get; private set; }
+    public ModifierKeys Modifiers { get; private set; }
+    public KeyHookDelegate Pressed { get; private set; }
+}
+{% endhighlight %}
+
+<h2>Prioritization</h2>
+<p>For simple hotkeys, there won't be any collisions. However, when you start mixing and matching modifier keys, things can get a little messy. To alleviate this issue, the hooked keys are sorted internally using a custom <a href="http://msdn.microsoft.com/en-us/library/8ehhxeaf.aspx" target="_blank">IComparer&lt;T&gt;</a>:</p>
+
+{% highlight csharp %}
+private class HookComparer : IComparer<KeyHook>
+{
+    private static int GetModifierCount(ModifierKeys modifiers)
+    {
+        var iValue = (int) modifiers;
+        var bitCount = 0;
+ 
+        while (iValue != 0)
+        {
+            iValue = iValue & (iValue - 1);
+            bitCount++;
+        }
+ 
+        return bitCount;
+    }
+ 
+    #region Implementation of IComparer<KeyHook>
+ 
+    public int Compare(KeyHook x, KeyHook y)
+    {
+        var keyCompare = x.Key.CompareTo(y.Key);
+        if (keyCompare != 0)
+            return keyCompare;
+ 
+        var modifierCount = GetModifierCount(y.Modifiers).CompareTo(GetModifierCount(x.Modifiers));
+        if (modifierCount != 0)
+            return modifierCount;
+ 
+        return ((int) x.Modifiers).CompareTo((int) y.Modifiers);
+    }
+ 
+    #endregion
+}
+{% endhighlight %}
+
+<p>Basically, it just compares hooked keys based on the following:</p>
+<ol>
+    <li><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.keys.aspx" target="_blank">Keys</a> enumeration</li>
+    <li>Number of ModiferKeys set</li>
+    <li>Underlying ModifierKeys integral type summation</li>
+</ol>
+<p>To sort the list, we use a simple lambda expression with our comparer:</p>
+
+{% highlight csharp %}
+_keys.Sort((k1, k2) => new HookComparer().Compare(k1, k2));
+{% endhighlight %}
+
+<h2>Polling</h2>
+<p>The underlying polling is based on a <a href="http://msdn.microsoft.com/en-us/library/system.timers.timer.aspx" target="_blank">SystemTimer.Timer</a>. According to <a href="http://msdn.microsoft.com/en-us/windows/hardware/gg463266.aspx" target="_blank">official Microsoft sources</a>, this has a resolution of 15.6ms:</p>
+
+<blockquote><p>The default timer resolution on Windows 7 is 15.6 milliseconds (ms). Some applications reduce this to 1 ms, which reduces the battery run time on mobile systems by as much as 25 percent.</p></blockquote>
+
+<p>I'm not about to perform a case steady on how fast a human can realistically type versus the timer interval, configure the interval as necessary. The polling itself can be enabled/disabled via the Enabled property. Additionally, polling is suppressed when hooking/unhooking keys.</p>
+<p>During each tick, the key states are polled via PollKeyStates():</p>
+
+{% highlight csharp %}
+private void PollKeyStates()
+{
+    var altPressed = Convert.ToBoolean(GetAsyncKeyState(Keys.Menu));
+    var controlPressed = Convert.ToBoolean(GetAsyncKeyState(Keys.ControlKey));
+    var shiftPressed = Convert.ToBoolean(GetAsyncKeyState(Keys.ShiftKey));
+ 
+    var pressedKeys = new List<Keys>();
+ 
+    foreach (var key in _keys)
+    {
+        if ((GetAsyncKeyState(key.Key) == -32767))
+            pressedKeys.Add(key.Key);
+    }
+ 
+    foreach (var key in _keys)
+    {
+        if (!pressedKeys.Contains(key.Key))
+            continue;
+ 
+        if ((key.Modifiers & ModifierKeys.None) == ModifierKeys.None)
+        {
+            if ((key.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt && !altPressed)
+                continue;
+            if ((key.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && !controlPressed)
+                continue;
+            if ((key.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift && !shiftPressed)
+                continue;
+        }
+ 
+        pressedKeys.Remove(key.Key);
+ 
+        if (KeyPressed != null)
+            KeyPressed(this, new KeyPressedEventArgs(key.Modifiers, key.Key));
+ 
+        if (key.Pressed != null)
+            key.Pressed(this, EventArgs.Empty);
+    }
+}
+{% endhighlight %}
+
+<p>When using GetAsyncKeyState() you need to pay attention to the most and least significant bits:</p>
+
+<blockquote><p>If the function succeeds, the return value specifies whether the key was pressed since the last call to GetAsyncKeyState, and whether the key is currently up or down. If the most significant bit is set, the key is down, and if the least significant bit is set, the key was pressed after the previous call to GetAsyncKeyState. However, you should not rely on this last behavior.</p></blockquote>
+
+<p>Normally when polling like these, we would end up triggering multiple KeyPressed events within a few milliseconds apart from each other. We can use the return value to get around this.</p>
+
+<p>A temporary List&lt;Keys&gt; is created which contains all hooked keys which are currently pressed. This way we don't need to call GetAsyncKeyState() while iterating over the hooked keys and we can prevent hook collisions. This is where the key sorting from earlier comes into play. We don't want to prematurely trigger a KeyPressed event for a different hooked key than expected.</p>
+
+<p>This isn't necessarily a perfect solution but it works and is simple and flexible.</p>
+
+<p>Finally, here's the complete class:</p>
+
+{% highlight csharp %}
+/*
+* KeyboardHook.cs by Nate Shoffner
+* http://nateshoffner.com
+*/
+ 
+#region
+ 
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Timers;
+using System.Windows.Forms;
+using Timer = System.Timers.Timer;
+ 
+#endregion
+ 
+namespace GlobalHotkeys
+{
+    [Flags]
+    public enum ModifierKeys : uint
+    {
+        None = 0,
+        Alt = 1,
+        Control = 2,
+        Shift = 4,
+    }
+ 
+    public class KeyPressedEventArgs : EventArgs
+    {
+        internal KeyPressedEventArgs(ModifierKeys modifiers, Keys key)
+        {
+            Modifiers = modifiers;
+            Key = key;
+        }
+ 
+        public Keys Key { get; private set; }
+        public ModifierKeys Modifiers { get; private set; }
+    }
+ 
+    public class KeyboardHook : IDisposable
+    {
+        #region P/Invokes
+ 
+        [DllImport("user32.dll")]
+        private static extern short GetAsyncKeyState(Keys vKey);
+ 
+        #endregion
+ 
+        #region Delegates
+ 
+        public delegate void KeyHookDelegate(object sender, EventArgs e);
+ 
+        #endregion
+ 
+        private readonly List<KeyHook> _keys = new List<KeyHook>();
+        private readonly Timer _timer;
+ 
+        public KeyboardHook()
+        {
+            _timer = new Timer {Interval = 75};
+            _timer.Elapsed += _timer_Elapsed;
+        }
+ 
+        public bool Enabled
+        {
+            get { return _timer.Enabled; }
+ 
+            set
+            {
+                if (value)
+                    _timer.Start();
+                else
+                    _timer.Stop();
+            }
+        }
+ 
+        public event EventHandler<KeyPressedEventArgs> KeyPressed;
+ 
+        public bool Hook(Keys key, ModifierKeys modifiers = ModifierKeys.None, KeyHookDelegate pressed = null)
+        {
+            if (_timer.Enabled)
+                _timer.Stop();
+ 
+            var exists = _keys.Find(x => x.Key == key && x.Modifiers == modifiers) != null;
+ 
+            if (!exists)
+            {
+                _keys.Add(new KeyHook(key, modifiers, pressed));
+                _keys.Sort((k1, k2) => new HookComparer().Compare(k1, k2));
+            }
+ 
+            if (_keys.Count > 0)
+                _timer.Start();
+ 
+            return !exists;
+        }
+ 
+        public bool Unhook(Keys key, ModifierKeys modifiers = ModifierKeys.None)
+        {
+            if (_timer.Enabled)
+                _timer.Stop();
+ 
+            var i = _keys.FindIndex(x => x.Key == key && x.Modifiers == modifiers);
+ 
+            if (i >= 0)
+            {
+                _keys.RemoveAt(i);
+                return true;
+            }
+ 
+            if (_keys.Count > 0)
+                _timer.Start();
+ 
+            return false;
+        }
+ 
+        private void _timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            PollKeyStates();
+        }
+ 
+        private void PollKeyStates()
+        {
+            var altPressed = Convert.ToBoolean(GetAsyncKeyState(Keys.Menu));
+            var controlPressed = Convert.ToBoolean(GetAsyncKeyState(Keys.ControlKey));
+            var shiftPressed = Convert.ToBoolean(GetAsyncKeyState(Keys.ShiftKey));
+ 
+            var pressedKeys = new List<Keys>();
+ 
+            foreach (var key in _keys)
+            {
+                if ((GetAsyncKeyState(key.Key) == -32767))
+                    pressedKeys.Add(key.Key);
+            }
+ 
+            foreach (var key in _keys)
+            {
+                if (!pressedKeys.Contains(key.Key))
+                    continue;
+ 
+                if ((key.Modifiers & ModifierKeys.None) == ModifierKeys.None)
+                {
+                    if ((key.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt && !altPressed)
+                        continue;
+                    if ((key.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && !controlPressed)
+                        continue;
+                    if ((key.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift && !shiftPressed)
+                        continue;
+                }
+ 
+                pressedKeys.Remove(key.Key);
+ 
+                if (KeyPressed != null)
+                    KeyPressed(this, new KeyPressedEventArgs(key.Modifiers, key.Key));
+            }
+        }
+ 
+        #region Nested type: HookComparer
+ 
+        private class HookComparer : IComparer<KeyHook>
+        {
+            private static int GetModifierCount(ModifierKeys modifiers)
+            {
+                var iValue = (int) modifiers;
+                var bitCount = 0;
+ 
+                while (iValue != 0)
+                {
+                    iValue = iValue & (iValue - 1);
+                    bitCount++;
+                }
+ 
+                return bitCount;
+            }
+ 
+            #region Implementation of IComparer<KeyHook>
+ 
+            public int Compare(KeyHook x, KeyHook y)
+            {
+                var keyCompare = x.Key.CompareTo(y.Key);
+                if (keyCompare != 0)
+                    return keyCompare;
+ 
+                var modifierCount = GetModifierCount(y.Modifiers).CompareTo(GetModifierCount(x.Modifiers));
+                if (modifierCount != 0)
+                    return modifierCount;
+ 
+                return ((int) x.Modifiers).CompareTo((int) y.Modifiers);
+            }
+ 
+            #endregion
+        }
+ 
+        #endregion
+ 
+        #region Implementation of IDisposable
+ 
+        public void Dispose()
+        {
+            _timer.Stop();
+            _timer.Dispose();
+        }
+ 
+        #endregion
+ 
+        #region Nested type: KeyHook
+ 
+        private class KeyHook
+        {
+            public KeyHook(Keys key, ModifierKeys modifiers)
+            {
+                Key = key;
+                Modifiers = modifiers;
+            }
+ 
+            public Keys Key { get; private set; }
+            public ModifierKeys Modifiers { get; private set; }
+        }
+ 
+        #endregion
+    }
+}
+{% endhighlight %}

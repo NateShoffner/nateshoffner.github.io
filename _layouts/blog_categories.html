@@ -1,0 +1,31 @@
+---
+layout: default
+---
+
+{% include url_decode.liquid param=page.category %}
+{% assign decoded = decoded | capitalize %}
+
+<div class="row">
+    <div class="col-xs-12">
+        <span class="post-title">Posts categorized under '{{ decoded }}'</span>
+    </div>
+</div>
+
+<div class="post-excerpt-container">
+{% for post in site.posts %}
+    {% if post.categories contains decoded %}
+    	<div class="row">
+    	<div class="col-sm-12">
+           {% include post_excerpt.html post=post excerpt_length=80 %}
+    	</div></div>
+    {% endif %}
+{% endfor %}
+</div>
+
+<script type="text/javascript" src="{{ site.base_url }}/vendor/fancybox/jquery.fancybox.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ site.base_url }}/vendor/fancybox/jquery.fancybox.css" media="screen" />
+
+<script type="text/javascript">
+    responsify_blog_images();
+    fancybox_blog_images();
+</script>
