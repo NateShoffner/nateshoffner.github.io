@@ -31,7 +31,7 @@
 - slug: pysnip
   name: PySnip
   version: 1.1
-  updated: December 23, 2015
+  updated: April 13, 2015
   description: 'PySnip is an robust, open-source and cross-platform server implementation for Ace of Spades. It is fully customizable with extensions and scripts.'
   image: pysnip.png
   download: https://github.com/NateShoffner/PySnip/releases
