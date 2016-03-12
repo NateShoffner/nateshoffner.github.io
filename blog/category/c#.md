@@ -1,5 +1,5 @@
 ---
 layout: blog_categories
 category: 'c#'
-permalink: /blog/category/c%23
+permalink: /blog/category/c%23/
 ---

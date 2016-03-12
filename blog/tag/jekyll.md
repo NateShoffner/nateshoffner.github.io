@@ -1,5 +1,5 @@
 ---
 layout: blog_tags
 tag: 'jekyll'
-permalink: /blog/tag/jekyll
+permalink: /blog/tag/jekyll/
 ---

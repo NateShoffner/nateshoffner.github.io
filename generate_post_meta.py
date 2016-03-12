@@ -61,7 +61,7 @@ def generate_markdown_files(directory, dict, layout, indexer_type):
             f.write("layout: %s\n" % layout)
             f.write("%s: '%s'\n" % (indexer_type, indexer.slug))
             f.write(
-                "permalink: /blog/%s/%s\n" %
+                "permalink: /blog/%s/%s/\n" %
                 (indexer_type,
                  urllib.quote_plus(
                      indexer.slug)))
