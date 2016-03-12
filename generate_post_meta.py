@@ -1,6 +1,6 @@
 """
 
-Generates 'tags.yml' and 'categores.yml' in '_data' based off of
+Generates markdown files for tags/categories based off of
 frontmatter located in '_posts' files.
 
 """
@@ -67,31 +67,11 @@ def generate_markdown_files(directory, dict, layout, indexer_type):
                      indexer.slug)))
             f.write("---")
 
-
-def generate_index_file(dict, filename):
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-
-    with open(filename, "w") as f:
-        for indexer in dict.itervalues():
-            f.write("- slug: '%s'\n" % indexer.slug)
-            f.write("  name: '%s'\n" % indexer.name)
-            f.write("\n")
-
-
 print "Building indexer lists...\n"
 build_indexer_lists()
 
-print "\nGenerating index file for tags...\n"
-generate_index_file(tags_dict, "_data/tags.yml")
-
 print "Generating markdown files for tags...\n"
 generate_markdown_files("blog/tag", tags_dict, "blog_tags", "tag")
-
-print "Generating index file for categories...\n"
-generate_index_file(categories_dict, "_data/categories.yml")
 
 print "Generating markdown files for categories...\n"
 generate_markdown_files(
