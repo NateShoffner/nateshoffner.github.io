@@ -1,0 +1,9 @@
+{% assign contains_item = false %}
+{% assign filter_downcased = include.filter | downcase %}
+{% for item in include.collection %}
+    {% assign item_downcased = item | downcase %}
+    {% if item_downcased == filter_downcased %}
+        {% assign contains_item = true %}
+        {% break %}
+    {% endif %}
+{% endfor %}

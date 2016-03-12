@@ -3,7 +3,6 @@ layout: default
 ---
 
 {% include url_decode.liquid param=page.category %}
-{% assign decoded = decoded | capitalize %}
 
 <div class="row">
     <div class="col-xs-12">
@@ -13,11 +12,13 @@ layout: default
 
 <div class="post-excerpt-container">
 {% for post in site.posts %}
-    {% if post.categories contains decoded %}
-    	<div class="row">
-    	<div class="col-sm-12">
-           {% include post_excerpt.html post=post excerpt_length=80 %}
-    	</div></div>
+    {% include array_contains_case_insensitive.liquid collection=post.tags filter=decoded %}
+    {% if contains_item %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include post_excerpt.html post=post excerpt_length=80 %}
+        </div>
+    </div>
     {% endif %}
 {% endfor %}
 </div>
