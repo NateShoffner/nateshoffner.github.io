@@ -1,1 +1,1 @@
-{% assign decoded = include.param | replace: '%23','#' %}
+{% assign decoded = include.param | replace: '%23','#' | replace: '-',' ' %}
