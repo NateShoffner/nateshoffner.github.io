@@ -9,6 +9,7 @@ url: http://nateshoffner.com
 blog_url: /blog
 gems:
   - jekyll-paginate
+  - jekyll-sitemap
 syntax_highlighter: rouge
 
 disqus_shortname: nateshoffner
