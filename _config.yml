@@ -5,7 +5,7 @@ title: Nate Shoffner
 permalink: /blog/:year/:month/:title/
 paginate: 3
 paginate_path: /blog/page/:num
-url: http://nateshoffner.com
+url: https://nateshoffner.com
 blog_url: /blog
 gems:
   - jekyll-paginate
