@@ -1,56 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="author" content="Nate Shoffner" />
-        <title>{% if page.title %} {{ page.title }} &bull; {% endif %}Nate Shoffner</title>
-        <link rel="shortcut icon" href="{{ site.base_url }}/assets/images/logo.png">
-        <link rel="stylesheet" href="{{ site.base_url }}/vendor/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{{ site.base_url }}/vendor/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="{{ site.base_url }}/assets/css/style.css">
-        <link rel="stylesheet" href="{{ site.base_url }}/assets/css/pygment.css">
-        <script src="{{ site.base_url }}/assets/js/main.js"></script>
-        <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
-        <script src="{{ site.base_url }}/vendor/bootstrap/js/bootstrap.min.js"></script>
-        <link rel="alternate" type="application/rss+xml" href="{{ site.baseurl}}/feed.xml" />
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-    </head>
-
-    <body>
-        <div class="page-container">
-            <nav class="navbar navbar-default navbar-static-top navbar-custom">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <h3 class="brand-title"><a href="{{ site.baseurl }}/">Nate Shoffner</a><small><span class="muted navbar-tagline">Bits, Bytes, Code and Sprites</span></small></h3>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li{% if page.url == '/' %} class="active"{% endif %}><a href="{{ site.baseurl }}/"><i class="fa fa-home"></i> Home</a></li>
-                        <li{% if page.url == '/about/' %} class="active"{% endif %}><a href="{{ site.baseurl }}/about/"><i class="fa fa-user"></i> About</a></li>
-                        <li{% if page.url contains '/blog/' or page.type == 'post' %} class="active"{% endif %}><a href="{{ site.baseurl }}/blog/"><i class="fa fa-pencil"></i> Blog</a></li>
-                        <li{% if page.url == '/projects/' %} class="active"{% endif %}><a href="{{ site.baseurl }}/projects/"><i class="fa fa-th-list"></i> Projects</a></li>
-                        <li class="dropdown{% if page.url == '/contact/' %} active{% endif %}">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-envelope"></i> Contact <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="http://twitter.com/NateShoffner"><i class="fa fa-twitter"></i> @NateShoffner</a></li>
-                                <li><a href="http://github.com/NateShoffner"><i class="fa fa-github"></i> GitHub</a></li>
-                                <li><a href="{{ site.baseurl }}/contact/"><i class="fa fa-envelope"></i> Message Me</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            <div class="container">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Nate Shoffner" />
+    <title>{% if page.title %} {{ page.title }} &bull; {% endif %}Nate Shoffner</title>
+    <link rel="shortcut icon" href="{{ site.base_url }}/assets/images/logo.png">
+    <link rel="stylesheet" href="{{ site.base_url }}/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ site.base_url }}/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ site.base_url }}/assets/css/style.css">
+    <link rel="stylesheet" href="{{ site.base_url }}/assets/css/pygment.css">
+    <script src="{{ site.base_url }}/assets/js/main.js"></script>
+    <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="{{ site.base_url }}/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="alternate" type="application/rss+xml" href="{{ site.baseurl}}/feed.xml" />
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
