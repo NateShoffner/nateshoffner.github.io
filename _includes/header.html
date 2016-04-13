@@ -10,16 +10,16 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-            <li{% if page.url=='/' %} class="active" {% endif %}><a href="{{ site.baseurl }}/"><i class="fa fa-home"></i> Home</a></li>
-            <li{% if page.url=='/about/' %} class="active" {% endif %}><a href="{{ site.baseurl }}/about/"><i class="fa fa-user"></i> About</a></li>
+            <li{% if page.url == '/' %} class="active" {% endif %}><a href="{{ site.baseurl }}/"><i class="fa fa-home"></i> Home</a></li>
+            <li{% if page.url == '/about/' %} class="active" {% endif %}><a href="{{ site.baseurl }}/about/"><i class="fa fa-user"></i> About</a></li>
             <li{% if page.url contains '/blog/' or page.type=='post' %} class="active" {% endif %}><a href="{{ site.baseurl }}/blog/"><i class="fa fa-pencil"></i> Blog</a></li>
-            <li{% if page.url=='/projects/' %} class="active" {% endif %}><a href="{{ site.baseurl }}/projects/"><i class="fa fa-th-list"></i> Projects</a></li>
+            <li{% if page.url == '/projects/' %} class="active" {% endif %}><a href="{{ site.baseurl }}/projects/"><i class="fa fa-th-list"></i> Projects</a></li>
             <li class="dropdown{% if page.url == '/contact/' %} active{% endif %}">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-envelope"></i> Contact <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="http://twitter.com/NateShoffner"><i class="fa fa-twitter"></i> @NateShoffner</a></li>
                     <li><a href="http://github.com/NateShoffner"><i class="fa fa-github"></i> GitHub</a></li>
-                    <li><a href="{{ site.baseurl }}/contact/"><i class="fa fa-envelope"></i> Message Me</a></li>
+                    <li{% if page.url == '/contact/' %} class="active" {% endif %}><a href="{{ site.baseurl }}/contact/"><i class="fa fa-envelope"></i> Message Me</a></li>
                 </ul>
             </li>
         </ul>
