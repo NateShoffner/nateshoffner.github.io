@@ -14,4 +14,4 @@ syntax_highlighter: rouge
 
 disqus_shortname: nateshoffner
 future: true
-include: ["vendor"]
+exclude: []
