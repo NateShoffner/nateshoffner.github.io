@@ -22,7 +22,7 @@
   name: Seachem Doser
   version: 1.2
   updated: November 7th, 2016
-  description: 'Dosage calculator for Seachem gravel, planted, and reef products. Simply entire in your aquarium parameters.'
+  description: 'Dosage calculator for Seachem gravel, planted, and reef products. Simply enter in your aquarium parameters.'
   image: seachem-doser-1.2.png
   download: https://play.google.com/store/apps/details?id=com.nateshoffner.seachemdoser
   platforms:
