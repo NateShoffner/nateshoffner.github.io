@@ -3,13 +3,14 @@
 <div class="post-container">
 
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12 text-center">
         {% if include.clickable %}
             <span class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></span>
         {% else %}
             <span class="post-title">{{ post.title }}</span>
         {% endif %}
-        
+        </div>
+        <div class="col-xs-12 text-center">
             <ul class="post-meta">
                 <li class="post-meta-item"><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.date | post.date | date: "%B %-d, %Y" }}</li>
 
@@ -56,19 +57,19 @@
     <div class="row">
         <div class="col-sm-6">
             <p class="pull-left">
-            {% if post.previous.url %} 
-                <a href="{{site.baseurl}}{{post.previous.url}}">&laquo; {{post.previous.title}}</a> 
+            {% if post.previous.url %}
+                <a href="{{site.baseurl}}{{post.previous.url}}">&laquo; {{post.previous.title}}</a>
             {% endif %}
             </p>
         </div>
         <div class="col-sm-6">
             <p class=" pull-right">
-          {% if post.next.url %} 
-            <a href="{{site.baseurl}}{{post.next.url}}">{{post.next.title}} &raquo;</a> 
-          {% endif %} 
+          {% if post.next.url %}
+            <a href="{{site.baseurl}}{{post.next.url}}">{{post.next.title}} &raquo;</a>
+          {% endif %}
             </p>
         </div>
-    </div> 
+    </div>
 </div>
 {% endif %}
 
