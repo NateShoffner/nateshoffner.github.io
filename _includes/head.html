@@ -14,6 +14,17 @@
     <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="{{ site.base_url }}/vendor/bootstrap/js/bootstrap.min.js"></script>
     <link rel="alternate" type="application/rss+xml" href="{{ site.baseurl}}/feed.xml" />
+    {% if page.custom_css %}
+        {% for stylesheet in page.custom_css %}
+            <link rel="stylesheet" href="{{ stylesheet }}" media="screen" type="text/css">
+        {% endfor %}
+    {% endif %}
+
+    {% if page.custom_js %}
+        {% for script in page.custom_js %}
+            <script src='{{ script }}' type="text/javascript"></script>
+        {% endfor %}
+    {% endif %}
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
