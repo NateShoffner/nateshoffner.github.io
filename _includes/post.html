@@ -57,16 +57,16 @@
     <div class="row">
         <div class="col-sm-6">
             <p class="pull-left">
-            {% if post.previous.url %}
-                <a href="{{site.baseurl}}{{post.previous.url}}">&laquo; {{post.previous.title}}</a>
-            {% endif %}
+          {% if post.next.url %}
+            <a href="{{site.baseurl}}{{post.next.url}}">&laquo; {{post.next.title}} </a>
+          {% endif %}
             </p>
         </div>
         <div class="col-sm-6">
-            <p class=" pull-right">
-          {% if post.next.url %}
-            <a href="{{site.baseurl}}{{post.next.url}}">{{post.next.title}} &raquo;</a>
-          {% endif %}
+            <p class="pull-right">
+            {% if post.previous.url %}
+                <a href="{{site.baseurl}}{{post.previous.url}}">{{post.previous.title}} &raquo;</a>
+            {% endif %}
             </p>
         </div>
     </div>
