@@ -11,7 +11,7 @@ title: Projects
         <div class="projects-container">
         {% for project in site.data.projects %}
             <div class="project">
-                <h5 class="project-title">{{ project.name }}</h5>
+                <h4 class="headline">{{ project.name }}</h5>
                 <div class="row">
                     <div class="col-xs-12 col-sm-4">
                         <a href="{{ site.base_url }}/assets/images/projects/{{ project.image }}" class="fancybox">
@@ -50,15 +50,7 @@ title: Projects
     });
 </script>
 
-<style type="text/css">
-.github-widget {
-    padding-top: 15px;
-}
-</style>
-
-<br /><br />
-
-<h3 class="headline text-center">Open Source Projects</h3>
+<h3 class="headline padtop text-center">Open Source Projects</h3>
 
 <div class="text-center">
     <strong>GitHub: </strong>
@@ -69,3 +61,15 @@ title: Projects
 
 <script type="text/javascript" src="{{ site.base_url }}/vendor/github-widget/github-widget.min.js"></script>
 <link href="{{ site.base_url }}/vendor/github-widget/github-widget.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.github-widget {
+    padding-top: 15px;
+}
+
+@media (max-width: 991px) {
+    .gw-repo-outer {
+        width: 100%;
+    }
+}
+</style>
