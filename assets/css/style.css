@@ -217,6 +217,10 @@ li {
         margin-left: 15px;
     }
 
+    .post-meta > .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0px;
+    }
 }
 
 @media (min-width: 768px) {
