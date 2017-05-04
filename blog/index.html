@@ -7,36 +7,60 @@ title: Blog
     {% include post.html post=post show_comments=false clickable=true %}
 {% endfor %}
 
+{% assign page_amount = 5 %}
+{% if page.paginate.page_amount %}
+{% assign page_amount = page.paginate.page_amount %}
+{% endif %}
+
+{% assign page_amount_min = page_amount | minus: 2 %}
+{% assign offset = page_amount_min | divided_by: 2 %}
+{% assign page_amount_prev = paginator.page | minus: offset %}
+{% assign page_amount_next = paginator.page | plus: offset %}
+{% assign totalpages = paginator.total_pages %}
+
+{% if page_amount_prev <= 1 %}
+{% assign page_amount_prev_fix = page_amount_prev | minus: 1 %}
+{% assign page_amount_prev = 0 %}
+{% assign page_amount_next = page_amount_next | minus: page_amount_prev_fix | plus: 1 %}
+{% endif %}
+
+{% if page_amount_next >= totalpages %}
+{% assign page_amount_next_fix = totalpages | minus: page_amount_next | minus: 1 %}
+{% assign page_amount_next = totalpages %}
+{% assign page_amount_prev = page_amount_prev | plus: page_amount_next_fix %}
+{% endif %}
+
 {% if paginator.total_pages > 1 %}
 <nav class="post-pagination text-center">
     <ul class="pagination">
-    {% if paginator.previous_page %}
-        <li><a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-    {% endif %}
+        <li{% if paginator.previous_page == null %} class="disabled"{% endif %}><a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Previous"><span aria-hidden="true">Previous</span></a></li>
 
-    {% assign page_count = 1 %}
-    {% assign total = paginator.total_pages %}
-    {% assign limit = total | divided_by: 2 %}
-    {% for page in (1..total) %}
-
-        {% if page_count == limit %}
-            <li class="disabled"><a>...</a></li>
-            {% assign page_count = 0 %}
-            {% continue %}
-        {% elsif page == paginator.page %}
-            <li class="active"><a href="#">{{ page }}</a></li>
-        {% elsif page == 1 %}
-            <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: 'page/:num', '' }}">{{ page }}</a></li>
+        {% unless paginator.page == 1 %}
+            <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: 'page/:num', '' }}">1</a></li>
+            <li><span aria-hidden="true">...</span></li>
         {% else %}
-            <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
+            <li class="active"><span aria-hidden="true">1</span></li>
+        {% endunless %}
+
+        {% for count in (2..paginator.total_pages) %}
+        {% if count >= page_amount_prev and count <= page_amount_next %}
+        {% assign relative_to_current = paginator.page | minus: count | replace: '-', '' | divided_by: 1 %}
+        {% unless count == totalpages %}
+            <li class="{% if count == paginator.page %}active{% endif %}">
+                <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', count }}">{{ count }}</a>
+            </li>
+        {% endunless %}
         {% endif %}
+        {% endfor %}
 
-        {% assign page_count = page_count | plus: 1 %}
-    {% endfor %}
+        {% unless paginator.page == totalpages %}
+            <li><span aria-hidden="true">...</span></li>
+            <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', totalpages }}">{{ totalpages }}</a></li>
+        {% else %}
+            <li class="active"><span aria-hidden="true">{{ totalpages }}</span></li>
+        {% endunless %}
 
-    {% if paginator.next_page %}
-        <li><a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-    {% endif %}
+        <li{% if paginator.next_page == null %} class="disabled"{% endif %}><a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Next"><span aria-hidden="true">Next</span></a></li>
     </ul>
 </nav>
 {% endif %}
