@@ -4,6 +4,7 @@
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Nate Shoffner" />
+    <!-- Open Graph -->
     <meta content="{{ site.title }}" property="og:site_name">
     <meta content="{% if page.title %} {{ page.title }} &bull; {% endif %}Nate Shoffner" property="og:title">
 {% if page.description %}
@@ -37,6 +38,28 @@
     <meta content="article" property="og:type">
 {% else %}
     <meta content="website" property="og:type">
+{% endif %}
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@NateShoffner">
+    <meta name="twitter:site" content="@NateShoffner">
+{% if page.title %}
+    <meta name="twitter:title" content="{{ page.title }}">
+{% else %}
+    <meta name="twitter:title" content="{{ site.title }}">
+{% endif %}
+{% if page.description %}
+    <meta name="twitter:description" content="{{ page.content | strip_html | xml_escape | truncate: 200 }}">
+{% else %}
+    <meta name="twitter:description" content="{{ site.description }}">
+{% endif %}
+{% if page.url %}
+    <meta name="twitter:url" content="{{ site.url }}{{ page.url }}">
+{% endif %}
+{% if page.image %}
+    <meta name="twitter:image:src" content="{{ page.image }}">
+{% else %}
+    <meta name="twitter:image:src" content="{{ site.base_url }}/assets/images/logo.png">
 {% endif %}
     <title>{% if page.title %}{{ page.title }} &bull; {% endif %}Nate Shoffner</title>
     <link rel="shortcut icon" href="{{ site.base_url }}/assets/images/logo.png">
