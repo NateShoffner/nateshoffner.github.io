@@ -81,6 +81,10 @@ footer .social:hover {
     text-align: center;
 }
 
+.post-container > table > td {
+    padding-top: 10px;
+}
+
 ul.post-meta {
     margin-bottom: 15px;
     list-style: none;
