@@ -6,7 +6,7 @@
     <meta name="author" content="Nate Shoffner" />
     <!-- Open Graph -->
     <meta content="{{ site.title }}" property="og:site_name">
-    <meta content="{% if page.title %} {{ page.title }} &bull; {% endif %}Nate Shoffner" property="og:title">
+    <meta content="{% if page.title %}{{ page.title }} &bull; {% endif %}Nate Shoffner" property="og:title">
 {% if page.description %}
     <meta content="{{ page.description }}" property="og:description">
 {% else %}
@@ -49,7 +49,7 @@
     <meta name="twitter:title" content="{{ site.title }}">
 {% endif %}
 {% if page.description %}
-    <meta name="twitter:description" content="{{ page.content | strip_html | xml_escape | truncate: 200 }}">
+    <meta name="twitter:description" content="{{ page.description }}">
 {% else %}
     <meta name="twitter:description" content="{{ site.description }}">
 {% endif %}
