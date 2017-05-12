@@ -12,7 +12,7 @@
         </div>
         <div class="col-xs-12 text-center">
             <ul class="post-meta">
-                <li class="post-meta-item"><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.date | post.date | date: "%B %-d, %Y" }}</li>
+                <li class="post-meta-item" title="{{ post.date | post.date | date: "%B %-d, %Y %r" }}"><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.date | post.date | date: "%B %-d, %Y" }}</li>
 
                 <li class="post-meta-item"><i class="fa fa-comments" aria-hidden="true"></i>  <a href="{{ post.url }}#comments"><span class="disqus-comment-count" data-disqus-url="{{ site.url }}{{ post.url }}">0 Comments</span></a></li>
 
