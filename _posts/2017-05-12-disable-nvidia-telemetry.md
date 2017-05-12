@@ -18,7 +18,7 @@ For me, however, it's a moot point. Nvidia should've been upfront about the tele
 
 I've shared it with a few people and figured I might as well throw it online.
 
-Note: I use a small subset of GeForce Experience's features, includingi ShadowPlay and have experienced no problems. I can't speak for every use case and how disabling these services might be impactful in the future, so use it at your own risk.
+Note: I use a small subset of GeForce Experience's features, including ShadowPlay and have experienced no problems. I can't speak for every use case and how disabling these services might be impactful in the future, so use it at your own risk.
 
 You can download the utility [here](https://github.com/NateShoffner/Disable-Nvidia-Telemetry/releases) as well as find the source code on [GitHub](https://github.com/NateShoffner/Disable-Nvidia-Telemetry).
 
