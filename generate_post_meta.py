@@ -23,7 +23,7 @@ categories_dict = {}
 
 
 def build_indexer_lists():
-    post_files = glob.glob("_posts/*.html")
+    post_files = glob.glob("_posts/*.*")
 
     for post_file in post_files:
         print 'Parsing: %s' % post_file
