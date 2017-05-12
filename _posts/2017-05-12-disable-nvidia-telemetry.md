@@ -4,7 +4,7 @@ title: Disable Nvidia Telemetry
 date: 2017-05-12 15:13 -05:00
 description: 
 type: post
-image: /assets/images/posts/NvidiaTelemetry1.png
+image: /assets/images/posts/NvidiaTelemetry2.png
 categories:
 - Projects
 tags:
