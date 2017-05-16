@@ -1,0 +1,14 @@
+{% assign filenames = include.filenames | split: ','  %}
+{% assign column_width =  12 | divided_by: filenames.size %}
+
+<div class="row">
+{% for filename in filenames %}
+
+    <div class="col-xs-12 col-sm-{{ column_width }}" style="margin-bottom: 10px;">
+        <a href="{{ site.baseurl }}/assets/images/posts/{{ filename }}">
+            <img src="{{ site.baseurl }}/assets/images/posts/{{ filename }}" class="center-block" />
+        </a>
+    </div>
+
+{% endfor %}
+</div>

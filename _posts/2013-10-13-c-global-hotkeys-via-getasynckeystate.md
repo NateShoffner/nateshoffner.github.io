@@ -1,7 +1,8 @@
 ---
 layout: post
 title: C# - Global Hotkeys via GetAsyncKeyState
-date: 2013-10-13 16:44:42.000000000 -04:00
+date: 2013-10-13 16:44 -04:00
+description: Global hotkeys in C# via GetAsyncGetState
 type: post
 categories:
 - C#
@@ -12,24 +13,22 @@ tags:
 - RegisterHotKey
 ---
 
-<p>Here's a quick little class for implementing global hotkeys in C#/.NET 2.0+.</p>
+Here's a quick little class for implementing global hotkeys in C#/.NET 2.0+.
 
-<p>As a bit of a preface, you could easily use <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms646309(v=vs.85).aspx" target="_blank">RegisterHotKey</a> and <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms646327(v=vs.85).aspx" target="_blank">UnregisterHotKey</a> respectively to accomplish something like this, but this has a few caveats:</p>
+As a bit of a preface, you could easily use [RegisterHotKey]http://msdn.microsoft.com/en-us/library/windows/desktop/ms646309(v=vs.85).aspx) and [UnregisterHotKey]http://msdn.microsoft.com/en-us/library/windows/desktop/ms646327(v=vs.85).aspx) respectively to accomplish something like this, but this has a few caveats:
 
-<ul>
-    <li>You can't register a key that has already been previously registered.</li>
-    <li>Some keys are reserved and cannot be registered, such as F12.</li>
-    <li>Although hacks exist, it's not very ideal to easily implement with console applications due to the lack of a proper window handle.</li>
-</ul>
+* You can't register a key that has already been previously registered.
+* Some keys are reserved and cannot be registered, such as F12.
+* Although hacks exist, it's not very ideal to easily implement with console applications due to the lack of a proper window handle.
 
-<p>Alternatively, we can use another WinAPI function: <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms646293(v=vs.85).aspx" target="_blank">GetAsyncKeyState</a>. It requires a bit more manual work, but it's simple in the end.</p>
+Alternatively, we can use another WinAPI function: [GetAsyncKeyState]http://msdn.microsoft.com/en-us/library/windows/desktop/ms646293(v=vs.85).aspx). It requires a bit more manual work, but it's simple in the end.
 
-<p><em>Note: Without getting into semantics about what constitutes a proper "hook", I'm just going to refer to the process of monitoring/polling key events via GetAsyncKeyState() as "hooking".</em></p>
+**Note: Without getting into semantics about what constitutes a proper "hook", I'm just going to refer to the process of monitoring/polling key events via GetAsyncKeyState() as "hooking".**
 
-<p>To keep things simple, the actually hooking process will use the <a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.keys.aspx" target="_blank">Keys Enumeration</a> and will marshall their underlying integral type during the P/Invoke. When a key is pressed, we will trigger the KeyPressed event.</p>
+To keep things simple, the actually hooking process will use the [Keys Enumeration]http://msdn.microsoft.com/en-us/library/system.windows.forms.keys.aspx) and will marshall their underlying integral type during the P/Invoke. When a key is pressed, we will trigger the KeyPressed event.
 
-<h2>Modifier Keys</h2>
-<p>We don't want to limit the hooking to just basic keys, instead will allow optional modifier keys using the ModifierKeys enum.</p>
+#### Modifier Keys
+We don't want to limit the hooking to just basic keys, instead will allow optional modifier keys using the ModifierKeys enum.
 
 {% highlight csharp %}
 [Flags]
@@ -42,10 +41,10 @@ public enum ModifierKeys : uint
 }
 {% endhighlight %}
 
-<h2>Hooking &amp; Unhooking</h2>
-<p>To hook a key, call the Hook() method, supplying the Keys value as well as any optional modifier keys. Additionally, you can provide a delegate to use for a callback for when the key is pressed.</p>
+#### Hooking & Unhooking
+To hook a key, call the Hook() method, supplying the Keys value as well as any optional modifier keys. Additionally, you can provide a delegate to use for a callback for when the key is pressed.
 
-<p>To unhook a key, simple call the Unhook() method with the appropriate parameters and it will no longer be polled.</p>
+To unhook a key, simple call the Unhook() method with the appropriate parameters and it will no longer be polled.
 
 {% highlight csharp %}
 [Flags]
@@ -57,7 +56,7 @@ keyboard.Hook(Keys.PrintScreen);
 keyboard.Unhook(Keys.PrintScreen);
 {% endhighlight %}
 
-<p>Internally, the hooked keys will be stored as KeyHook objects, which provide Keys and Modifiers properties.</p>
+Internally, the hooked keys will be stored as KeyHook objects, which provide Keys and Modifiers properties.
 
 {% highlight csharp %}
 private class KeyHook
@@ -75,8 +74,8 @@ private class KeyHook
 }
 {% endhighlight %}
 
-<h2>Prioritization</h2>
-<p>For simple hotkeys, there won't be any collisions. However, when you start mixing and matching modifier keys, things can get a little messy. To alleviate this issue, the hooked keys are sorted internally using a custom <a href="http://msdn.microsoft.com/en-us/library/8ehhxeaf.aspx" target="_blank">IComparer&lt;T&gt;</a>:</p>
+#### Prioritization
+    For simple hotkeys, there won't be any collisions. However, when you start mixing and matching modifier keys, things can get a little messy. To alleviate this issue, the hooked keys are sorted internally using a custom [IComparer<T>](http://msdn.microsoft.com/en-us/library/8ehhxeaf.aspx):
 
 {% highlight csharp %}
 private class HookComparer : IComparer<KeyHook>
@@ -114,25 +113,25 @@ private class HookComparer : IComparer<KeyHook>
 }
 {% endhighlight %}
 
-<p>Basically, it just compares hooked keys based on the following:</p>
-<ol>
-    <li><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.keys.aspx" target="_blank">Keys</a> enumeration</li>
-    <li>Number of ModiferKeys set</li>
-    <li>Underlying ModifierKeys integral type summation</li>
-</ol>
-<p>To sort the list, we use a simple lambda expression with our comparer:</p>
+Basically, it just compares hooked keys based on the following:
+
+1. (Keys](http://msdn.microsoft.com/en-us/library/system.windows.forms.keys.aspx) enumeration
+2. Number of ModiferKeys set
+3. Underlying ModifierKeys integral type summation
+
+To sort the list, we use a simple lambda expression with our comparer:
 
 {% highlight csharp %}
 _keys.Sort((k1, k2) => new HookComparer().Compare(k1, k2));
 {% endhighlight %}
 
-<h2>Polling</h2>
-<p>The underlying polling is based on a <a href="http://msdn.microsoft.com/en-us/library/system.timers.timer.aspx" target="_blank">SystemTimer.Timer</a>. According to <a href="http://msdn.microsoft.com/en-us/windows/hardware/gg463266.aspx" target="_blank">official Microsoft sources</a>, this has a resolution of 15.6ms:</p>
+#### Polling
+The underlying polling is based on a [SystemTimer.Timer]http://msdn.microsoft.com/en-us/library/system.timers.timer.aspx). According to [official Microsoft sources]http://msdn.microsoft.com/en-us/windows/hardware/gg463266.aspx), this has a resolution of 15.6ms:
 
-<blockquote><p>The default timer resolution on Windows 7 is 15.6 milliseconds (ms). Some applications reduce this to 1 ms, which reduces the battery run time on mobile systems by as much as 25 percent.</p></blockquote>
+    The default timer resolution on Windows 7 is 15.6 milliseconds (ms). Some applications reduce this to 1 ms, which reduces the battery run time on mobile systems by as much as 25 percent.
 
-<p>I'm not about to perform a case steady on how fast a human can realistically type versus the timer interval, configure the interval as necessary. The polling itself can be enabled/disabled via the Enabled property. Additionally, polling is suppressed when hooking/unhooking keys.</p>
-<p>During each tick, the key states are polled via PollKeyStates():</p>
+I'm not about to perform a case steady on how fast a human can realistically type versus the timer interval, configure the interval as necessary. The polling itself can be enabled/disabled via the Enabled property. Additionally, polling is suppressed when hooking/unhooking keys.
+During each tick, the key states are polled via PollKeyStates():
 
 {% highlight csharp %}
 private void PollKeyStates()
@@ -175,17 +174,17 @@ private void PollKeyStates()
 }
 {% endhighlight %}
 
-<p>When using GetAsyncKeyState() you need to pay attention to the most and least significant bits:</p>
+When using GetAsyncKeyState() you need to pay attention to the most and least significant bits:
 
-<blockquote><p>If the function succeeds, the return value specifies whether the key was pressed since the last call to GetAsyncKeyState, and whether the key is currently up or down. If the most significant bit is set, the key is down, and if the least significant bit is set, the key was pressed after the previous call to GetAsyncKeyState. However, you should not rely on this last behavior.</p></blockquote>
+    If the function succeeds, the return value specifies whether the key was pressed since the last call to GetAsyncKeyState, and whether the key is currently up or down. If the most significant bit is set, the key is down, and if the least significant bit is set, the key was pressed after the previous call to GetAsyncKeyState. However, you should not rely on this last behavior.
 
-<p>Normally when polling like these, we would end up triggering multiple KeyPressed events within a few milliseconds apart from each other. We can use the return value to get around this.</p>
+Normally when polling like these, we would end up triggering multiple KeyPressed events within a few milliseconds apart from each other. We can use the return value to get around this.
 
-<p>A temporary List&lt;Keys&gt; is created which contains all hooked keys which are currently pressed. This way we don't need to call GetAsyncKeyState() while iterating over the hooked keys and we can prevent hook collisions. This is where the key sorting from earlier comes into play. We don't want to prematurely trigger a KeyPressed event for a different hooked key than expected.</p>
+A temporary List<Keys> is created which contains all hooked keys which are currently pressed. This way we don't need to call GetAsyncKeyState() while iterating over the hooked keys and we can prevent hook collisions. This is where the key sorting from earlier comes into play. We don't want to prematurely trigger a KeyPressed event for a different hooked key than expected.
 
-<p>This isn't necessarily a perfect solution but it works and is simple and flexible.</p>
+This isn't necessarily a perfect solution but it works and is simple and flexible.
 
-<p>Finally, here's the complete class:</p>
+Finally, here's the complete class:
 
 {% highlight csharp %}
 /*

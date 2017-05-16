@@ -1,14 +1,14 @@
 ---
 layout: post
 title: C# INI Reader/Writer
-date: 2013-01-02 21:42:14.000000000 -05:00
+date: 2013-01-02 21:42 -05:00
 type: post
 categories:
 - Programming
 tags:
 - C#
 ---
-<p>Nothing major, just figured somebody might be able to use it. A basic INI reader/writer utility.</p>
+Nothing major, just figured somebody might be able to use it. A basic INI reader/writer utility.
 
 {% highlight csharp %}
 using System.Globalization;

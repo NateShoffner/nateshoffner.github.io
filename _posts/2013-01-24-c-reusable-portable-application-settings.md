@@ -1,7 +1,7 @@
 ---
 layout: post
 title: C# - Reusable Portable Application Settings
-date: 2013-01-24 00:19:07.000000000 -05:00
+date: 2013-01-24 00:19 -05:00
 type: post
 categories:
 - C#
@@ -11,7 +11,7 @@ tags:
 - C#
 ---
 
-<p>Anybody who has worked with the .NET Framework has likely dealt with the native configuration files, especially if you're using something as intuitive as Visual Studio. While the native functionality is pretty nifty, there's still one small gripe myself and many other developers have. The .NET Framework is designed in a way that applications are to interface with a single configuration file whose location is found somewhere between AppData and obscurity. The reason for this design, according to Microsoft, was to alleviate the possibility of overwrite collisions between different applications. Despite being asked to allow developers to manage their own relative configuration paths, Microsoft has stood by this design. It's quite an annoying "feature", but there are workarounds, albeit tedious. This <a href="http://www.geek-republic.com/2010/11/c-portable-settings-provider/">article</a> provides a good bit of insight on how to tackle something like this. by inheriting the <a href="http://msdn.microsoft.com/en-us/library/system.configuration.settingsprovider.aspx">SettingsProvider</a> class.</p>
+Anybody who has worked with the .NET Framework has likely dealt with the native configuration files, especially if you're using something as intuitive as Visual Studio. While the native functionality is pretty nifty, there's still one small gripe myself and many other developers have. The .NET Framework is designed in a way that applications are to interface with a single configuration file whose location is found somewhere between AppData and obscurity. The reason for this design, according to Microsoft, was to alleviate the possibility of overwrite collisions between different applications. Despite being asked to allow developers to manage their own relative configuration paths, Microsoft has stood by this design. It's quite an annoying "feature", but there are workarounds, albeit tedious. This [article](http://www.geek-republic.com/2010/11/c-portable-settings-provider) provides a good bit of insight on how to tackle something like this. by inheriting the [SettingsProvider](http://msdn.microsoft.com/en-us/library/system.configuration.settingsprovider.aspx) class.
 
 {% highlight csharp %}
 using System;
@@ -333,8 +333,8 @@ public class PortableSettingsProvider : SettingsProvider
 }
 {% endhighlight %}
 
-<h2>Deserialization Bug</h2>
-<p>Immediately I found a bug during deserialization using <a href="http://msdn.microsoft.com/en-us/library/system.collections.arraylist.aspx">ArrayList</a> or <a href="http://msdn.microsoft.com/en-us/library/system.collections.specialized.stringcollection.aspx">StringCollection</a> within GetSetting(). It seems that the collection was being cast to a string array during deserialization. Luckily this is a simple fix:</p>
+#### Deserialization Bug
+Immediately I found a bug during deserialization using [ArrayList](http://msdn.microsoft.com/en-us/library/system.collections.arraylist.aspx) or [StringCollection](http://msdn.microsoft.com/en-us/library/system.collections.specialized.stringcollection.aspx) within GetSetting(). It seems that the collection was being cast to a string array during deserialization. Luckily this is a simple fix:
 
 {% highlight csharp %}
 private object GetSetting(SettingsProperty setProp)
@@ -388,11 +388,11 @@ private object GetSetting(SettingsProperty setProp)
 }
 {% endhighlight %}
 
-<h2>Making it Reusable</h2>
-<p>Great, now it works perfectly. However, I'm far too lazy to copy this snippet into every project, I'd much prefer to reuse it from a referenced library. In order to do this, you'll have to make use of <a href="http://msdn.microsoft.com/en-us/library/system.reflection.assembly.getentryassembly.aspx">GetEntryAssembly()</a>. This will allow you to reference the portable settings class within any assembly.</p>
-<p>Some words of caution: This solution is dependent on the calling assembly name. It will create a directory in the <a href="http://msdn.microsoft.com/en-us/library/system.environment.specialfolder.aspx">ApplicationData</a> folder using the <a href="http://msdn.microsoft.com/en-us/library/system.environment.getfolderpath.aspx">Environment.GetFolderPath()</a> method and then create the appropriate configuration file using the same name. Use it at your own risk and with common sense, especially if you plan on using this in any sort of production software.</p>
+#### Making it Reusable
+Great, now it works perfectly. However, I'm far too lazy to copy this snippet into every project, I'd much prefer to reuse it from a referenced library. In order to do this, you'll have to make use of [GetEntryAssembly()](http://msdn.microsoft.com/en-us/library/system.reflection.assembly.getentryassembly.aspx). This will allow you to reference the portable settings class within any assembly.
+Some words of caution: This solution is dependent on the calling assembly name. It will create a directory in the [ApplicationData](http://msdn.microsoft.com/en-us/library/system.environment.specialfolder.aspx) folder using the [Environment.GetFolderPath()](http://msdn.microsoft.com/en-us/library/system.environment.getfolderpath.aspx) method and then create the appropriate configuration file using the same name. Use it at your own risk and with common sense, especially if you plan on using this in any sort of production software.
 
-<p>Create a standard library (DLL) and add the following class:</p>
+Create a standard library (DLL) and add the following class:
 
 {% highlight csharp %}
 public class PortableSettingsProvider : SettingsProvider
@@ -685,9 +685,10 @@ public class PortableSettingsProvider : SettingsProvider
 }
 {% endhighlight %}
 
-<h2>Assigning the ProviderBase</h2>
-<img src="{{ site.baseurl }}/assets/images/posts/vs-portable-settings.png" alt="Visual Studio Properties" class="center-block" />
+#### Assigning the ProviderBase
 
-<p>Next, open your Visual Studio solution and go to the Settings tab located in the project properties for the appropriate project. For each of the settings that you want to make portable, modify the "Provider" property to represent the namespace scheme for your portable settings class. You will have to modify the provider property for each subsequent setting if you want it to remain portable. It can be a bit of a hassle, but in the end, it's a small cost for better control.</p>
+{% include post_image.liquid filename="vs-portable-settings.png" alt="Visual Studio Properties" title="Visual Studio Properties" %} 
 
-<p>I have been using this code for a few years now on a few smaller projects with no problems. As I've stated, it's not perfect, but it's still an alright solution, assuming you use it properly.</p></p>
+Next, open your Visual Studio solution and go to the Settings tab located in the project properties for the appropriate project. For each of the settings that you want to make portable, modify the "Provider" property to represent the namespace scheme for your portable settings class. You will have to modify the provider property for each subsequent setting if you want it to remain portable. It can be a bit of a hassle, but in the end, it's a small cost for better control.
+
+I have been using this code for a few years now on a few smaller projects with no problems. As I've stated, it's not perfect, but it's still an alright solution, assuming you use it properly.
