@@ -10,23 +10,18 @@ layout: default
     </div>
 </div>
 
-<div class="post-excerpt-container">
+<div class="blog-container">
 {% for post in site.posts %}
     {% include array_contains_case_insensitive.liquid collection=post.tags filter=decoded %}
     {% if contains_item %}
-    <div class="row">
-        <div class="col-sm-12">
-            {% include post_excerpt.html post=post excerpt_length=80 %}
-        </div>
-    </div>
+        {% include post_excerpt.html post=post excerpt_length=80 %}
     {% endif %}
 {% endfor %}
 </div>
 
 <script type="text/javascript" src="{{ site.baseurl }}/vendor/fancybox/jquery.fancybox.pack.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/vendor/fancybox/jquery.fancybox.css" media="screen" />
+<script type="text/javascript">init_fancybox();</script>
 
-<script type="text/javascript">
-    responsify_blog_images();
-    fancybox_blog_images();
-</script>
+<!-- Used for Disqus comment counts -->
+<script id="dsq-count-scr" src="//{{ site.disqus_shortname }}.disqus.com/count.js" async></script>

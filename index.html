@@ -14,13 +14,13 @@ layout: default
     </div>
     <div class="col-sm-6">
         <h4 class="headline">Latest Blog Posts</h4>
-        <div class="post-excerpt-container">
+        <div class="blog-container">
         {% for post in site.posts limit: 4 %}
             {% include post_excerpt.html post=post excerpt_length=20 strip_html=true %}
         {% endfor %}
         </div>
         <div class="text-center">
-            <a href="/blog/" class="btn btn-primary"><i class="fa fa-share"></i> View more blog posts</a>
+            <a href="/blog/" class="btn btn-default btn-nav">Read Full Blog <i class="fa fa-arrow-right"></i></a>
         </div>
     </div>
 
@@ -71,4 +71,5 @@ GitHubActivity.feed({
 }
 </style>
 
+<!-- Used for Disqus comment counts -->
 <script id="dsq-count-scr" src="//{{ site.disqus_shortname }}.disqus.com/count.js" async></script>

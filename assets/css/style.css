@@ -27,6 +27,10 @@ h1, h2, h3, h4 {
     letter-spacing: 1.5px;
 }
 
+.btn-nav {
+    font-weight: bold;
+}
+
 ul.nav li a {
     outline: 0;
     font-family: 'Open Sans', sans-serif;
@@ -67,8 +71,11 @@ footer .social:hover {
     color: #337ab7;
 }
 
-.post-container {
+.post-container:not(:last-child) {
     border-bottom: 1px solid #e7e7e7;
+}
+
+.post-container {
     padding-bottom: 25px;
     margin-bottom: 25px;
 }
@@ -105,16 +112,25 @@ li.post-meta-item {
     padding-top: 10px;
 }
 
-.post-excerpt-container {
+.blog-container {
     margin-bottom: 10px;
 }
 
 .post-excerpt {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.post-excerpt:not(:last-child) {
     border-bottom: 1px solid #e7e7e7;
 }
 
 .post-excerpt-title {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
     letter-spacing: 1px;
+    margin-bottom: 5px;
 }
 
 .post-excerpt-date {
@@ -122,15 +138,9 @@ li.post-meta-item {
     font-size: 12px;
 }
 
-.post-excerpt-comments {
-    color: #777;
-    font-size: 12px;
-}
-
-.post-excerpt-link {
-    color: #777;
-    font-size: 12px;
-    float: right;
+.post-excerpt-content {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .project:not(:last-child) {
@@ -260,10 +270,6 @@ li {
 }
 
 @media (max-width: 767px) {
-
-    .post-excerpt-link {
-        padding-right: 15px;
-    }
 
     footer .social {
         font-size: 36px;

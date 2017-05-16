@@ -3,9 +3,11 @@ layout: default
 title: Blog
 ---
 
+<div class="blog-container">
 {% for post in paginator.posts %}
     {% include post.html post=post show_comments=false clickable=true %}
 {% endfor %}
+</div>
 
 {% assign page_amount = 5 %}
 {% if page.paginate.page_amount %}
@@ -65,12 +67,9 @@ title: Blog
 </nav>
 {% endif %}
 
-<script type="text/javascript" src="{{ site.base_url }}/vendor/fancybox/jquery.fancybox.pack.js"></script>
-<link rel="stylesheet" type="text/css" href="{{ site.base_url }}/vendor/fancybox/jquery.fancybox.css" media="screen" />
+<script type="text/javascript" src="{{ site.baseurl }}/vendor/fancybox/jquery.fancybox.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/vendor/fancybox/jquery.fancybox.css" media="screen" />
+<script type="text/javascript">init_fancybox();</script>
 
-<script type="text/javascript">
-    responsify_blog_images();
-    fancybox_blog_images();
-</script>
-
+<!-- Used for Disqus comment counts -->
 <script id="dsq-count-scr" src="//{{ site.disqus_shortname }}.disqus.com/count.js" async></script>

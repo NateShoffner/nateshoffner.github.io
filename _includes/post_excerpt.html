@@ -5,19 +5,9 @@
 {% endif %}
 
 <div class="post-excerpt">
-    <h5 class="post-excerpt-title"><a href="{{ post.url }}">{{ post.title }}</a></h5>
-    <p class="post-content">{{ excerpt }}</p>
-    <div class="row">
-        <span class="col-sm-12"> 
-        <span class="post-excerpt-date"><i class="fa fa-calendar"></i> {{ post.date | date: '%B %d, %Y' }}</a></span>
-        </span>
-    </div>
-    <div class="row">
-        <span class="col-sm-5"> 
-        <span class="post-excerpt-comments"><i class="fa fa-comments"></i> <a href="{{ post.url }}#comments"><span class="disqus-comment-count" data-disqus-url="{{ site.url }}{{ post.url }}">0 Comments</span></a></span>
-        </span>
-        <span class="col-sm-7">
-            <p class="post-excerpt-link"><a href="{{ post.url }}">Read More &raquo;</a></p>
-        </span>
-    </div>
+    <div class="post-excerpt-title"><a href="{{ post.url }}">{{ post.title }}</a></div>
+    <div class="post-excerpt-date"><i class="fa fa-calendar"></i> {{ post.date | date: '%B %d, %Y' }}</a></div>
+    <div class="post-excerpt-content">{{ excerpt }}</div>
+    <i class="fa fa-comments"></i> <a href="{{ post.url }}#comments"><span class="disqus-comment-count" data-disqus-url="{{ site.url }}{{ post.url }}">0 Comments</span></a>
+    <span class="pull-right"><a href="{{ post.url }}">Read More &raquo;</a></span>
 </div>
