@@ -16,7 +16,7 @@ Back in early November, Nvidia started bundling telemetry services with their dr
 
 For me, however, it's a moot point. Nvidia should've been upfront about the telemetry with their users and I'm not really a fan of unnecessary services running on my computer, so naturally I disabled the services from their inception. I soon found out that they were being reactivated upon updates, which resulted in me throwing together a small utility to handle the disabling work for me.
 
-{% include post_images_inline.liquid filenames="NvidiaTelemetry1.png,NvidiaTelemetry2.png,NvidiaTelemetry3.png" %} 
+{% include post_images_inline.liquid filenames="NvidiaTelemetry1.png,NvidiaTelemetry2.png,NvidiaTelemetry3.png" group="screenshots" %} 
 
 I've shared it with a few people and figured I might as well throw it online.
 
