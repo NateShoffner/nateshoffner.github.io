@@ -1,10 +1,10 @@
 ---
 layout: post
 title: Intel Core i7-7700K Delidding
-date: 2017-06-01 02:16 -05:00
+date: 2017-06-01 12:16 -05:00
 description:
 type: post
-image: 
+image: 7700KDelid3.jpg
 categories:
 - Projects
 - Hardware
