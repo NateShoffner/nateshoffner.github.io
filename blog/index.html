@@ -13,7 +13,6 @@ title: Blog
 {% if page.paginate.page_amount %}
 {% assign page_amount = page.paginate.page_amount %}
 {% endif %}
-
 {% assign page_amount_min = page_amount | minus: 2 %}
 {% assign offset = page_amount_min | divided_by: 2 %}
 {% assign page_amount_prev = paginator.page | minus: offset %}
@@ -37,12 +36,14 @@ title: Blog
     <ul class="pagination">
         <li{% if paginator.previous_page == null %} class="disabled"{% endif %}><a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Previous"><span aria-hidden="true">Previous</span></a></li>
 
-        {% unless paginator.page == 1 %}
-            <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: 'page/:num', '' }}">1</a></li>
-            <li><span aria-hidden="true">...</span></li>
-        {% else %}
+        {% if paginator.page == 1 %}
             <li class="active"><span aria-hidden="true">1</span></li>
-        {% endunless %}
+        {% else %}
+            <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: 'page/:num', '' }}">1</a></li>
+            {% if page_amount_prev > 2 %}
+                <li><span aria-hidden="true">...</span></li>
+            {% endif %}
+        {% endif %}
 
         {% for count in (2..paginator.total_pages) %}
         {% if count >= page_amount_prev and count <= page_amount_next %}
@@ -55,17 +56,22 @@ title: Blog
         {% endif %}
         {% endfor %}
 
-        {% unless paginator.page == totalpages %}
-            <li><span aria-hidden="true">...</span></li>
-            <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', totalpages }}">{{ totalpages }}</a></li>
-        {% else %}
+        {% if paginator.page == totalpages %}
             <li class="active"><span aria-hidden="true">{{ totalpages }}</span></li>
-        {% endunless %}
+        {% else %}
+            {% if totalpages > page_amount_next | minus: 2 %}
+                <li><span aria-hidden="true">...</span></li>
+            {% endif %}
+            <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', totalpages }}">{{ totalpages }}</a></li>
+        {% endif %}
+
 
         <li{% if paginator.next_page == null %} class="disabled"{% endif %}><a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Next"><span aria-hidden="true">Next</span></a></li>
     </ul>
 </nav>
 {% endif %}
+
+{{ page_amount_next }}
 
 <script type="text/javascript" src="{{ site.baseurl }}/vendor/fancybox/jquery.fancybox.pack.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/vendor/fancybox/jquery.fancybox.css" media="screen" />
