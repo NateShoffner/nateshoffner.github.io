@@ -61,11 +61,11 @@ Prior to delidding, I was able to overlock to 5.0GHz @1.36v using an AVX offset 
 
 Alternatively, you could you use a {% include amazon_associate_url.liquid asin="B0002UEN1A" text="silicon-based gasket maker" %} instead of the super glue, either one is easy enough to de-lid and does the job. Just note that the gasket maker will take much longer to cure, hence why I chose the super glue.
 
-{% include post_images_inline.liquid filenames="7700KDelid1.jpg,7700KDelid2.jpg,7700KDelid3.jpg " group="delid" %} 
+{% include post_images_inline.liquid filenames="7700KDelid1.jpg,7700KDelid2.jpg,7700KDelid3.jpg" group="delid" %} 
 
 Using the Rockit88, I popped the IHS off the wafer and removed the old TIM and sealant. Just to be safe, I masked the CPU with tape prior to applying the new TIM, as the liquid metal is *extremely* runny, almost like liquid mercury.
 
-Using the relid kit, I aligned the IHS back above the CPU and applied a drop of superglue on the bottom corners of the IHS and pressed it down. After allowing it to cure for 2 hours, I popped the CPU out of the kit, threw it in the socket and started it up. Almost immediately I noticed a huge difference in thermals. Under both AVX and non-AVX loads, I was barely hitting 72C which is simply mind blowing.
+Using the relid kit, I aligned the IHS back above the CPU and applied a drop of superglue on the bottom corners of the IHS and pressed it down. After allowing it to cure for 2 hours, I popped the CPU out of the kit, threw it in the socket and started it up. Almost immediately I noticed a huge difference in thermals. Under both AVX and non-AVX loads, I was barely hitting 72C which is simply mind blowing. With that headroom, I was able to bump up the voltage back to 1.36V and hit that sweet 5.0GHz
 
 As of posting this, everything has been running stable for a few weeks now and thermals haven't changed nor have there been any signs of instabilities.
 
