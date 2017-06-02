@@ -2,7 +2,7 @@
 layout: post
 title: Intel Core i7-7700K Delidding
 date: 2017-06-01 12:16 -05:00
-description:
+description: Intel i7-7700K delidding experience.
 type: post
 image: 7700KDelid3.jpg
 categories:
