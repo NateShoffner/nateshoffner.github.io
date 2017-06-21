@@ -4,10 +4,18 @@
     {% assign excerpt = excerpt | strip_html %}
 {% endif %}
 
+
 <div class="post-excerpt">
-    <div class="post-excerpt-title"><a href="{{ post.url }}">{{ post.title }}</a></div>
-    <div class="post-excerpt-date"><i class="fa fa-calendar"></i> {{ post.date | date: '%B %d, %Y' }}</a></div>
-    <div class="post-excerpt-content">{{ excerpt }}</div>
-    <i class="fa fa-comments"></i> <a href="{{ post.url }}#comments"><span class="disqus-comment-count" data-disqus-url="{{ site.url }}{{ post.url }}">0 Comments</span></a>
-    <span class="pull-right"><a href="{{ post.url }}">Read More &raquo;</a></span>
+    <div class="row">
+        <div class="col-xs-3">
+            <img src="/assets/images/posts/{{ post.image }}" class="img-thumbnail img-responsive">
+        </div>
+        <div class="col-xs-9">
+            <div class="post-excerpt-title"><a href="{{ post.url }}">{{ post.title }}</a></div>
+            <div class="post-excerpt-date"><i class="fa fa-calendar"></i> {{ post.date | date: '%B %d, %Y' }}</a></div>
+            <div class="post-excerpt-content">{{ excerpt }}</div>
+            <i class="fa fa-comments"></i> <a href="{{ post.url }}#comments"><span class="disqus-comment-count" data-disqus-url="{{ site.url }}{{ post.url }}">0 Comments</span></a>
+            <span class="pull-right"><a href="{{ post.url }}">Read More &raquo;</a></span>
+        </div>
+    </div>
 </div>
