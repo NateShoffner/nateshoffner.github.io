@@ -1,5 +1,6 @@
 ---
 layout: default
+mustacheSetDelimiter: "{{={u{ }u}=}}"
 ---
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/octicons/2.0.2/octicons.min.css">
@@ -12,29 +13,23 @@ layout: default
     <div class="col-md-12">
         <p>I am a {{site.data.bio.age}} year old software and web developer currently living in the United States. I am an avid computer enthusiast and enjoy developing software and web applications as well as working with hardware. In my free time I like to play guitar, work with circuitry, and play video games.</p>
     </div>
-    <div class="col-sm-6">
-        <h4 class="headline">Latest Blog Posts</h4>
-        <div class="blog-container">
-        {% for post in site.posts limit: 4 %}
-            {% include post_excerpt.html post=post excerpt_length=20 strip_html=true %}
-        {% endfor %}
-        </div>
-        <div class="text-center">
-            <a href="/blog/" class="btn btn-default btn-nav">Read Full Blog <i class="fa fa-arrow-right"></i></a>
-        </div>
-    </div>
 
-    <div class="col-sm-6">
-        <h4 class="headline">Recent Activity</h4>
+    <div class="col-sm-12">
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#twitter"><i class="fa fa-twitter"></i> Twitter</a></li>
+            <li class="active"><a data-toggle="tab" href="#blog"><i class="fa fa-rss"></i> Latest Blog Posts</a></li>
+            <li><a data-toggle="tab" data-tab href="#twitter"><i class="fa fa-twitter"></i> Twitter</a></li>
             <li><a data-toggle="tab" href="#github"><i class="fa fa-github"></i> GitHub</a></li>   
         </ul>
-        <div class="tab-content">      
-            <div id="twitter" class="tab-pane fade in active">
-                <div class="textwidget"><a class="twitter-timeline" href="https://twitter.com/NateShoffner" data-widget-id="404171662465069056">Tweets by @NateShoffner</a>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        <div class="tab-content" id="social-feed-content">
+            <div id="blog" class="tab-pane fade in active">
+                <div class="blog-container">
+                    {% for post in site.posts limit: 4 %}
+                        {% include post_excerpt.html post=post excerpt_length=25 strip_html=true %}
+                    {% endfor %}
                 </div>
+            </div>
+            <div id="twitter" class="tab-pane fade in active">
+
             </div>             
             <div id="github" class="tab-pane fade in">
                 <div id="github-feed"></div>
@@ -43,19 +38,30 @@ layout: default
     </div>
 </div>
 
+<script id="twitter-template" type="text/template">
+<a class="twitter-timeline" href="https://twitter.com/NateShoffner">Tweets by NateShoffner</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</script>
 <script type="text/javascript">
 GitHubActivity.feed({
     username: "NateShoffner",
     selector: "#github-feed",
     limit: 4
 });
+
+
+// load timeline on click otherwise it breaks tab container
+var twitterLoaded = false;
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    var target = $(e.target).attr("href");
+    if (target == '#twitter' && !twitterLoaded) {
+        var timeline = Mustache.render("{{page.mustacheSetDelimiter}} " + $('#twitter-template').html());
+        $("#twitter").html(timeline);
+        twitterLoaded = true;
+    }
+});
 </script>
 
 <style type="text/css">
-.gha-feed {
-    border-style: none;
-}
-
 .gha-header {
     width: calc(100% - 2px);
 }
@@ -66,8 +72,8 @@ GitHubActivity.feed({
     height: auto;
 }
 
-#twitter-widget-0 {
-    height: 650px !important;
+#social-feed-content {
+    border-style: none;
 }
 </style>
 

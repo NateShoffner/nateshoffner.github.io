@@ -14,10 +14,7 @@
                 <div class="post-excerpt-date"><i class="fa fa-calendar"></i> {{ post.date | date: '%B %d, %Y' }}</a></div>
                 <div class="post-excerpt-content">{{ excerpt }}</div>
                 <span class="pull-right">
-        </div>
-
-        <div class="pull-right">
-                            <i class="fa fa-comments"></i> <a href="{{ post.url }}#comments"><span class="disqus-comment-count" data-disqus-url="{{ site.url }}{{ post.url }}">0 Comments</span></a> | 
+                <i class="fa fa-comments"></i> <a href="{{ post.url }}#comments"><span class="disqus-comment-count" data-disqus-url="{{ site.url }}{{ post.url }}">0 Comments</span></a> | 
                 <a href="{{ post.url }}">Read More &raquo;</a></span>
         </div>
     </div>

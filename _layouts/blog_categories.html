@@ -14,7 +14,7 @@ layout: default
 {% for post in site.posts %}
     {% include array_contains_case_insensitive.liquid collection=post.categories filter=decoded %}
     {% if contains_item %}
-        {% include post_excerpt.html post=post excerpt_length=80 %}
+        {% include post_index_excerpt.html post=post excerpt_length=80 %}
     {% endif %}
 {% endfor %}
 </div>
