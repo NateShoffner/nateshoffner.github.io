@@ -25,6 +25,6 @@ As per usual, you can view the source code over at [GitHub](https://github.com/N
 
 #### Download
 
-* [Portable (Self-Extracting Archive)](https://github.com/NateShoffner/Disable-Nvidia-Telemetry/releases/download/1.1/Disable.Nvidia.Telemetry.1.1.0.14.Portable.exe)
+* [Portable (Self-Extracting Archive)](https://github.com/NateShoffner/Disable-Nvidia-Telemetry/releases/download/1.1/Disable.Nvidia.Telemetry.1.1.0.16.Portable.exe)
 
-* [Installer](https://github.com/NateShoffner/Disable-Nvidia-Telemetry/releases/download/1.1/Disable.Nvidia.Telemetry.1.1.0.14.Setup.exe)
+* [Installer](https://github.com/NateShoffner/Disable-Nvidia-Telemetry/releases/download/1.1/Disable.Nvidia.Telemetry.1.1.0.16.Setup.exe)
