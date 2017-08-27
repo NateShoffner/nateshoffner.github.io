@@ -1,8 +1,5 @@
 {% assign post = include.post %}
-{% assign excerpt = post.excerpt | truncatewords: include.excerpt_length %}
-{% if include.strip_html %}
-    {% assign excerpt = excerpt | strip_html %}
-{% endif %}
+{% assign excerpt = post.excerpt  | truncatewords: include.excerpt_length | replace: ":</p>", "...</p>" %}
 
 <div class="post-excerpt-container">
     <div class="media">

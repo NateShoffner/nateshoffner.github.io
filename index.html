@@ -24,7 +24,7 @@ mustacheSetDelimiter: "{{={u{ }u}=}}"
             <div id="blog" class="tab-pane fade in active">
                 <div class="blog-container">
                     {% for post in site.posts limit: 4 %}
-                        {% include post_excerpt.html post=post excerpt_length=25 strip_html=true %}
+                        {% include post_excerpt.html post=post excerpt_length=25 %}
                     {% endfor %}
                 </div>
             </div>
