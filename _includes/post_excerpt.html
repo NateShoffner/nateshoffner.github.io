@@ -1,25 +1,29 @@
 {% assign post = include.post %}
-{% assign excerpt = post.excerpt  | truncatewords: include.excerpt_length | replace: ":</p>", "...</p>" %}
 
-<div class="post-excerpt-container">
-    <div class="media">
-        <div class="media-left media-{% if include.media_align %}{{ include.media_align }}{% else %}top{% endif %}">
-        {% if post.image %}
-            <img src="/assets/images/posts/{{ post.image }}" class="post-excerpt-image">
-        {% else %}
-            <img src="/assets/images/post.png" class="post-excerpt-image">
-        {% endif %}
-        </div>
-        <div class="media-body">
-            <div class="post-excerpt-title"><a href="{{ post.url }}">{{ post.title }}</a></div>
-            <div class="post-excerpt-date"><i class="fa fa-calendar"></i> {{ post.date | date: '%B %d, %Y' }}</a></div>
-            <div class="post-excerpt-content">{{ excerpt }}</div>
-            <span class="pull-right">
-        </div>
+<div class="row blog-excerpt mb-3 pb-3">
+    <div class="col-12 col-md-3 mb-3">
+    {% if post.image %}
+        <img src="/assets/images/posts/{{ post.image }}" class="img-fluid mx-auto d-block post-image">
+    {% else %}
+        <img src="/assets/images/post.png" class="img-fluid mx-auto d-block post-image">
+    {% endif %}  
+    </div>
+    <div class="col-12 col-md-9">
+        <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
 
-        <div class="pull-right">
-            <i class="fa fa-comments"></i> <a href="{{ post.url }}#comments"><span class="disqus-comment-count" data-disqus-url="{{ site.url }}{{ post.url }}">0 Comments</span></a> | 
-            <a href="{{ post.url }}">Read More &raquo;</a></span>
-        </div>
+        <ul class="post-meta">
+            <li class="post-meta-item"><i class="fa fa-calendar"></i> {{ post.date | date: '%B %d, %Y' }}</li>
+            <li class="post-meta-item"><i class="fa fa-comments"></i> <a href="{{ post.url }}#comments"><span class="disqus-comment-count" data-disqus-url="{{ site.url }}{{ post.url }}">0 Comments</span></a></li>
+            <li class="post-meta-item"><i class="fa fa-folder"></i> 
+                {% if post.categories.size > 0 %}
+                {% for category in post.categories %}
+                {% include create_indexer.liquid param=category %}
+                <a href="{{ site.baseurl }}{{ site.blog_url }}/category/{{ indexer }}/">{{ category }}</a>{% if forloop.last == false %},{% endif %}
+                {% endfor %}
+                {% else %}No Categories{% endif %}</li>
+        </ul>
+
+        <p>{{ post.excerpt }}</p>
+        <p><a href="{{ post.url }}">Read More &raquo;</a></p>
     </div>
 </div>

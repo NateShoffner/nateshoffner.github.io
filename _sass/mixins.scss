@@ -1,0 +1,36 @@
+@mixin background-cover {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+@mixin body-font {
+    font-family: 'Open Sans', serif;
+    font-weight: 300;
+}
+
+@mixin heading-font {
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 300;
+}
+
+@mixin gradient-border-left($top, $bottom) {
+    border-top: solid $top;
+    border-bottom: solid $bottom;
+    border-image: linear-gradient(to right, $highlight, rgba(0, 0, 0, 0) 50%) 5;
+    border-image: linear-gradient(to right, $highlight, rgba(0, 0, 0, 0) 50%) 5;
+    border-image: $highlight; /* Old browsers */
+    border-image: -moz-linear-gradient(to right, $highlight, rgba(0, 0, 0, 0) 50%) 5; /* FF3.6-15 */
+    border-image: -webkit-linear-gradient(to right, $highlight, rgba(0, 0, 0, 0) 50%) 5; /* Chrome10-25,Safari5.1-6 */
+    border-image: linear-gradient(to right, $highlight, rgba(0, 0, 0, 0) 50%) 5; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+@mixin gradient-border-center($top, $bottom) {
+    border-top: solid $top;
+    border-bottom: solid $bottom;
+    border-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, $highlight 49%, rgba(0, 0, 0, 0) 100%) 5;
+    border-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, $highlight 49%, rgba(0, 0, 0, 0) 100%) 5;
+    border-image: $highlight; /* Old browsers */
+    border-image: -moz-linear-gradient(to right, rgba(0, 0, 0, 0) 0%, $highlight 49%, rgba(0, 0, 0, 0) 100%) 5; /* FF3.6-15 */
+    border-image: -webkit-linear-gradient(to right, rgba(0, 0, 0, 0) 0%, $highlight 49%, rgba(0, 0, 0, 0) 100%) 5; /* Chrome10-25,Safari5.1-6 */}

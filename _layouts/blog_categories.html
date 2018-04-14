@@ -1,27 +1,17 @@
 ---
-layout: default
+layout: page
 ---
 
 {% include url_decode.liquid param=page.category %}
 
-<div class="row">
-    <div class="col-xs-12">
-        <span class="post-title">Posts categorized under '{{ decoded }}'</span>
-    </div>
-</div>
+<h2 class="mb-5">Posts categorized under <span class="text-primary">'{{ decoded }}'</span></h2>
 
-<div class="blog-container">
 {% for post in site.posts %}
     {% include array_contains_case_insensitive.liquid collection=post.categories filter=decoded %}
-    {% if contains_item %}
-        {% include post_index_excerpt.html post=post excerpt_length=80 %}
+    {% if item_exists %}
+        {% include post_excerpt.html post=post excerpt_length=80 %}
     {% endif %}
 {% endfor %}
-</div>
-
-<script type="text/javascript" src="{{ site.base_url }}/vendor/fancybox/jquery.fancybox.pack.js"></script>
-<link rel="stylesheet" type="text/css" href="{{ site.base_url }}/vendor/fancybox/jquery.fancybox.css" media="screen" />
-<script type="text/javascript">init_fancybox();</script>
 
 <!-- Used for Disqus comment counts -->
 <script id="dsq-count-scr" src="//{{ site.disqus_shortname }}.disqus.com/count.js" async></script>

@@ -1,0 +1,175 @@
+#navbar {
+
+    background-color: $menu-bg;
+
+    .navbar-nav .nav-item .nav-link {
+        font-weight: 200;
+        text-transform: uppercase;
+        @include heading-font;
+        font-size: 1.2em;
+        letter-spacing: 1.5px;
+    }
+    ul.social-list {
+        text-align: center;
+        padding-left: 0px;
+        padding-top: 0.8rem;
+        margin-top: 0.8rem;     
+        @include gradient-border-center(1px, 0);
+
+        a {
+            color: $gray-700;
+        }
+
+        .fa-inverse:hover {
+            color: $highlight;
+        }
+
+        li {
+            display: inline-block;
+        }
+    }
+}
+
+@media (min-width: 992px) {
+
+    #navbar {
+        width: $sidebar-base-width;
+        height: 100vh;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+
+        .navbar-brand {
+            display: flex;
+            margin: auto auto 0;
+            padding: 0.5rem;
+
+            .img-profile {
+                max-width: 10rem;
+                max-height: 10rem;
+            }
+        }
+        .navbar-collapse {
+            display: flex;
+            align-items: flex-start;
+            flex-grow: 0;
+            width: 100%;
+            margin-bottom: auto;
+
+            .navbar-nav {
+                flex-direction: column;
+                width: 100%;
+
+                .nav-item {
+                    display: block;
+
+                    .nav-link {
+                        display: block;
+                    }
+                }
+            }
+        }
+        div.test {
+            position: absolute;
+            bottom: 20px;
+            margin-right: 0.8rem;
+
+            ul.social-list {
+                list-style: none;
+                text-align: center;
+                width: 100%;
+                margin: 0 auto;
+
+                li {
+                    display: inline-block;
+                }
+            }
+
+            a .fa-lg {
+                font-size: 1.75rem;
+            }
+        }
+    }
+}
+
+.circle-border {
+  width: 160px;
+  height: 160px;
+  border-radius: 100%;
+  background-color: black;
+}
+
+.circle {
+  width: 160px;
+  height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  
+  background: none;
+  border: 0;
+  box-sizing: border-box;
+  
+  // Using inset box-shadow instead of border for sizing simplicity
+  border-radius: 100%;
+  font-size: inherit;
+  font-weight: 700;
+
+  // Required, since we're setting absolute on pseudo-elements
+  position: relative;
+  vertical-align: middle;
+
+  &::before,
+  &::after {
+    box-sizing: inherit;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+     border-radius: 100%;
+  }
+  
+  &:hover {
+    color: $highlight;
+  }
+
+  &::before,
+  &::after {
+    top: 0;
+    left: 0;
+  }
+
+  &::before {
+    border: 1px solid transparent; // We're animating border-color again
+  }
+
+  &:hover::before {
+    border-top-color: $highlight; // Show borders
+    border-right-color: $highlight;
+    border-bottom-color: $highlight;
+
+    transition:
+      border-top-color 0.15s linear, // Stagger border appearances
+      border-right-color 0.15s linear 0.10s,
+      border-bottom-color 0.15s linear 0.20s;
+  }
+
+  &::after {
+    border: 0 solid transparent; // Makes border thinner at the edges?
+  }
+
+  &:hover::after {
+    border-top: 1px solid $highlight; // Shows border
+    border-left-width: 1px; // Solid edges, invisible borders
+    border-right-width: 1px; // Solid edges, invisible borders
+    transform: rotate(270deg); // Rotate around circle
+    transition:
+      transform 0.4s linear 0s,
+      border-left-width 0s linear 0.35s; // Solid edge post-rotation
+  }
+}

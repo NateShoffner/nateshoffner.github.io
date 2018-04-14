@@ -1,0 +1,13 @@
+<h2 class="mb-5">Latest <span class="text-highlight">Blog Posts</span><a href="{{ site.baseurl }}/feed.xml"><i class="fa fa-rss pl-4"></i></a></h2>
+
+<p class="pb-5">Incoherent ramblings, project updates, reviews, and other writings fallen into the ether.</p>
+
+
+{% for post in site.posts limit: 4 %}
+    {% include post_excerpt.html post=post %}
+{% endfor %}
+
+<a href="{{ site.baseurl }}/blog" role="button" class="btn btn-primary btn-lg btn-block">View More Blog Posts</a>
+
+<!-- Used for Disqus comment counts -->
+<script id="dsq-count-scr" src="//{{ site.disqus_shortname }}.disqus.com/count.js" async></script>

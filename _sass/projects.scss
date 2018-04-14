@@ -1,0 +1,76 @@
+.project-compact {
+
+    @media (max-width: 767.98px) { 
+
+        .project-image {
+            max-height: 128px;
+        }
+    }
+
+    table.project-table {
+        border-style: none;
+        margin-bottom: 0px;
+
+        tbody > tr:nth-child(2n) > td, 
+        tbody > tr:nth-child(2n) > th {
+            background-color: #FFFFFF;
+        }
+
+
+        tbody > tr:nth-child(2n+1) > td, 
+        tbody > tr:nth-child(2n+1) > th {
+            background-color: #F9F9F9;
+        }
+
+        td, th {
+            border: none;
+
+            .project-name {
+                font-weight: bold;
+            }
+
+            .project-description {
+                font-size: 90%;
+                padding-left: 0px;
+            }
+
+            .btn-download {
+                float: right;
+            }
+
+        }
+
+        td.description {
+            vertical-align: middle;
+        }
+    }
+
+    .project-description {
+        padding: 10px;
+    }
+}
+
+.tab-content > .tab-pane {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.project {
+
+    img {
+        max-height: 256px;
+    }
+
+    table {
+        border: 01px solid #CBCBCB;
+
+        th {
+    font-weight: bold;
+    @include heading-font;
+        }
+
+    }
+
+}

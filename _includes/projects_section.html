@@ -1,0 +1,35 @@
+<h2 class="mb-5">Public <span class="text-highlight">Projects</span></h2>
+
+<p>Here are a few public projects I’ve worked on. I still have a lot yet to add here and some of these might not be 100% up to date, but I'll get to it eventually&trade;.</p>
+
+<p>If you would like to see my portfolio and resume for professional work, <a href="#contact">message me</a>.</p>
+
+<div class="projects-container">
+
+{% for project in site.data.projects %}
+    {% include project_compact.html project=project %}
+{% endfor %}
+
+</div>
+
+<h3>Open Source Projects</h3>
+
+<strong>GitHub: </strong>
+
+<a href="https://github.com/NateShoffner" target="_blank">https://github.com/NateShoffner</a>
+
+<div class="github-widget" data-user="NateShoffner,GetTabster,BuildandShoot,NubileGames" data-options='{"forks":false, "pages":true, "sortBy":"pushed_at"}'></div>
+
+<link href="{{ site.baseurl }}/vendor/github-widget/github-widget.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{{ site.baseurl }}/vendor/github-widget/github-widget.min.js"></script>
+<script type="text/javascript">initialize_github_widgets();</script>
+<style type="text/css">
+    .github-widget {
+        padding-top: 15px;
+    }
+    @media (max-width: 991px) {
+        .gw-repo-outer {
+            width: 100%;
+        }
+    }
+</style>

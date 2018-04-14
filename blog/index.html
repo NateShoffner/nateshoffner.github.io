@@ -1,13 +1,15 @@
 ---
-layout: default
+layout: page
 title: Blog
 ---
 
-<div class="blog-container">
+<h2 class="mb-5">Blog<span class="text-primary"> Posts</span><a href="{{ site.baseurl }}/feed.xml"><i class="fa fa-rss pl-4"></i></a></h2>
+
+<p class="pb-5">Incoherent ramblings, project updates, reviews, and other writings fallen into the ether.</p>
+
 {% for post in paginator.posts %}
-    {% include post.html post=post show_comments=false clickable=true %}
+    {% include post_excerpt.html post=post %}
 {% endfor %}
-</div>
 
 {% assign page_amount = 5 %}
 {% if page.paginate.page_amount %}
@@ -17,7 +19,11 @@ title: Blog
 {% assign offset = page_amount_min | divided_by: 2 %}
 {% assign page_amount_prev = paginator.page | minus: offset %}
 {% assign page_amount_next = paginator.page | plus: offset %}
-{% assign totalpages = paginator.total_pages %}
+{% assign total_pages = paginator.total_pages %}
+
+{% assign next_page_threshold = page_amount_next | minus: 2 %}
+
+
 
 {% if page_amount_prev <= 1 %}
 {% assign page_amount_prev_fix = page_amount_prev | minus: 1 %}
@@ -25,21 +31,21 @@ title: Blog
 {% assign page_amount_next = page_amount_next | minus: page_amount_prev_fix | plus: 1 %}
 {% endif %}
 
-{% if page_amount_next >= totalpages %}
-{% assign page_amount_next_fix = totalpages | minus: page_amount_next | minus: 1 %}
-{% assign page_amount_next = totalpages %}
+{% if page_amount_next >= total_pages %}
+{% assign page_amount_next_fix = total_pages | minus: page_amount_next | minus: 1 %}
+{% assign page_amount_next = total_pages %}
 {% assign page_amount_prev = page_amount_prev | plus: page_amount_next_fix %}
 {% endif %}
 
 {% if paginator.total_pages > 1 %}
-<nav class="post-pagination text-center">
+<nav class="post-pagination">
     <ul class="pagination">
-        <li{% if paginator.previous_page == null %} class="disabled"{% endif %}><a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Previous"><span aria-hidden="true">Previous</span></a></li>
+        <li{% if paginator.previous_page == null %} class="disabled"{% endif %}><a class="page-link" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Previous"><span aria-hidden="true">Previous</span></a></li>
 
         {% if paginator.page == 1 %}
-            <li class="active"><span aria-hidden="true">1</span></li>
+            <li class="page-item active"><a class="page-link" href="#" tabindex="-1">1</a></li>
         {% else %}
-            <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: 'page/:num', '' }}">1</a></li>
+            <li class="page-item"><a class="page-link" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: 'page/:num', '' }}">1</a></li>
             {% if page_amount_prev > 2 %}
                 <li><span aria-hidden="true">...</span></li>
             {% endif %}
@@ -48,34 +54,28 @@ title: Blog
         {% for count in (2..paginator.total_pages) %}
         {% if count >= page_amount_prev and count <= page_amount_next %}
         {% assign relative_to_current = paginator.page | minus: count | replace: '-', '' | divided_by: 1 %}
-        {% unless count == totalpages %}
-            <li class="{% if count == paginator.page %}active{% endif %}">
-                <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', count }}">{{ count }}</a>
+        {% unless count == total_pages %}
+            <li class="page-item {% if count == paginator.page %}active{% endif %}">
+                <a class="page-link" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', count }}">{{ count }}</a>
             </li>
         {% endunless %}
         {% endif %}
         {% endfor %}
 
-        {% if paginator.page == totalpages %}
-            <li class="active"><span aria-hidden="true">{{ totalpages }}</span></li>
+        {% if paginator.page == total_pages %}
+            <li class="page-item active"><a class="page-link">{{ total_pages }}</a></li>
         {% else %}
-            {% if totalpages > page_amount_next | minus: 2 %}
-                <li><span aria-hidden="true">...</span></li>
+            {% if total_pages > next_page_threshold %}
+                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">...</a></li>
             {% endif %}
-            <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', totalpages }}">{{ totalpages }}</a></li>
+            <li class="page-item"><a class="page-link" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', total_pages }}">{{ total_pages }}</a></li>
         {% endif %}
 
 
-        <li{% if paginator.next_page == null %} class="disabled"{% endif %}><a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Next"><span aria-hidden="true">Next</span></a></li>
+        <li{% if paginator.next_page == null %} class="disabled"{% endif %}><a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Next"><span aria-hidden="true">Next</span></a></li>
     </ul>
 </nav>
 {% endif %}
-
-{{ page_amount_next }}
-
-<script type="text/javascript" src="{{ site.baseurl }}/vendor/fancybox/jquery.fancybox.pack.js"></script>
-<link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/vendor/fancybox/jquery.fancybox.css" media="screen" />
-<script type="text/javascript">init_fancybox();</script>
 
 <!-- Used for Disqus comment counts -->
 <script id="dsq-count-scr" src="//{{ site.disqus_shortname }}.disqus.com/count.js" async></script>

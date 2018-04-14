@@ -1,0 +1,49 @@
+.blog-excerpt {
+
+    &:not(:last-child) {
+        border-bottom: 1px solid $gray-300;
+    }
+
+        @media (max-width: 767.98px) { 
+
+            .project-image {
+                max-height: 128px;
+            }
+        }
+}
+
+.blog-post {
+    
+    width: 100%;
+
+    .post-nav {
+        border-top: 1px solid $gray-300;
+        border-bottom: 1px solid $gray-300;
+    }
+
+    .post-comments {
+        margin-top: 15px;
+    }
+
+    .post-tags {
+        padding-bottom: 1rem;
+    }
+}
+
+ul.post-meta {
+    padding-left: 0;
+    list-style: none;
+
+    li.post-meta-item {
+        display: inline-block;
+
+        &:not(:last-child) {
+            margin-right: .5rem;
+        }
+
+        &:not(:last-child)::after {
+            content: "\2022";
+            padding-left: 1rem;
+        }
+    }
+}

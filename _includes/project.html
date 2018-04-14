@@ -1,0 +1,83 @@
+{% include get_project_from_slug.liquid slug=include.slug %}
+
+<div class="project">
+    <div class="row">
+        <div class="col-12 col-sm-2 col-md-1 my-auto">
+            {% if project.logo %}
+            <img src="/assets/images/projects/{{ project.slug }}/logo.png" class="img-fluid mx-auto d-block project-image">
+            {% else %}
+            <img src="/assets/images/projects/{{ project.slug }}/{{ product.images[0] }}" class="img-fluid mx-auto d-block project-image">
+            {% endif %}  
+        </div>
+        <div class="col-12 col-sm-10 col-md-11 mt-3">
+            <h1>{{ project.name }}</h1>
+        </div>
+    </div>
+    <p>{{ project.description }}</p>
+    {% assign image_filenames = '' %}
+    {% for image in project.images %}
+    {% assign image_filenames = image_filenames | append: image.filename %}
+    {% if forloop.last == false %}
+    {% assign image_filenames = image_filenames | append: "," %}
+    {% endif %}
+    {% endfor %}
+    {% include project_images_inline.liquid slug=project.slug filenames=image_filenames group="screenshots" %}
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <table class="table table-sm table-striped project-table">
+                <thead>
+                    <tr>
+                        <th colspan="2">System Requirements</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><i class="fa fa-history"></i> Version:</td>
+                        <td>{{ project.version }}</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-calendar"></i> Updated:</td>
+                        <td>{{ project.updated }}</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-home"></i> Homepage:</td>
+                        {% include url_domain_extract.liquid url=project.homepage %}
+                        <td><a href="{{ project.homepage }}">{{ domain }}</a></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-code"></i> Open Source:</td>
+                        <td>{{ project.open_source }}</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-file"></i> License:</td>
+                        <td>{{ project.license }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 col-md-6">
+            <table class="table table-sm table-striped project-table">
+                <thead>
+                    <tr>
+                        <th colspan="2">Downloads</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for download in project.downloads %}
+                    <tr>
+                        <td><i class="fa fa-download"></i> <span class="project-name">{{ download.name }}</span><br /><span class="project-description">{{ download.description }}</span></td>
+                        <td class="description"><a href="{{ download.url }}" role="button" class="btn btn-primary btn-block btn-download">Download</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="ssk-group">
+        <a href="" class="ssk ssk-facebook"></a>
+        <a href="" class="ssk ssk-twitter"></a>
+        <a href="" class="ssk ssk-google-plus"></a>
+        <a href="" class="ssk ssk-pinterest"></a>
+        <a href="" class="ssk ssk-tumblr"></a>
+    </div>
+</div>

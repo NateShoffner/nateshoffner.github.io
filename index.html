@@ -1,81 +1,32 @@
 ---
 layout: default
-mustacheSetDelimiter: "{{={u{ }u}=}}"
 ---
 
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/octicons/2.0.2/octicons.min.css">
-<link rel="stylesheet" href="{{ site.baseurl }}/vendor/github-activity/github-activity.css">
-
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
-<script type="text/javascript" src="{{ site.baseurl }}/vendor/github-activity/github-activity.js"></script>
-
-<div class="row">
-    <div class="col-md-12">
-        <p>I am a {{site.data.bio.age}} year old software and web developer currently living in the United States. I am an avid computer enthusiast and enjoy developing software and web applications as well as working with hardware. In my free time I like to play guitar, work with circuitry, and play video games.</p>
-    </div>
-
-    <div class="col-sm-12">
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#blog"><i class="fa fa-rss"></i> Latest Blog Posts</a></li>
-            <li><a data-toggle="tab" data-tab href="#twitter"><i class="fa fa-twitter"></i> Twitter</a></li>
-            <li><a data-toggle="tab" href="#github"><i class="fa fa-github"></i> GitHub</a></li>   
-        </ul>
-        <div class="tab-content" id="social-feed-content">
-            <div id="blog" class="tab-pane fade in active">
-                <div class="blog-container">
-                    {% for post in site.posts limit: 4 %}
-                        {% include post_excerpt.html post=post excerpt_length=25 %}
-                    {% endfor %}
-                </div>
-            </div>
-            <div id="twitter" class="tab-pane fade in active">
-
-            </div>             
-            <div id="github" class="tab-pane fade in">
-                <div id="github-feed"></div>
-            </div>
+<div class="container-fluid p-0">
+    <section class="page-section code-cover p-4 p-lg-5 d-flex d-column" id="about">
+        <div class="my-auto">
+            {% include about_section.html %}
         </div>
+        <div class="scroll-btn">
+            <a href="#blog" title="" class="centered"><span class="scroll-down"></span></a>
+        </div>
+    </section>
+    <section class="page-section p-4 p-lg-5 d-flex flex-column" id="blog">
+        <div class="my-auto">
+            {% include blog_section.html %}
+        </div>
+    </section>
+    <section class="page-section p-4 p-lg-5 d-flex flex-column" id="projects">
+        <div class="my-auto">
+            {% include projects_section.html %}
+        </div>
+    </section>
+    <section class="page-section p-4 p-lg-5 d-flex flex-column" id="contact">
+        <div class="my-auto">
+            {% include contact_section.html %}
+        </div>
+    </section>
+    <div id="top-btn" class="scroll-btn">
+        <a href="#page-top" title=""><span class="scroll-up"></span></a>
     </div>
 </div>
-
-<script id="twitter-template" type="text/template">
-<a class="twitter-timeline" href="https://twitter.com/NateShoffner">Tweets by NateShoffner</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-</script>
-<script type="text/javascript">
-GitHubActivity.feed({
-    username: "NateShoffner",
-    selector: "#github-feed",
-    limit: 4
-});
-
-
-// load timeline on click otherwise it breaks tab container
-var twitterLoaded = false;
-$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-    var target = $(e.target).attr("href");
-    if (target == '#twitter' && !twitterLoaded) {
-        var timeline = Mustache.render("{{page.mustacheSetDelimiter}} " + $('#twitter-template').html());
-        $("#twitter").html(timeline);
-        twitterLoaded = true;
-    }
-});
-</script>
-
-<style type="text/css">
-.gha-header {
-    width: calc(100% - 2px);
-}
-
-.gha-footer {
-    width: calc(100% - 2px);
-    position: static;
-    height: auto;
-}
-
-#social-feed-content {
-    border-style: none;
-}
-</style>
-
-<!-- Used for Disqus comment counts -->
-<script id="dsq-count-scr" src="//{{ site.disqus_shortname }}.disqus.com/count.js" async></script>

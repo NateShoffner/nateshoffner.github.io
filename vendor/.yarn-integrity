@@ -1,0 +1,28 @@
+{
+  "systemParams": "win32-x64-57",
+  "modulesFolders": [
+    "vendor"
+  ],
+  "flags": [],
+  "linkedModules": [],
+  "topLevelPatterns": [
+    "bootstrap@^4.0.0",
+    "fancybox@^3.0.1",
+    "font-awesome@^4.7.0",
+    "jquery.easing@^1.4.1",
+    "jquery@^3.3.1",
+    "popper.js@^1.14.1",
+    "social-share-kit@^1.0.15"
+  ],
+  "lockfileEntries": {
+    "bootstrap@^4.0.0": "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0.tgz#ceb03842c145fcc1b9b4e15da2a05656ba68469a",
+    "fancybox@^3.0.1": "https://registry.yarnpkg.com/fancybox/-/fancybox-3.0.1.tgz#13f6927449157ed026c69e78c2ba5bf0f1da9af7",
+    "font-awesome@^4.7.0": "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133",
+    "jquery.easing@^1.4.1": "https://registry.yarnpkg.com/jquery.easing/-/jquery.easing-1.4.1.tgz#47982c5836bd758fd48494923c4a101ef6e93e3b",
+    "jquery@^3.3.1": "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca",
+    "popper.js@^1.14.1": "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.1.tgz#b8815e5cda6f62fc2042e47618649f75866e6753",
+    "social-share-kit@^1.0.15": "https://registry.yarnpkg.com/social-share-kit/-/social-share-kit-1.0.15.tgz#1cb3fa37345ab6b98ac3694c17655e0200ec829e"
+  },
+  "files": [],
+  "artifacts": {}
+}

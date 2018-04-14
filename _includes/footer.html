@@ -1,17 +1,20 @@
 <footer>
-    <div class="col-md-12">
-        <a href="{{ site.baseurl }}/feed.xml" class="social"><i class="fa fa-rss"></i></a>
-        <a href="https://bitbucket.org/NateShoffner/" target="_blank" class="social"><i class="fa fa-bitbucket"></i></a>
-        <a href="https://github.com/NateShoffner" target="_blank" class="social"><i class="fa fa-github"></i></a>
-        <a href="https://twitter.com/NateShoffner" target="_blank" class="social"><i class="fa fa-twitter"></i></a>
-        <a href="http://www.linkedin.com/in/NateShoffner" target="_blank" class="social"><i class="fa fa-linkedin"></i></a>
-        <a href="{{ site.baseurl }}/contact/" class="social"><i class="fa fa-envelope"></i></a>
-    </div>
-
-    <div class="col-md-12">
-        <p>&copy; Nate Shoffner, {{ site.time | date: '%Y' }}. All rights reserved.</p>
+    <div class="my-auto text-muted">
+        &copy; Nate Shoffner, {{ site.time | date: '%Y' }}. All rights reserved.
+        <br />
+        <a href="{{ site.baseurl }}/about/privacy">Privacy</a> | <a href="{{ site.baseurl }}/about/disclosure">Disclosure</a> | <a href="{{ site.baseurl }}/#contact">Report Issue</a>
     </div>
 </footer>
+
+<script src="{{ site.baseurl }}/vendor/jquery/dist/jquery.min.js"></script>
+<script src="{{ site.baseurl }}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="{{ site.baseurl }}/vendor/bootstrap/dist/js/bootstrap.bundle.js"></script>
+<script src="{{ site.baseurl }}/vendor/jquery.easing/jquery.easing.js"></script>
+<script src="{{ site.baseurl }}/vendor/fancybox/dist/js/jquery.fancybox.pack.js"></script>
+<script src="{{ site.baseurl }}/vendor/social-share-kit/dist/js/social-share-kit.min.js"></script>
+<script src="{{ site.baseurl }}/assets/js/main.js"></script>
+
+<link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/vendor/fancybox/dist/css/jquery.fancybox.css" media="screen" />
 
 <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -22,4 +25,8 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
+</script>
+
+<script type="text/javascript">
+SocialShareKit.init();
 </script>

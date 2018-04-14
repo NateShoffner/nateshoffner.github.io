@@ -4,7 +4,7 @@ permalink: /:title
 title: Nate Shoffner
 description: Personal homepage and blog for Nate Shoffner.
 permalink: /blog/:year/:month/:title/
-paginate: 3
+paginate: 10
 paginate_path: /blog/page/:num
 url: https://nateshoffner.com
 blog_url: /blog
@@ -12,9 +12,14 @@ gems:
   - jekyll-paginate
   - jekyll-sitemap
 syntax_highlighter: rouge
-
 disqus_shortname: nateshoffner
 future: true
-exclude: []
+exclude: ['CNAME', '_extra', 'yarn-error.log', 'yarn.lock', 'packages.json']
 google_analytics: UA-37580682-1
-amazon_tag: nateshoffner-20
+amazon_tag: nate.shoffner-20
+sass:
+    sass_dir: _sass
+
+mustache_set_delimiter: "{{={u{ }u}=}}"
+recaptcha_site_key: 6LeOIlAUAAAAAGRZuMvrOqTch_aPFaV7kmrF68zD
+project_path: /projects/:slug

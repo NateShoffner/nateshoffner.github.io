@@ -1,0 +1,14 @@
+{% assign filenames = include.filenames | split: ','  %}
+{% assign column_width = 12 | divided_by: filenames.size %}
+
+<div class="row">
+{% for filename in filenames %}
+
+    <div class="col-12 col-sm-{{ column_width }}" style="margin-bottom: 10px;">
+        <a href="{{ site.baseurl }}/assets/images/projects/{{ include.slug }}/{{ filename }}" class="fancybox"{% if include.group %} rel="{{ include.group }}"{% endif %}>
+            <img src="{{ site.baseurl }}/assets/images/projects/{{ include.slug }}/{{ filename }}" class="mx-auto img-fluid" />
+        </a>
+    </div>
+
+{% endfor %}
+</div>

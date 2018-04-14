@@ -1,0 +1,37 @@
+<h2 class="mb-5">Contact <span class="text-highlight">Me</span></h2>
+
+<p>If you want to get in touch with me, just drop me a message. I’ll try to respond to you as soon as possible.</p>
+
+<p>You can also try contacting me via Twitter <a href="https://twitter.com/{{ site.data.social.twitter }}">@{{ site.data.social.twitter }}</a>.</p>
+
+<p>If there is a problem with the site, feel free to open an issue on the <a href="https://github.com/NateShoffner/nateshoffner.github.io/issues">issue tracker</a>.</p>
+
+<div id="contact-result-success" class="alert alert-success" role="alert" style="display:none;">Your message has been sent! I will try to respond to you as soon as possible. Thanks!</div>
+
+<div id="contact-result-error" class="alert alert-danger" role="alert" style="display:none;">Your message could not be sent. You can also try contacting me via Twitter <a href="https://twitter.com/{{ site.data.social.twitter }}">@{{ site.data.social.twitter }}</a>.
+</div>
+
+<form id="contact-form" action="" method="post">
+    <div class="col-lg-9">
+        <div class="form-group">
+            <label for="name">Your Name:</label>
+            <input type="text" class="form-control transparent" name="name" id="name" placeholder="Enter Name" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Your Email:</label>
+            <input type="email" class="form-control transparent" id="email" name="email" placeholder="Enter Email" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="subject">Subject:</label>
+            <input type="text" class="form-control transparent" id="subject" name="subject" placeholder="Enter Subject" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea name="message" id="message" class="form-control transparent" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+            <div class="g-recaptcha" data-sitekey="{{ site.recaptcha_site_key }}"></div>
+        </div>
+        <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary pull-right">
+    </div>
+</form>

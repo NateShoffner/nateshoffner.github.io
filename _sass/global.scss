@@ -1,0 +1,92 @@
+body {
+    @include body-font;
+    padding-top: 54px;
+    color: $gray-900;
+    background-color: #ffffff;
+}
+
+@media (min-width: 992px) {
+     body {
+        padding-top: 0;
+        padding-left: $sidebar-base-width;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    @include heading-font;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+h1 {
+    font-size: 3.6rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+}
+
+.subheading {
+    text-transform: uppercase;
+    font-weight: 500;
+    @include heading-font;
+    font-size: 1.35rem;
+    padding-bottom: 0.5rem;
+    @include gradient-border-left(0, 4px);
+}
+
+.text-highlight {
+    color: $highlight;
+}
+
+footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+ul.highlighted {
+
+     list-style-type: none;
+     padding: 0;
+
+     li:before {
+        background-color: $highlight;
+        border-radius: 50%;
+        content: "";
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 2px;
+        height: 8px;
+        width: 8px;
+    }
+}
+
+ul.inlined-list {
+    list-style-type: none;
+    li {
+        display: inline-block;
+        width: 50%;
+    }
+}
+
+@media (max-width: 767.98px) {
+     ul.inlined-list li {
+        width: 100%;
+    }
+}
+
+
+@media (min-width: 768px) {
+     ul.inlined-list li {
+        width: 33.33%;
+    }
+}
+
+
+@media (min-width: 992px) {
+    ul.inlined-list li {
+        width: 50%;
+    }
+}

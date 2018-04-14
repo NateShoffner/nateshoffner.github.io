@@ -4,6 +4,17 @@ title: Page Not Found
 permalink: /404.html 
 ---
 
-<div class="text-center">
-    <img src="{{site.baseurl }}/assets/images/404.png" class="img-responsive" />
-</div>
+<section class="page-section error-404 p-4 p-lg-5 d-flex d-column">
+    <div class="my-auto">
+        <h1>404 <span class="text-highlight">Page Not Found</span></h1>
+        <h3 class="mb-5">Oops, the page you're looking for does not exist.</h3>
+
+        <p>Click <a href="{{ site.baseurl }}">here</a> to return to the homepage. If you think something is broken, <a href="{{ site.baseurl }}/#contact">report a problem</a>.</p>
+    </div>
+</section>
+
+<style type="text/css">
+    footer {
+        display: none;
+    }
+</style>
