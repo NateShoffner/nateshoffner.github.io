@@ -59,7 +59,7 @@
                                 {% for download in project.downloads %}
                                 <tr>
                                     <td class="w-75"><i class="fa fa-download"></i> <span class="project-name">{{ download.name }}</span><br /><span class="project-description">{{ download.description }}</span></td>
-                                    <td class="w-25"><a href="{{ download.url }}" role="button" class="btn btn-primary btn-block btn-download">Download</a></td>
+                                    <td class="w-25 download"><a href="{{ download.url }}" role="button" class="btn btn-primary btn-block btn-download">Download</a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

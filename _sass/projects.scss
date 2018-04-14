@@ -13,13 +13,13 @@
 
         tbody > tr:nth-child(2n) > td, 
         tbody > tr:nth-child(2n) > th {
-            background-color: #FFFFFF;
+            background-color: $white;
         }
 
 
         tbody > tr:nth-child(2n+1) > td, 
         tbody > tr:nth-child(2n+1) > th {
-            background-color: #F9F9F9;
+            background-color: $gray-600;
         }
 
         td, th {
@@ -40,7 +40,7 @@
 
         }
 
-        td.description {
+        td.download {
             vertical-align: middle;
         }
     }
@@ -51,26 +51,42 @@
 }
 
 .tab-content > .tab-pane {
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    border-left: 1px solid $gray-300;
+    border-right: 1px solid $gray-300;
+    border-bottom: 1px solid $gray-300;
     border-radius: 0px 0px 5px 5px;
 }
 
 .project {
 
-    img {
-        max-height: 256px;
-    }
+    @media (min-width: 992px) {
 
-    table {
-        border: 01px solid #CBCBCB;
-
-        th {
-    font-weight: bold;
-    @include heading-font;
+        img {
+            max-height: 256px;
         }
 
     }
 
+
+    table {
+        border: 01px solid $gray-400;
+
+        th {
+            @include heading-font;
+            font-weight: 600;
+        }
+
+    }
+
+
+    @media (max-width: 767.98px) { 
+
+        .project-images-container {
+            text-align: center;
+        }
+    }
+
+    td.download {
+        vertical-align: middle;
+    }
 }

@@ -10,8 +10,6 @@
   images:
     - caption: 'Tabster 1.6'
       filename: tabster-1.6.png
-    - caption: 'Tabster 1.6'
-      filename: tabster-1.6.png
   downloads:
     - name: 'Installer'
       description: 'Tabster installation package for Windows'
@@ -69,6 +67,8 @@
   license: MIT
   homepage: https://play.google.com/store/apps/details?id=com.nateshoffner.seachemdoser
   images:
+    - caption: 'Seachem Doser 1.1'
+      filename: seachem-doser-1.1.png
     - caption: 'Seachem Doser 1.2'
       filename: seachem-doser-1.2.png
   downloads:
@@ -92,7 +92,7 @@
   homepage: https://github.com/NateShoffner/PySnip
   images:
     - caption: 'PySnip Logo'
-      filename: pysnip.png
+      filename: logo.png
   downloads:
     - name: 'Win32 Build'
       description: 'Zipped Win32 build version of PySnip'
