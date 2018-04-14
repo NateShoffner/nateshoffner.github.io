@@ -11,17 +11,6 @@
         border-style: none;
         margin-bottom: 0px;
 
-        tbody > tr:nth-child(2n) > td, 
-        tbody > tr:nth-child(2n) > th {
-            background-color: $white;
-        }
-
-
-        tbody > tr:nth-child(2n+1) > td, 
-        tbody > tr:nth-child(2n+1) > th {
-            background-color: $gray-600;
-        }
-
         td, th {
             border: none;
 
