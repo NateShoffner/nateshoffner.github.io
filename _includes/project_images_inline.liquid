@@ -1,4 +1,6 @@
 {% assign filenames = include.filenames | split: ','  %}
+
+{% if filenames. size > 0 %}
 <div class="project-images-container">	
 {% for filename in filenames %}
         <a href="{{ site.baseurl }}/assets/images/projects/{{ include.slug }}/{{ filename }}" class="fancybox"{% if include.group %} rel="{{ include.group }}"{% endif %}>
@@ -6,3 +8,4 @@
         </a>
 {% endfor %}
 </div>
+{% endif %}

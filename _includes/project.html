@@ -1,13 +1,10 @@
 {% include get_project_from_slug.liquid slug=include.slug %}
+{% include get_project_image.liquid project=project %}
 
 <div class="project">
     <div class="row">
-        <div class="col-12 col-sm-2 col-md-1 my-auto">
-            {% if project.logo %}
-            <img src="/assets/images/projects/{{ project.slug }}/logo.png" class="img-fluid mx-auto d-block project-image">
-            {% else %}
-            <img src="/assets/images/projects/{{ project.slug }}/{{ product.images[0] }}" class="img-fluid mx-auto d-block project-image">
-            {% endif %}  
+        <div class="col-12 col-sm-2 col-md-1 my-auto">       
+            <img src="/assets/images/projects/{{ project.slug }}/{{ project_image }}" class="img-fluid mx-auto d-block project-image">
         </div>
         <div class="col-12 col-sm-10 col-md-11 mt-3">
             <h1>{{ project.name }}</h1>

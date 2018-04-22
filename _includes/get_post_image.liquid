@@ -1,0 +1,5 @@
+{% if include.post.image %}
+    {% assign post_image = include.post.image %}
+{% else %}
+    {% assign post_image = "default.png" %}
+{% endif %}

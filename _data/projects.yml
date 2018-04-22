@@ -90,9 +90,6 @@
   open_source: 'Yes'
   license: MIT
   homepage: https://github.com/NateShoffner/PySnip
-  images:
-    - caption: 'PySnip Logo'
-      filename: logo.png
   downloads:
     - name: 'Win32 Build'
       description: 'Zipped Win32 build version of PySnip'

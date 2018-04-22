@@ -19,8 +19,13 @@
     <meta content="{{ page.date | date_to_xmlschema }}" property="article:published_time">
     <meta content="{{ site.url }}/about/" property="article:author">
 {% endif %}
-{% if page.image %}
-    <meta content="{{ site.url }}/assets/images/posts/{{ page.image }}" property="og:image">
+{% if page.type=='post' %}
+    {% include get_post_image.liquid post=page %}
+    <meta content="{{ site.url }}/assets/images/posts/{{ post_image }}" property="og:image">
+{% elsif page.type=='project' %}
+    {% include get_project_from_slug.liquid slug=page.slug %}
+    {% include get_project_image.liquid project=project %}
+    <meta content="{{ site.url }}/assets/images/projects/{{ page.slug }}/{{ project_image }}" property="og:image">
 {% else %}
     <meta content="{{ site.url }}/assets/images/logo.png" property="og:image">
 {% endif %}
@@ -56,8 +61,13 @@
 {% if page.url %}
     <meta name="twitter:url" content="{{ site.url }}{{ page.url }}">
 {% endif %}
-{% if page.image %}
-    <meta name="twitter:image:src" content="{{ site.url }}/assets/images/posts/{{ page.image }}">
+{% if page.type=='post' %}
+    {% include get_post_image.liquid post=page %}
+    <meta name="twitter:image:src" content="{{ site.url }}/assets/images/posts/{{ post_image }}">
+{% elsif page.type=='project' %}
+    {% include get_project_from_slug.liquid slug=page.slug %}
+    {% include get_project_image.liquid project=project %}
+    <meta name="twitter:image:src" content="{{ site.url }}/assets/images/projects/{{ page.slug }}/{{ project_image }}">
 {% else %}
     <meta name="twitter:image:src" content="{{ site.url }}/assets/images/logo.png">
 {% endif %}
