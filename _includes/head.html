@@ -8,8 +8,10 @@
     <meta content="{{ site.title }}" property="og:site_name">
     <meta content="{% if page.title %}{{ page.title }} &bull; {% endif %}Nate Shoffner" property="og:title">
 {% if page.description %}
+    <meta name="description" content="{{ page.description }}">
     <meta content="{{ page.description }}" property="og:description">
 {% else %}
+    <meta name="description" content="{{ site.description }}">
     <meta content="{{ site.description }}" property="og:description">
 {% endif %}
 {% if page.url %}
