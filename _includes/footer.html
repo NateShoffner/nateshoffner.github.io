@@ -3,6 +3,8 @@
         &copy; Nate Shoffner, {{ site.time | date: '%Y' }}. All rights reserved.
         <br />
         <a href="{{ site.baseurl }}/about/privacy">Privacy</a> | <a href="{{ site.baseurl }}/about/disclosure">Disclosure</a> | <a href="{{ site.baseurl }}/#contact">Report Issue</a>
+        <br />
+        Build: <a href="{{ site.github_commit_path | replace: ':id', site.github.build_revision }}">{{ site.github.build_revision | slice: 0, 7 }}</a> - {{ site.time | date_to_rfc822 }}</a>
     </div>
 </footer>
 
