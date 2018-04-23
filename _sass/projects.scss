@@ -2,9 +2,14 @@
 
     @media (max-width: 767.98px) { 
 
+        .project-logo {
+            max-height: 128px;
+        }
+
         .project-image {
             max-height: 128px;
         }
+
     }
 
     table.project-table {
@@ -48,14 +53,22 @@
 
 .project {
 
+    .project-logo {
+        max-height: 128px;
+    }
+
+    .project-image {
+        margin-bottom: 10px;
+        margin-right: 10px;
+    }
+
     @media (min-width: 992px) {
 
-        img {
+        .project-image {
             max-height: 256px;
         }
 
     }
-
 
     table {
         border: 01px solid $gray-400;
@@ -66,7 +79,6 @@
         }
 
     }
-
 
     @media (max-width: 767.98px) { 
 

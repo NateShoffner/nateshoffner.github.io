@@ -10,6 +10,7 @@ categories:
 tags:
 - Nvidia
 - Telemetry
+- Disable Nvidia Telemetry
 ---
 
 Pushed out a small update to for the Nvidia Telemetry tool with a few new features:

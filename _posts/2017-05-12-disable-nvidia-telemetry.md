@@ -10,6 +10,7 @@ categories:
 tags:
 - Nvidia
 - Telemetry
+- Disable Nvidia Telemetry
 ---
 
 Back in early November, Nvidia started bundling telemetry services with their drivers. Gamers Nexus did an [analysis](http://www.gamersnexus.net/industry/2672-geforce-experience-data-transfer-analysis) where they inspected data transactions via Wireshark. Their focus seemed to be moreso on dispelling the rumors of personally identifiable information being sent **unencrypted**, as they didn't decrypt any of the encrypted traffic. Their results yielded from an hour of testing that nothing was being sent, the services were seemingly dormant.

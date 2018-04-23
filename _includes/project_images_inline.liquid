@@ -4,7 +4,7 @@
 <div class="project-images-container">	
 {% for filename in filenames %}
         <a href="{{ site.baseurl }}/assets/images/projects/{{ include.slug }}/{{ filename }}" class="fancybox"{% if include.group %} rel="{{ include.group }}"{% endif %}>
-            <img src="{{ site.baseurl }}/assets/images/projects/{{ include.slug }}/{{ filename }}" class="img-fluid" style="margin-bottom: 10px;margin-right: 10px;" />
+            <img src="{{ site.baseurl }}/assets/images/projects/{{ include.slug }}/{{ filename }}" class="img-fluid project-image" />
         </a>
 {% endfor %}
 </div>

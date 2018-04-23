@@ -3,7 +3,7 @@
 
 <div class="row project-compact mb-3 pb-3">
     <div class="col-12 col-sm-2 col-md-1">
-        <img src="/assets/images/projects/{{ project.slug }}/{{ project_image }}" class="img-fluid mx-auto d-block project-image">
+        <img src="/assets/images/projects/{{ project.slug }}/{{ project_image }}" class="img-fluid mx-auto d-block project-logo">
     </div>
     <div class="col-12 col-sm-10 col-md-11 mt-3">
         <h4><a href="{{ site.project_path | prepend: site.baseurl | replace: '//', '/' | replace: ':slug', project.slug }}">{{ project.name }}</a></h4>
