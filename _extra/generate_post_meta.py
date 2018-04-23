@@ -27,23 +27,31 @@ def build_indexer_lists():
         print 'Parsing: %s' % post_file
         with open(post_file, "r") as f:
             metadata, content = frontmatter.parse(f.read())
-            tags = metadata["tags"] if "tags" in metadata else []
-            categories = metadata[
-                "categories"] if "categories" in metadata else []
 
-            if len(tags) == 0:
-                print '\tNo tags found'
-            if len(categories) == 0:
-                print '\tNo categories found'
+            draft = False
+            
+            if "draft" in metadata and metadata["draft"]:
+                print '\t**Draft**'
+                draft = True
 
-            for tag in tags:
-                indexer = PostIndexer(tag)
-                if indexer.slug not in tags_dict:
-                    tags_dict[indexer.slug] = indexer
-            for category in categories:
-                indexer = PostIndexer(category)
-                if indexer.slug not in categories_dict:
-                    categories_dict[indexer.slug] = indexer
+            if not draft:
+                tags = metadata["tags"] if "tags" in metadata else []
+                categories = metadata[
+                    "categories"] if "categories" in metadata else []
+
+                if len(tags) == 0:
+                    print '\tNo tags found'
+                if len(categories) == 0:
+                    print '\tNo categories found'
+
+                for tag in tags:
+                    indexer = PostIndexer(tag)
+                    if indexer.slug not in tags_dict:
+                        tags_dict[indexer.slug] = indexer
+                for category in categories:
+                    indexer = PostIndexer(category)
+                    if indexer.slug not in categories_dict:
+                        categories_dict[indexer.slug] = indexer
 
 
 def generate_markdown_files(directory, dict, layout, indexer_type):
