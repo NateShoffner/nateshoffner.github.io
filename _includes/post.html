@@ -26,6 +26,15 @@
         {{ post.content }}
     </article>
 
+    {% if post.categories contains "Projects" %}
+        {% for tag in post.tags %}
+            {% include get_project_from_name.liquid name=tag %}
+            {% if project %}
+            {% include project_post_card.html project=project %}
+            {% endif %}  
+        {% endfor %}
+    {% endif %}
+
     <div class="row mb-3">
         <div class="col-12 col-sm-6">
             <div class="post-tags">

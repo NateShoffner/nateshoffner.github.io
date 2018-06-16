@@ -47,3 +47,12 @@ ul.post-meta {
         }
     }
 }
+
+.project-card {
+    border: 1px solid $gray-300;
+
+    img {
+        max-height: 64px;
+    }
+
+}

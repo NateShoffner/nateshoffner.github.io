@@ -6,7 +6,7 @@
         <img src="/assets/images/projects/{{ project.slug }}/{{ project_image }}" class="img-fluid mx-auto d-block project-logo">
     </div>
     <div class="col-12 col-sm-10 col-md-11 mt-3">
-        <h4><a href="{{ site.project_path | prepend: site.baseurl | replace: '//', '/' | replace: ':slug', project.slug }}">{{ project.name }}</a></h4>
+        <h4><a href="{{ site.project_path | prepend: site.baseurl | replace: ':slug', project.slug }}">{{ project.name }}</a></h4>
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active no-easing" id="{{ project.slug }}-description-tab" data-toggle="tab" href="#{{ project.slug }}-description" role="tab" aria-controls="{{ project.slug }}-description" aria-selected="true">Description</a>
@@ -21,7 +21,7 @@
                 <div class="tab-content" id="{{ project.slug }}-tabs">
                     <div class="tab-pane fade show active project-description" id="{{ project.slug }}-description" role="tabpanel" aria-labelledby="{{ project.slug }}-description-tab">
                         <p>{{ project.description }}</p>
-                        <a href="{{ site.project_path | prepend: site.baseurl | replace: '//', '/' | replace: ':slug', project.slug }}">More Info...</a>
+                        <a href="{{ site.project_path | prepend: site.baseurl | replace: ':slug', project.slug }}">More Info...</a>
                     </div>
                     <div class="tab-pane fade show" id="{{ project.slug }}-info" role="tabpanel" aria-labelledby="{{ project.slug }}-info-tab">
                         <table class="table table-sm table-striped project-table">
