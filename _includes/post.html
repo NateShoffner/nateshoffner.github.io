@@ -31,6 +31,7 @@
             {% include get_project_from_name.liquid name=tag %}
             {% if project %}
             {% include project_post_card.html project=project %}
+            {% break %}  
             {% endif %}  
         {% endfor %}
     {% endif %}
