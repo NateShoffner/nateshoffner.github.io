@@ -15,17 +15,17 @@ tags:
 
 Here's a quick little class for implementing global hotkeys in C#/.NET 2.0+.
 
-As a bit of a preface, you could easily use [RegisterHotKey]http://msdn.microsoft.com/en-us/library/windows/desktop/ms646309(v=vs.85).aspx) and [UnregisterHotKey]http://msdn.microsoft.com/en-us/library/windows/desktop/ms646327(v=vs.85).aspx) respectively to accomplish something like this, but this has a few caveats:
+As a bit of a preface, you could easily use [RegisterHotKey](http://msdn.microsoft.com/en-us/library/windows/desktop/ms646309(v=vs.85).aspx) and [UnregisterHotKey](http://msdn.microsoft.com/en-us/library/windows/desktop/ms646327(v=vs.85).aspx) respectively to accomplish something like this, but this has a few caveats:
 
 * You can't register a key that has already been previously registered.
 * Some keys are reserved and cannot be registered, such as F12.
 * Although hacks exist, it's not very ideal to easily implement with console applications due to the lack of a proper window handle.
 
-Alternatively, we can use another WinAPI function: [GetAsyncKeyState]http://msdn.microsoft.com/en-us/library/windows/desktop/ms646293(v=vs.85).aspx). It requires a bit more manual work, but it's simple in the end.
+Alternatively, we can use another WinAPI function: [GetAsyncKeyState](http://msdn.microsoft.com/en-us/library/windows/desktop/ms646293(v=vs.85).aspx). It requires a bit more manual work, but it's simple in the end.
 
 **Note: Without getting into semantics about what constitutes a proper "hook", I'm just going to refer to the process of monitoring/polling key events via GetAsyncKeyState() as "hooking".**
 
-To keep things simple, the actually hooking process will use the [Keys Enumeration]http://msdn.microsoft.com/en-us/library/system.windows.forms.keys.aspx) and will marshall their underlying integral type during the P/Invoke. When a key is pressed, we will trigger the KeyPressed event.
+To keep things simple, the actually hooking process will use the [Keys Enumeration](http://msdn.microsoft.com/en-us/library/system.windows.forms.keys.aspx) and will marshall their underlying integral type during the P/Invoke. When a key is pressed, we will trigger the KeyPressed event.
 
 #### Modifier Keys
 We don't want to limit the hooking to just basic keys, instead will allow optional modifier keys using the ModifierKeys enum.
@@ -75,7 +75,8 @@ private class KeyHook
 {% endhighlight %}
 
 #### Prioritization
-    For simple hotkeys, there won't be any collisions. However, when you start mixing and matching modifier keys, things can get a little messy. To alleviate this issue, the hooked keys are sorted internally using a custom [IComparer<T>](http://msdn.microsoft.com/en-us/library/8ehhxeaf.aspx):
+
+For simple hotkeys, there won't be any collisions. However, when you start mixing and matching modifier keys, things can get a little messy. To alleviate this issue, the hooked keys are sorted internally using a custom [IComparer&lt;T&gt;](http://msdn.microsoft.com/en-us/library/8ehhxeaf.aspx):
 
 {% highlight csharp %}
 private class HookComparer : IComparer<KeyHook>
@@ -115,7 +116,7 @@ private class HookComparer : IComparer<KeyHook>
 
 Basically, it just compares hooked keys based on the following:
 
-1. (Keys](http://msdn.microsoft.com/en-us/library/system.windows.forms.keys.aspx) enumeration
+1. [Keys](http://msdn.microsoft.com/en-us/library/system.windows.forms.keys.aspx) enumeration
 2. Number of ModiferKeys set
 3. Underlying ModifierKeys integral type summation
 
@@ -126,9 +127,9 @@ _keys.Sort((k1, k2) => new HookComparer().Compare(k1, k2));
 {% endhighlight %}
 
 #### Polling
-The underlying polling is based on a [SystemTimer.Timer]http://msdn.microsoft.com/en-us/library/system.timers.timer.aspx). According to [official Microsoft sources]http://msdn.microsoft.com/en-us/windows/hardware/gg463266.aspx), this has a resolution of 15.6ms:
+The underlying polling is based on a [SystemTimer.Timer](http://msdn.microsoft.com/en-us/library/system.timers.timer.aspx). According to [official Microsoft sources](http://msdn.microsoft.com/en-us/windows/hardware/gg463266.aspx), this has a resolution of 15.6ms:
 
-    The default timer resolution on Windows 7 is 15.6 milliseconds (ms). Some applications reduce this to 1 ms, which reduces the battery run time on mobile systems by as much as 25 percent.
+> The default timer resolution on Windows 7 is 15.6 milliseconds (ms). Some applications reduce this to 1 ms, which reduces the battery run time on mobile systems by as much as 25 percent.
 
 I'm not about to perform a case steady on how fast a human can realistically type versus the timer interval, configure the interval as necessary. The polling itself can be enabled/disabled via the Enabled property. Additionally, polling is suppressed when hooking/unhooking keys.
 During each tick, the key states are polled via PollKeyStates():
@@ -176,7 +177,7 @@ private void PollKeyStates()
 
 When using GetAsyncKeyState() you need to pay attention to the most and least significant bits:
 
-    If the function succeeds, the return value specifies whether the key was pressed since the last call to GetAsyncKeyState, and whether the key is currently up or down. If the most significant bit is set, the key is down, and if the least significant bit is set, the key was pressed after the previous call to GetAsyncKeyState. However, you should not rely on this last behavior.
+> If the function succeeds, the return value specifies whether the key was pressed since the last call to GetAsyncKeyState, and whether the key is currently up or down. If the most significant bit is set, the key is down, and if the least significant bit is set, the key was pressed after the previous call to GetAsyncKeyState. However, you should not rely on this last behavior.
 
 Normally when polling like these, we would end up triggering multiple KeyPressed events within a few milliseconds apart from each other. We can use the return value to get around this.
 
