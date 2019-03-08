@@ -14,9 +14,16 @@
                     <li class="nav-item">
                         <a class="nav-link no-easing" id="{{ project.slug }}-info-tab" data-toggle="tab" href="#{{ project.slug }}-info" role="tab" aria-controls="{{ project.slug }}-info" aria-selected="false">Info</a>
                     </li>
+                    {% if project.downloads %}
                     <li class="nav-item">
                         <a class="nav-link no-easing" id="{{ project.slug }}-downloads-tab" data-toggle="tab" href="#{{ project.slug }}-downloads" role="tab" aria-controls="{{ project.slug }}-downloads" aria-selected="false">Downloads</a>
                     </li>
+                    {% endif %}
+                    {% if project.examples %}
+                    <li class="nav-item">
+                        <a class="nav-link no-easing" id="{{ project.slug }}-examples-tab" data-toggle="tab" href="#{{ project.slug }}-examples" role="tab" aria-controls="{{ project.slug }}-examples" aria-selected="false">Examples</a>
+                    </li>
+                    {% endif %}
                 </ul>
                 <div class="tab-content" id="{{ project.slug }}-tabs">
                     <div class="tab-pane fade show active project-description" id="{{ project.slug }}-description" role="tabpanel" aria-labelledby="{{ project.slug }}-description-tab">
@@ -34,10 +41,14 @@
                                     <td><i class="fa fa-calendar"></i> Updated:</td>
                                     <td>{{ project.updated }}</td>
                                 </tr>
+                    <tr>
+                        <td><i class="fa fa-desktop"></i> Platform(s):</td>
+                        <td>{{ project.platforms | join: ", " }}</td>
+                    </tr>
                                 <tr>
                                     <td><i class="fa fa-home"></i> Homepage:</td>
                                     {% include url_domain_extract.liquid url=project.homepage %}
-                                    <td><a href="{{ project.homepage }}">{{ domain }}</a></td>
+                                    <td>{% if project.homepage %}<a href="{{ project.homepage }}">{{ domain }}</a>{% else %}N/A{% endif %}</td>
                                 </tr>
                                 <tr>
                                     <td><i class="fa fa-code"></i> Open Source:</td>
@@ -50,6 +61,7 @@
                             </tbody>
                         </table>
                     </div>
+                    {% if project.downloads %}
                     <div class="tab-pane fade" id="{{ project.slug }}-downloads" role="tabpanel" aria-labelledby="{{ project.slug }}-downloads-tab">
                         <table class="table project-table">
                             <tbody>
@@ -62,6 +74,21 @@
                             </tbody>
                         </table>
                     </div>
+                    {% endif %}
+                    {% if project.examples %}
+                    <div class="tab-pane fade" id="{{ project.slug }}-examples" role="tabpanel" aria-labelledby="{{ project.slug }}-examples-tab">
+                        <table class="table project-table">
+                            <tbody>
+                                {% for example in project.examples %}
+                                <tr>
+                                    <td class="w-75"><i class="fa fa-globe"></i> <span class="project-name">{{ example.name }}</span><br /><span class="project-description">{{ example.description }}</span></td>
+                                    <td class="w-25 download"><a href="{{ example.url }}" role="button" class="btn btn-primary btn-block btn-download">View</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
                 </div>
     </div>
 </div>
