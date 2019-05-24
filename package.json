@@ -8,6 +8,8 @@
     "jquery.easing": "^1.4.1",
     "ns-github-widget": "^1.0.0",
     "popper.js": "^1.14.1",
-    "social-share-kit": "^1.0.15"
-  }
+    "social-share-kit": "^1.0.15",
+    "typed.js": "^2.0.10"
+  },
+  "devDependencies": {}
 }

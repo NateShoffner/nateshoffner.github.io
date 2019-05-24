@@ -13,7 +13,8 @@
     "jquery@^3.3.1",
     "ns-github-widget@^1.0.0",
     "popper.js@^1.14.1",
-    "social-share-kit@^1.0.15"
+    "social-share-kit@^1.0.15",
+    "typed.js@^2.0.10"
   ],
   "lockfileEntries": {
     "bootstrap@^4.0.0": "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0.tgz#ceb03842c145fcc1b9b4e15da2a05656ba68469a",
@@ -23,7 +24,8 @@
     "jquery@^3.3.1": "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca",
     "ns-github-widget@^1.0.0": "https://registry.yarnpkg.com/ns-github-widget/-/ns-github-widget-1.0.0.tgz#704e8b4b85e295b9026f542d6a7dfc7f2cce0b42",
     "popper.js@^1.14.1": "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.1.tgz#b8815e5cda6f62fc2042e47618649f75866e6753",
-    "social-share-kit@^1.0.15": "https://registry.yarnpkg.com/social-share-kit/-/social-share-kit-1.0.15.tgz#1cb3fa37345ab6b98ac3694c17655e0200ec829e"
+    "social-share-kit@^1.0.15": "https://registry.yarnpkg.com/social-share-kit/-/social-share-kit-1.0.15.tgz#1cb3fa37345ab6b98ac3694c17655e0200ec829e",
+    "typed.js@^2.0.10": "https://registry.yarnpkg.com/typed.js/-/typed.js-2.0.10.tgz#70a1c1ad11965923bc9e52f851d1891b0ca1316f"
   },
   "files": [],
   "artifacts": {}

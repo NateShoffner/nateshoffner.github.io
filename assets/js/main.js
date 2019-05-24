@@ -148,3 +148,31 @@ $(document).ready(function(){
         }
     });
 });
+
+function typeName(selector, hideCursor, callback) {
+    var options = {
+        strings: [$(selector).attr('data-name')],
+        typeSpeed: 100,
+        showCursor: true,
+        onComplete: function(self) {
+
+            if (hideCursor) {
+                var cursor = $('.typed-cursor');
+                setTimeout(function() {
+                    cursor.hide();
+                }, 1); 
+            }
+
+            if (callback)
+                callback();
+        },
+    }
+
+    var typed = new Typed(selector, options);
+}
+
+$(document).ready(function() {
+    typeName('#first-name', true, function() {
+        typeName('#last-name', false, null);
+    });
+});
