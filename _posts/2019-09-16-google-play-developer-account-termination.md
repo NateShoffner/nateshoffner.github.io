@@ -2,7 +2,7 @@
 layout: post
 title: Google Play Developer Account Termination
 date: 2019-09-16 15:10 -05:00
-description: 
+description: Recently I had the pleasure of dealing with Google's heavy handed approach to over-sweeping account terminations.
 type: post
 image: google-play.png
 categories:
