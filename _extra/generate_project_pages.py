@@ -53,7 +53,7 @@ def generate_markdown_files(projects, directory, template):
         escaped = re.escape(delimiter)
         ptrn = re.compile(r"^.*%s([a-zA-Z]*)%s.*$" % (escaped, escaped), re.MULTILINE)
         replaced = ptrn.sub(lambda m: m.group().replace(delimiter + m.group(1) + delimiter, project[m.group(1)], 1), content)
-        print replaced
+        print(replaced)
         with open(index, "w") as f:
             f.write("---\n")
             for m in metadata:
@@ -66,11 +66,11 @@ def generate_markdown_files(projects, directory, template):
             f.write(replaced)
 
 
-print "Building project list...\n"
+print("Building project list...\n")
 projects = build_project_list()
 
-print "Loading project template...\n"
+print("Loading project template...\n")
 template = load_project_template()
 
-print "Generating markdown files for projects...\n"
+print("Generating markdown files for projects...\n")
 generate_markdown_files(projects, "../projects", template)

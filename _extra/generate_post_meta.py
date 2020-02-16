@@ -9,6 +9,7 @@ import frontmatter
 import glob
 import os
 import urllib
+import urllib.parse
 
 class PostIndexer(object):
 
@@ -24,14 +25,14 @@ def build_indexer_lists():
     post_files = glob.glob("../_posts/*.*")
 
     for post_file in post_files:
-        print 'Parsing: %s' % post_file
+        print('Parsing: %s' % post_file)
         with open(post_file, "r") as f:
             metadata, content = frontmatter.parse(f.read())
 
             draft = False
             
             if "draft" in metadata and metadata["draft"]:
-                print '\t**Draft**'
+                print('\t**Draft**')
                 draft = True
 
             if not draft:
@@ -40,9 +41,9 @@ def build_indexer_lists():
                     "categories"] if "categories" in metadata else []
 
                 if len(tags) == 0:
-                    print '\tNo tags found'
+                    print('\tNo tags found')
                 if len(categories) == 0:
-                    print '\tNo categories found'
+                    print('\tNo categories found')
 
                 for tag in tags:
                     indexer = PostIndexer(tag)
@@ -58,7 +59,7 @@ def generate_markdown_files(directory, dict, layout, indexer_type):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-    for indexer in dict.itervalues():
+    for indexer in dict.values():
         filename = "%s.md" % indexer.slug
         filename = filename[1:] if filename.startswith(".") else filename
         filename = os.path.join(directory, filename)
@@ -69,17 +70,17 @@ def generate_markdown_files(directory, dict, layout, indexer_type):
             f.write(
                 "permalink: /blog/%s/%s/\n" %
                 (indexer_type,
-                 urllib.quote_plus(
+                 urllib.parse.quote_plus(
                      indexer.slug)))
             f.write("---")
 
-print "Building indexer lists...\n"
+print("Building indexer lists...\n")
 build_indexer_lists()
 
-print "Generating markdown files for tags...\n"
+print("Generating markdown files for tags...\n")
 generate_markdown_files("../blog/tag", tags_dict, "blog_tags", "tag")
 
-print "Generating markdown files for categories...\n"
+print("Generating markdown files for categories...\n")
 generate_markdown_files(
     "../blog/category",
     categories_dict,
