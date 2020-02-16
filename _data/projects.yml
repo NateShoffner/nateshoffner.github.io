@@ -120,3 +120,22 @@
       url: 'https://github.com/NateShoffner/Disable-Nvidia-Telemetry/releases'
   platforms:
     - Windows
+
+- slug: phaucet
+  name: Phaucet
+  version: 2.0
+  updated: November 30, 2018
+  description: 'Phaucet is a web service that allows allows easy deployment and configuration for crypto "faucets" which are sites that dispense cryptocurrencies to visitors in an attempt to fuel intrest in crypto.'
+  logo: phaucet.png
+  open_source: 'No'
+  license: N/A
+  homepage:
+  platforms:
+    - Web
+  examples:
+    - name: 'In Doge We Trust'
+      description: 'Dogecoin Faucet'
+      url: 'https://indogewetrust.com'
+    - name: 'Tip of the Fedora'
+      description: 'Fedoracoin Faucet'
+      url: 'https://tipofthefedora.com'
