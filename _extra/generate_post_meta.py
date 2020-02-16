@@ -20,9 +20,10 @@ class PostIndexer(object):
 tags_dict = {}
 categories_dict = {}
 
+root_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 def build_indexer_lists():
-    post_files = glob.glob("../_posts/*.*")
+    post_files = glob.glob(os.path.join(root_dir, "_posts/*.*"))
 
     for post_file in post_files:
         print('Parsing: %s' % post_file)
@@ -78,11 +79,11 @@ print("Building indexer lists...\n")
 build_indexer_lists()
 
 print("Generating markdown files for tags...\n")
-generate_markdown_files("../blog/tag", tags_dict, "blog_tags", "tag")
+generate_markdown_files(os.path.join(root_dir, "blog/tag"), tags_dict, "blog_tags", "tag")
 
 print("Generating markdown files for categories...\n")
 generate_markdown_files(
-    "../blog/category",
+    os.path.join(root_dir, "blog/category"),
     categories_dict,
     "blog_categories",
     "category")

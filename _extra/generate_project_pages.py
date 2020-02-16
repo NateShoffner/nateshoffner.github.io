@@ -16,12 +16,14 @@ try:
 except ImportError:
     from yaml import Loader, Dumper
 
-template_path = "../_layouts/project.html"
+root_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+
+template_path = os.path.join(root_dir, "_layouts/project.html")
 
 def build_project_list():
     projects = []
 
-    with open("../_data/projects.yml", "r") as f:
+    with open(os.path.join(root_dir, "_data/projects.yml"), "r") as f:
         project_data = load(f, Loader=Loader)
         
         for p in project_data:
@@ -73,4 +75,4 @@ print("Loading project template...\n")
 template = load_project_template()
 
 print("Generating markdown files for projects...\n")
-generate_markdown_files(projects, "../projects", template)
+generate_markdown_files(projects, os.path.join(root_dir, "projects"), template)
