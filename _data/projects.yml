@@ -125,7 +125,7 @@
   name: Phaucet
   version: 2.0
   updated: November 30, 2018
-  description: 'Phaucet is a web service that allows allows easy deployment and configuration for crypto "faucets" which are sites that dispense cryptocurrencies to visitors in an attempt to fuel intrest in crypto.'
+  description: 'Phaucet is a web service that allows allows easy deployment and configuration for crypto "faucets" which are sites that dispense cryptocurrencies to visitors in an attempt to fuel interest in crypto.'
   logo: phaucet.png
   open_source: 'No'
   license: N/A
