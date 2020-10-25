@@ -4,12 +4,13 @@
 
 <p>If you would like to see my portfolio and resume for professional work, <a href="#contact">message me</a>.</p>
 
-<div class="projects-container">
-
+<div class="row">
 {% for project in site.data.projects %}
-    {% include project_compact.html project=project %}
+    <div class="col-sm-12 col-md-6 col-lg-4 mb-5">
+        {% include project_compact.html project=project %}
+    </div>
+ 
 {% endfor %}
-
 </div>
 
 <h3>Open Source Projects</h3>

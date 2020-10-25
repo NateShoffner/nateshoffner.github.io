@@ -1,54 +1,10 @@
-.project-compact {
+.project-card {
 
-    @media (max-width: 767.98px) { 
-
-        .project-logo {
-            max-height: 128px;
-        }
-
-        .project-image {
-            max-height: 128px;
-        }
-
+    .project-card-image  {
+        width: 100%!important;
+        height: 200px!important;
+        object-fit: contain;
     }
-
-    table.project-table {
-        border-style: none;
-        margin-bottom: 0px;
-
-        td, th {
-            border: none;
-
-            .project-name {
-                font-weight: bold;
-            }
-
-            .project-description {
-                font-size: 90%;
-                padding-left: 0px;
-            }
-
-            .btn-download {
-                float: right;
-            }
-
-        }
-
-        td.download {
-            vertical-align: middle;
-        }
-    }
-
-    .project-description {
-        padding: 10px;
-    }
-}
-
-.tab-content > .tab-pane {
-    border-left: 1px solid $gray-300;
-    border-right: 1px solid $gray-300;
-    border-bottom: 1px solid $gray-300;
-    border-radius: 0px 0px 5px 5px;
 }
 
 .project {

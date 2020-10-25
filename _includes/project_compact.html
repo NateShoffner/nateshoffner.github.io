@@ -1,94 +1,16 @@
 {% assign project = include.project %}
 {% include get_project_image.liquid project=project %}
 
-<div class="row project-compact mb-3 pb-3">
-    <div class="col-12 col-sm-2 col-md-1">
-        <img src="/assets/images/projects/{{ project.slug }}/{{ project_image }}" class="img-fluid mx-auto d-block project-logo">
-    </div>
-    <div class="col-12 col-sm-10 col-md-11 mt-3">
-        <h4><a href="{{ site.project_path | prepend: site.baseurl | replace: ':slug', project.slug }}">{{ project.name }}</a></h4>
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active no-easing" id="{{ project.slug }}-description-tab" data-toggle="tab" href="#{{ project.slug }}-description" role="tab" aria-controls="{{ project.slug }}-description" aria-selected="true">Description</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link no-easing" id="{{ project.slug }}-info-tab" data-toggle="tab" href="#{{ project.slug }}-info" role="tab" aria-controls="{{ project.slug }}-info" aria-selected="false">Info</a>
-                    </li>
-                    {% if project.downloads %}
-                    <li class="nav-item">
-                        <a class="nav-link no-easing" id="{{ project.slug }}-downloads-tab" data-toggle="tab" href="#{{ project.slug }}-downloads" role="tab" aria-controls="{{ project.slug }}-downloads" aria-selected="false">Downloads</a>
-                    </li>
-                    {% endif %}
-                    {% if project.examples %}
-                    <li class="nav-item">
-                        <a class="nav-link no-easing" id="{{ project.slug }}-examples-tab" data-toggle="tab" href="#{{ project.slug }}-examples" role="tab" aria-controls="{{ project.slug }}-examples" aria-selected="false">Examples</a>
-                    </li>
-                    {% endif %}
-                </ul>
-                <div class="tab-content" id="{{ project.slug }}-tabs">
-                    <div class="tab-pane fade show active project-description" id="{{ project.slug }}-description" role="tabpanel" aria-labelledby="{{ project.slug }}-description-tab">
-                        <p>{{ project.description }}</p>
-                        <a href="{{ site.project_path | prepend: site.baseurl | replace: ':slug', project.slug }}">More Info...</a>
-                    </div>
-                    <div class="tab-pane fade show" id="{{ project.slug }}-info" role="tabpanel" aria-labelledby="{{ project.slug }}-info-tab">
-                        <table class="table table-sm table-striped project-table">
-                            <tbody>
-                                <tr>
-                                    <td><i class="fa fa-history"></i> Version:</td>
-                                    <td>{{ project.version }}</td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fa fa-calendar"></i> Updated:</td>
-                                    <td>{{ project.updated }}</td>
-                                </tr>
-                    <tr>
-                        <td><i class="fa fa-desktop"></i> Platform(s):</td>
-                        <td>{{ project.platforms | join: ", " }}</td>
-                    </tr>
-                                <tr>
-                                    <td><i class="fa fa-home"></i> Homepage:</td>
-                                    {% include url_domain_extract.liquid url=project.homepage %}
-                                    <td>{% if project.homepage %}<a href="{{ project.homepage }}">{{ domain }}</a>{% else %}N/A{% endif %}</td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fa fa-code"></i> Open Source:</td>
-                                    <td>{{ project.open_source }}</td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fa fa-file"></i> License:</td>
-                                    <td>{{ project.license }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    {% if project.downloads %}
-                    <div class="tab-pane fade" id="{{ project.slug }}-downloads" role="tabpanel" aria-labelledby="{{ project.slug }}-downloads-tab">
-                        <table class="table project-table">
-                            <tbody>
-                                {% for download in project.downloads %}
-                                <tr>
-                                    <td class="w-75"><i class="fa fa-download"></i> <span class="project-name">{{ download.name }}</span><br /><span class="project-description">{{ download.description }}</span></td>
-                                    <td class="w-25 download"><a href="{{ download.url }}" role="button" class="btn btn-primary btn-block btn-download">Download</a></td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    {% endif %}
-                    {% if project.examples %}
-                    <div class="tab-pane fade" id="{{ project.slug }}-examples" role="tabpanel" aria-labelledby="{{ project.slug }}-examples-tab">
-                        <table class="table project-table">
-                            <tbody>
-                                {% for example in project.examples %}
-                                <tr>
-                                    <td class="w-75"><i class="fa fa-globe"></i> <span class="project-name">{{ example.name }}</span><br /><span class="project-description">{{ example.description }}</span></td>
-                                    <td class="w-25 download"><a href="{{ example.url }}" role="button" class="btn btn-primary btn-block btn-download">View</a></td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    {% endif %}
-                </div>
+{% assign post = include.post %}
+{% include get_post_image.liquid post=post %}
+
+<div class="card project-card h-100 pt-2">
+    <a href="{{ site.project_path | prepend: site.baseurl | replace: ':slug', project.slug }}">
+        <img class="card-img-top img-fluid project-card-image" src="/assets/images/projects/{{ project.slug }}/{{ project_image }}">
+    </a>
+    <div class="card-body">
+      <h5 class="card-title"><a href="{{ site.project_path | prepend: site.baseurl | replace: ':slug', project.slug }}">{{ project.name }}</a></h5>
+      <p class="card-text">{{ project.description }}</p>
+      <p class="card-text"><a href="{{ site.project_path | prepend: site.baseurl | replace: ':slug', project.slug }}">Read More &raquo;</a></p>
     </div>
 </div>
