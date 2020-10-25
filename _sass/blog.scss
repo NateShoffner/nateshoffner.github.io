@@ -1,14 +1,21 @@
-.blog-excerpt {
+.blog-card {
 
-    &:not(:last-child) {
-        border-bottom: 1px solid $gray-300;
-    }
+    .card-img-top{
+        width: 100%!important;
+        object-fit: contain;
+     }
 
-        @media (max-width: 767.98px) { 
+        @media (min-width: 768px) {
+            .card-img-top{
+                max-height: 280px!important;
+             }
+        }
+        
+        @media (min-width: 992px) {
 
-            .project-image {
-                max-height: 128px;
-            }
+            .card-img-top{
+                height: 320px!important;
+             }
         }
 }
 
@@ -48,7 +55,7 @@ ul.post-meta {
     }
 }
 
-.project-card {
+.blog-project-embed {
     border: 1px solid $gray-300;
 
     img {

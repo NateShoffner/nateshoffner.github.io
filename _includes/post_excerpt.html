@@ -1,26 +1,17 @@
 {% assign post = include.post %}
 {% include get_post_image.liquid post=post %}
 
-<div class="row blog-excerpt mb-3 pb-3">
-    <div class="col-12 col-md-3 mb-3">
-        <img src="/assets/images/posts/{{ post_image }}" class="img-fluid mx-auto d-block post-image"> 
+<div class="card blog-card h-100 pt-2">
+    <a href="{{ post.url }}"><img class="card-img-top img-fluid" src="/assets/images/posts/{{ post_image }}"></a>
+    <div class="card-body">
+      <h5 class="card-title"><a href="{{ post.url }}">{{ post.title }}</a></h5>
+      <p class="card-text">{{ post.excerpt }}</p>
+      <p class="card-text"><a href="{{ post.url }}">Read More &raquo;</a></p>
     </div>
-    <div class="col-12 col-md-9">
-        <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
-
+    <div class="card-footer text-center text-muted">
         <ul class="post-meta">
             <li class="post-meta-item"><i class="fa fa-calendar"></i> {{ post.date | date: '%B %d, %Y' }}</li>
             <li class="post-meta-item"><i class="fa fa-comments"></i> <a href="{{ post.url }}#comments"><span class="disqus-comment-count" data-disqus-url="{{ site.url }}{{ post.url }}">0 Comments</span></a></li>
-            <li class="post-meta-item"><i class="fa fa-folder"></i> 
-                {% if post.categories.size > 0 %}
-                {% for category in post.categories %}
-                {% include create_indexer.liquid param=category %}
-                <a href="{{ site.baseurl }}{{ site.blog_url }}/category/{{ indexer }}/">{{ category }}</a>{% if forloop.last == false %},{% endif %}
-                {% endfor %}
-                {% else %}No Categories{% endif %}</li>
         </ul>
-
-        <p>{{ post.excerpt }}</p>
-        <p><a href="{{ post.url }}">Read More &raquo;</a></p>
     </div>
 </div>
