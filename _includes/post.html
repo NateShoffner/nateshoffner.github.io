@@ -30,7 +30,7 @@
         {% for tag in post.tags %}
             {% include get_project_from_name.liquid name=tag %}
             {% if project %}
-            {% include project_post_card.html project=project %}
+            {% include project_post_embed.html project=project %}
             {% break %}  
             {% endif %}  
         {% endfor %}
