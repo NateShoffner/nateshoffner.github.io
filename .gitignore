@@ -1,6 +1,10 @@
 _site
 .sass-cache
+.jekyll-cache
 
+# jekyll drafts
+_drafts
+assets/images/_drafts
 
 # Logs
 logs
