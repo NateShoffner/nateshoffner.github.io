@@ -35,6 +35,15 @@
     .post-tags {
         padding-bottom: 1rem;
     }
+
+    @media (min-width: 992px) {
+
+        .post-image {
+            max-height: 256px;
+        }
+
+    }
+
 }
 
 ul.post-meta {
