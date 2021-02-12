@@ -6,12 +6,16 @@ layout: page
 
 <h2 class="mb-5">Posts categorized under <span class="text-primary">'{{ decoded }}'</span></h2>
 
-{% for post in site.posts %}
+<div class="row">
+    {% for post in site.posts %}
     {% include array_contains_case_insensitive.liquid collection=post.categories filter=decoded %}
     {% if item_exists %}
-        {% include post_excerpt.html post=post excerpt_length=80 %}
+    <div class="col-sm-12 col-md-6 col-lg-4 mb-5">
+        {% include post_excerpt.html post=post %}
+    </div>
     {% endif %}
 {% endfor %}
+</div>
 
 <!-- Used for Disqus comment counts -->
 <script id="dsq-count-scr" src="//{{ site.disqus_shortname }}.disqus.com/count.js" async></script>
