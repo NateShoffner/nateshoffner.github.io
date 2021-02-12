@@ -1,6 +1,5 @@
 markdown: kramdown
 highligher: pygments
-permalink: /:title
 title: Nate Shoffner
 description: Personal homepage and blog for Nate Shoffner.
 permalink: /blog/:year/:month/:title/
