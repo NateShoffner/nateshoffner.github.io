@@ -26,4 +26,3 @@ mustache_set_delimiter: "{{={u{ }u}=}}"
 recaptcha_site_key: 6LeOIlAUAAAAAGRZuMvrOqTch_aPFaV7kmrF68zD
 project_path: /projects/:slug
 github_commit_path: https://github.com/NateShoffner/nateshoffner.github.io/commit/:id
-excerpt_separator: "\r\n\r\n"

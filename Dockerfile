@@ -7,6 +7,7 @@ RUN gem install sass
 
 # install pip/yarn
 COPY requirements.txt ./requirements.txt
+RUN apk add dos2unix --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/community/ --allow-untrusted
 RUN apk add --no-cache python3 py3-pip yarn
 RUN python3 --version
 RUN pip3 install -r requirements.txt
@@ -34,6 +35,9 @@ COPY _config.yml 404.html favicon.ico feed.xml index.html ./
 # most likely to be modified
 COPY _posts/ ./_posts/
 COPY _data/ ./_data/
+
+# convert any windows line-endings to unix
+RUN find ./_posts/ -type f -print0 | xargs -0 dos2unix
 
 # generate meta and slugs
 RUN python3 ./_extra/generate_post_meta.py
