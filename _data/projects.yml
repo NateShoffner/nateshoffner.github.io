@@ -139,3 +139,31 @@
     - name: 'Tip of the Fedora'
       description: 'Fedoracoin Faucet'
       url: 'https://tipofthefedora.com'
+
+- slug: lcwc
+  name: LCWC++ (Name Pending)
+  version: 0.1
+  updated: July 29, 2023
+  description: 'LCWC++ is a third-party, open-source project aimed at creating a REST API for the Lancaster County-Wide Communications (LCWC) webcad service '
+  logo: lcwc.png
+  open_source: 'Yes'
+  license: N/A
+  homepage: 
+  platforms:
+    - Web
+
+- slug: tenji
+  name: Tenji
+  version: 0.1
+  updated: July 29, 2023
+  description: 'Tenji (展示) is an open-source project aimed at providing a reliable REST API for MyFigureCollection.net.'
+  logo: tenji.png
+  open_source: 'Yes'
+  license: N/A
+  homepage: https://tenji.moe
+  platforms:
+    - Web
+  examples:
+    - name: 'Tenji'
+      description: 'Tenji Homepage'
+      url: 'https://tenji.moe'
