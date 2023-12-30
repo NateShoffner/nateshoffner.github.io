@@ -26,6 +26,8 @@ I started by decoding the APK using [apktool](https://ibotpeaches.github.io/Apkt
 
 I then used [Fiddler Everywhere](https://www.telerik.com/download/fiddler-everywhere) to act as a man-in-the-middle (MITM) proxy to intercept the HTTPS traffic from the app. There are plenty of free/open source alternatives to Fiddler, but I've found Fiddler to be the most user-friendly and wanted to try the Everywhere version, as I've been a long-time user of the original Fiddler for Windows.
 
+{% include post_image.liquid filename="modeshift-fiddler.png" class="center-block" %}
+
 I'm not particularly interested in any of the authenticated endpoints, so I'm only going to focus on the unauthenticated endpoints for now since they're the most useful and allow stuff like trip planning. Admittedly, these endpoints do a lot of the heavy lifting as far as actual routing and trip planning goes. I was initially assuming that ModeShift was piggybacking off the same system as BusFinder (they perhaps are, to a degree), but it seems that ModeShift is doing a lot of the heavy lifting itself, rather than passing off the routing to something like Routes API from Google or something similar.
 
 My plan is to offer a client implementation for ModeShift within the [python-rrta](https://github.com/NateShoffner/python-rrta) package. My hope is to create more tools for RRTA riders to utilize and to hopefully encourage more ridership.
