@@ -4,8 +4,8 @@ section.page-section {
     min-height: 100vh;
 }
 
-section.code-cover {
-    background: linear-gradient( rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), url("../images/bg.jpg");
+section.about-cover {
+    background: linear-gradient( rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.90)), url("../images/bg.jpg");
     background-size: cover;
     color: $white !important;
 }
