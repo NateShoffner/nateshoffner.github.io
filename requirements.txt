@@ -1,2 +1,2 @@
 python-frontmatter==0.5
-urllib3==1.26.19
+urllib3==2.5.0
