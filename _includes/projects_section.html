@@ -5,17 +5,18 @@
 <p>If you would like to see my portfolio and resume for professional work, <a href="#contact">message me</a>.</p>
 
 <div class="row">
+{% assign sorted_projects = site.data.projects | reverse %}
 {% assign project_limit = include.limit %}
 {% if project_limit %}
-    {% for project in site.data.projects limit: project_limit %}
+    {% for project in sorted_projects limit: project_limit %}
         <div class="col-sm-12 col-md-6 col-lg-4 mb-5">
-                {% include project_compact.html project=project %}
+            {% include project_compact.html project=project %}
         </div>
     {% endfor %}
 {% else %}
-    {% for project in site.data.projects %}
+    {% for project in sorted_projects %}
         <div class="col-sm-12 col-md-6 col-lg-4 mb-5">
-                {% include project_compact.html project=project %}
+            {% include project_compact.html project=project %}
         </div>
     {% endfor %}
 {% endif %}
