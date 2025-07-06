@@ -167,3 +167,16 @@
     - name: 'Tenji'
       description: 'Tenji Homepage'
       url: 'https://tenji.moe'
+
+- slug: lancobot
+  name: Lancobot
+  version: 0.1
+  updated: July 5, 2025
+  description: 'General-purpose Discord bot with some tailored features for Lancaster County, PA.'
+  logo: lancobot.png
+  open_source: 'Yes'
+  license: N/A
+  homepage: https://lancobet.dev
+  platforms:
+    - Discord
+  
