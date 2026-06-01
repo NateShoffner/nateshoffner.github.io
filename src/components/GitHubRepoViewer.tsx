@@ -134,13 +134,10 @@ const GitHubRepoViewer: React.FC<Props> = ({
   const [selectedOrg, setSelectedOrg] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>(defaultSortBy)
   const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(defaultVisibleCount)
   const [activityMap, setActivityMap] = useState<Record<number, number[]>>({})
   const [viewMode, setViewMode] = useState<ViewMode>('cards')
   const fetchingIds = useRef(new Set<number>())
-
-  useEffect(() => {
-    setCurrentPage(1)
-  }, [defaultVisibleCount])
 
   useEffect(() => {
     const fetchRepos = async () => {
@@ -212,10 +209,10 @@ const GitHubRepoViewer: React.FC<Props> = ({
     return sortRepos(result, sortBy)
   }, [repos, searchQuery, selectedLang, selectedOrg, sortBy])
 
-  const pageSize = defaultVisibleCount
-  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize))
+  const PAGE_SIZE_OPTIONS = [12, 24, 48, 0] as const
+  const totalPages = pageSize === 0 ? 1 : Math.max(1, Math.ceil(filtered.length / pageSize))
   const safePage = Math.min(Math.max(1, currentPage), totalPages)
-  const visible = filtered.slice((safePage - 1) * pageSize, safePage * pageSize)
+  const visible = pageSize === 0 ? filtered : filtered.slice((safePage - 1) * pageSize, safePage * pageSize)
 
   const visibleKey = visible.map((r) => r.id).join(',')
 
@@ -273,7 +270,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
           disabled={safePage === 1}
           aria-label="First page"
         >
-          <i className="fa fa-step-backward" /><span>First</span>
+          <i className="fa fa-step-backward" />
         </button>
         <button
           className="gw-page-btn"
@@ -281,7 +278,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
           disabled={safePage === 1}
           aria-label="Previous page"
         >
-          <i className="fa fa-chevron-left" /><span>Prev</span>
+          <i className="fa fa-chevron-left" />
         </button>
         <span className="gw-page-info">{safePage} / {totalPages}</span>
         <button
@@ -290,7 +287,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
           disabled={safePage === totalPages}
           aria-label="Next page"
         >
-          <span>Next</span><i className="fa fa-chevron-right" />
+          <i className="fa fa-chevron-right" />
         </button>
         <button
           className="gw-page-btn"
@@ -298,7 +295,7 @@ const GitHubRepoViewer: React.FC<Props> = ({
           disabled={safePage === totalPages}
           aria-label="Last page"
         >
-          <span>Last</span><i className="fa fa-step-forward" />
+          <i className="fa fa-step-forward" />
         </button>
       </div>
     )
@@ -339,37 +336,59 @@ const GitHubRepoViewer: React.FC<Props> = ({
               onChange={(e) => { setSearchQuery(e.target.value); resetPage() }}
             />
 
-            <select
-              className="form-control gw-select"
-              value={selectedLang}
-              onChange={(e) => { setSelectedLang(e.target.value); resetPage() }}
-            >
-              <option value="">All Languages</option>
-              {languages.map(({ lang, count }) => (
-                <option key={lang} value={lang}>{lang} ({count})</option>
-              ))}
-            </select>
+            <label className="gw-select-label">
+              Language
+              <select
+                className="form-control gw-select"
+                value={selectedLang}
+                onChange={(e) => { setSelectedLang(e.target.value); resetPage() }}
+              >
+                <option value="">All</option>
+                {languages.map(({ lang, count }) => (
+                  <option key={lang} value={lang}>{lang} ({count})</option>
+                ))}
+              </select>
+            </label>
 
-            <select
-              className="form-control gw-select"
-              value={selectedOrg}
-              onChange={(e) => { setSelectedOrg(e.target.value); resetPage() }}
-            >
-              <option value="">All Accounts</option>
-              {orgs.map(({ org, count }) => (
-                <option key={org} value={org}>{org} ({count})</option>
-              ))}
-            </select>
+            <label className="gw-select-label">
+              Account
+              <select
+                className="form-control gw-select"
+                value={selectedOrg}
+                onChange={(e) => { setSelectedOrg(e.target.value); resetPage() }}
+              >
+                <option value="">All</option>
+                {orgs.map(({ org, count }) => (
+                  <option key={org} value={org}>{org} ({count})</option>
+                ))}
+              </select>
+            </label>
 
-            <select
-              className="form-control gw-select"
-              value={sortBy}
-              onChange={(e) => { setSortBy(e.target.value as SortOption); resetPage() }}
-            >
-              <option value="stars">Most Stars</option>
-              <option value="pushed">Recently Updated</option>
-              <option value="name">Alphabetical</option>
-            </select>
+            <label className="gw-select-label">
+              Sort
+              <select
+                className="form-control gw-select"
+                value={sortBy}
+                onChange={(e) => { setSortBy(e.target.value as SortOption); resetPage() }}
+              >
+                <option value="stars">Stars</option>
+                <option value="pushed">Updated</option>
+                <option value="name">A–Z</option>
+              </select>
+            </label>
+
+            <label className="gw-select-label">
+              Per page
+              <select
+                className="form-control gw-select gw-select--per-page"
+                value={pageSize}
+                onChange={(e) => { setPageSize(Number(e.target.value)); resetPage() }}
+              >
+                {PAGE_SIZE_OPTIONS.map((n) => (
+                  <option key={n} value={n}>{n === 0 ? 'All' : n}</option>
+                ))}
+              </select>
+            </label>
 
             {hasActiveFilters && (
               <button className="btn btn-sm btn-outline-secondary gw-clear" onClick={clearFilters}>
@@ -397,26 +416,45 @@ const GitHubRepoViewer: React.FC<Props> = ({
               onChange={(e) => { setSearchQuery(e.target.value); resetPage() }}
             />
 
-            <select
-              className="form-control gw-select"
-              value={selectedLang}
-              onChange={(e) => { setSelectedLang(e.target.value); resetPage() }}
-            >
-              <option value="">All Languages</option>
-              {languages.map(({ lang, count }) => (
-                <option key={lang} value={lang}>{lang} ({count})</option>
-              ))}
-            </select>
+            <label className="gw-select-label">
+              Language
+              <select
+                className="form-control gw-select"
+                value={selectedLang}
+                onChange={(e) => { setSelectedLang(e.target.value); resetPage() }}
+              >
+                <option value="">All</option>
+                {languages.map(({ lang, count }) => (
+                  <option key={lang} value={lang}>{lang} ({count})</option>
+                ))}
+              </select>
+            </label>
 
-            <select
-              className="form-control gw-select"
-              value={sortBy}
-              onChange={(e) => { setSortBy(e.target.value as SortOption); resetPage() }}
-            >
-              <option value="pushed">Recently Updated</option>
-              <option value="stars">Most Stars</option>
-              <option value="name">A–Z</option>
-            </select>
+            <label className="gw-select-label">
+              Sort
+              <select
+                className="form-control gw-select"
+                value={sortBy}
+                onChange={(e) => { setSortBy(e.target.value as SortOption); resetPage() }}
+              >
+                <option value="pushed">Updated</option>
+                <option value="stars">Stars</option>
+                <option value="name">A–Z</option>
+              </select>
+            </label>
+
+            <label className="gw-select-label">
+              Per page
+              <select
+                className="form-control gw-select gw-select--per-page"
+                value={pageSize}
+                onChange={(e) => { setPageSize(Number(e.target.value)); resetPage() }}
+              >
+                {PAGE_SIZE_OPTIONS.map((n) => (
+                  <option key={n} value={n}>{n === 0 ? 'All' : n}</option>
+                ))}
+              </select>
+            </label>
 
             {hasActiveFilters && (
               <button className="gw-compact-clear" onClick={clearFilters} title="Clear filters" aria-label="Clear filters">

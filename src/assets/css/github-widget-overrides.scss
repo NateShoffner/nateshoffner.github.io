@@ -48,6 +48,21 @@
   max-width: 220px;
 }
 
+.gw-select-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: $gray-500;
+  white-space: nowrap;
+  margin: 0;
+
+  .gw-select--per-page {
+    min-width: unset;
+    width: auto;
+  }
+}
+
 .gw-clear {
   align-self: stretch;
 }

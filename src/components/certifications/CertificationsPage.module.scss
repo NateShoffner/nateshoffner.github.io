@@ -95,6 +95,15 @@
   }
 }
 
+// dark is :root default — show white variant, hide black
+.logoLight { display: none; }
+.logoDark  { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+:global([data-theme="light"]) {
+  .logoLight { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .logoDark  { display: none; }
+}
+
 .logoPlaceholder {
   width: 100%;
   height: 100%;

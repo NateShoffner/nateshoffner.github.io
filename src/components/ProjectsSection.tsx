@@ -70,7 +70,7 @@ export function ProjectsSection({
         ]}
         includeForks={false}
         includePages={true}
-        defaultVisibleCount={9}
+        defaultVisibleCount={12}
         defaultSortBy="pushed"
         showFilters={false}
         showCompactFilters={true}

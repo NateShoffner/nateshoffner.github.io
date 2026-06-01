@@ -91,20 +91,24 @@ export default function WorkContent({ profile, certs, compact = false }: Props) 
             {certs && (
               <>
                 <div className={styles.issuerLogos}>
-                  {certs.issuers.map(({ name, logo }) =>
-                    logo ? (
-                      <img
-                        key={name}
-                        src={`/assets/images/certs/${logo}`}
-                        alt={name}
-                        className={styles.issuerLogo}
-                      />
-                    ) : (
+                  {certs.issuers.map(({ name, logo }) => {
+                    if (!logo) return (
                       <div key={name} className={styles.issuerLogoPlaceholder}>
                         {name.charAt(0)}
                       </div>
                     )
-                  )}
+                    const lightSrc = `/assets/images/certs/${logo}`
+                    const darkSrc = lightSrc.replace('-black.', '-white.')
+                    const hasVariants = lightSrc !== darkSrc
+                    return hasVariants ? (
+                      <span key={name} className={styles.issuerLogoWrap}>
+                        <img src={lightSrc} alt={name} className={`${styles.issuerLogo} ${styles.issuerLogoLight}`} />
+                        <img src={darkSrc} alt={name} className={`${styles.issuerLogo} ${styles.issuerLogoDark}`} />
+                      </span>
+                    ) : (
+                      <img key={name} src={lightSrc} alt={name} className={styles.issuerLogo} />
+                    )
+                  })}
                 </div>
                 <div className={styles.statsStrip}>
                   <div className={styles.stat}>

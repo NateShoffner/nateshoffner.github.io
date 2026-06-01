@@ -22,9 +22,20 @@ function certIsActive(cert: Certification): boolean {
 
 function IssuerLogo({ cert, size = 28 }: { cert: Certification; size?: number }) {
   if (cert.issuer_logo) {
+    const lightSrc = `/assets/images/certs/${cert.issuer_logo}`
+    const darkSrc = lightSrc.replace('-black.', '-white.')
+    const hasVariants = lightSrc !== darkSrc
+
     return (
       <div className={styles.logo} style={{ width: size, height: size }}>
-        <img src={`/assets/images/certs/${cert.issuer_logo}`} alt={cert.issuer} />
+        {hasVariants ? (
+          <>
+            <img src={lightSrc} alt={cert.issuer} className={styles.logoLight} />
+            <img src={darkSrc} alt={cert.issuer} className={styles.logoDark} />
+          </>
+        ) : (
+          <img src={lightSrc} alt={cert.issuer} />
+        )}
       </div>
     )
   }

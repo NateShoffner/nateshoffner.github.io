@@ -247,6 +247,13 @@ $highlight: #337ab7;
   flex-wrap: wrap;
 }
 
+.issuerLogoWrap {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
 .issuerLogo {
   width: 44px;
   height: 44px;
@@ -265,6 +272,15 @@ $highlight: #337ab7;
   justify-content: center;
   font-weight: 700;
   font-size: 1rem;
+}
+
+// dark is :root default — show white variant, hide black
+.issuerLogoLight { display: none; }
+.issuerLogoDark  { display: block; }
+
+:global([data-theme="light"]) {
+  .issuerLogoLight { display: block; }
+  .issuerLogoDark  { display: none; }
 }
 
 // ── stats strip ───────────────────────────────────────────────────────────────
