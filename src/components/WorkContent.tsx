@@ -79,8 +79,8 @@ export default function WorkContent({ profile, certs, compact = false }: Props) 
             </div>
             <h3 className={styles.panelTitle}>Industry Credentials</h3>
             <p className={styles.panelDesc}>
-              Verified certifications across security, observability, and
-              enterprise search, spanning multiple platforms and vendors.
+              Verified certifications across various platforms, vendors,
+              and technologies.
             </p>
             <Link href="/work/certifications" className={styles.panelBtn}>
               View Certifications <i className="fa fa-arrow-right" />
