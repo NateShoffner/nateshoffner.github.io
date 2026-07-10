@@ -1,24 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
-
-async function verifyTurnstile(token: string): Promise<boolean> {
-  const secret = process.env.TURNSTILE_SECRET_KEY
-  if (!secret) {
-    console.error('[contact] TURNSTILE_SECRET_KEY is not set')
-    return false
-  }
-
-  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ secret, response: token }),
-  })
-  const data = await res.json()
-  if (!data.success) {
-    console.error('[contact] Turnstile verification failed:', data['error-codes'])
-  }
-  return data.success === true
-}
+import { verifyTurnstile } from '@lib/turnstile'
 
 export async function POST(req: NextRequest) {
   const { name, email, message, turnstileToken } = await req.json()
@@ -27,7 +9,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
-  const turnstileOk = await verifyTurnstile(turnstileToken)
+  const turnstileOk = await verifyTurnstile(turnstileToken, 'contact')
   if (!turnstileOk) {
     return NextResponse.json({ error: 'captcha' }, { status: 400 })
   }

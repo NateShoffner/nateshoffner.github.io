@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { jwtVerify, createRemoteJWKSet } from 'jose'
+import {
+  SESSION_COOKIE,
+  UNLOCK_PATH,
+  isCloudflareAccessEnabled,
+} from '@lib/auth/config'
+import { verifySessionToken } from '@lib/auth/session'
 
 const JWKS = (() => {
   const domain = process.env.CF_ACCESS_TEAM_DOMAIN
@@ -8,7 +14,7 @@ const JWKS = (() => {
     : null
 })()
 
-export async function middleware(req: NextRequest) {
+async function cloudflareAccess(req: NextRequest): Promise<NextResponse> {
   if (process.env.CF_ACCESS_BYPASS === 'true') return NextResponse.next()
 
   const aud = process.env.CF_ACCESS_AUD
@@ -17,7 +23,6 @@ export async function middleware(req: NextRequest) {
   }
 
   const token = req.headers.get('CF-Access-JWT-Assertion')
-
   if (!token) {
     return new NextResponse('Unauthorized', { status: 401 })
   }
@@ -30,6 +35,26 @@ export async function middleware(req: NextRequest) {
   }
 }
 
+async function passwordGate(req: NextRequest): Promise<NextResponse> {
+  const token = req.cookies.get(SESSION_COOKIE)?.value
+  if (token && (await verifySessionToken(token))) {
+    return NextResponse.next()
+  }
+
+  // Send the visitor to the unlock page, remembering where they were headed.
+  const url = req.nextUrl.clone()
+  url.pathname = UNLOCK_PATH
+  url.search = ''
+  url.searchParams.set('next', req.nextUrl.pathname)
+  return NextResponse.redirect(url)
+}
+
+export async function middleware(req: NextRequest) {
+  return isCloudflareAccessEnabled()
+    ? cloudflareAccess(req)
+    : passwordGate(req)
+}
+
 export const config = {
-  matcher: ['/resume/:path*'],
+  matcher: ['/work/resume/:path*', '/work/certifications/:path*'],
 }
