@@ -17,7 +17,7 @@
     "@react-pdf/renderer": "^4.5.1",
     "@types/js-yaml": "^4.0.9",
     "@uiw/react-md-editor": "^4.1.1",
-    "axios": "^1.15.2",
+    "axios": "^1.18.0",
     "bootstrap": "^4.5.3",
     "disqus-react": "^1.1.7",
     "feed": "^5.1.0",
