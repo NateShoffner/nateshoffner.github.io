@@ -6,7 +6,7 @@
     "dev": "next dev -H 0.0.0.0",
     "build": "bash scripts/unlock.sh && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "prepare": "git config core.hooksPath .githooks && chmod +x .githooks/pre-commit"
   },
   "dependencies": {
@@ -44,15 +44,19 @@
     "sass": "^1.89.2",
     "unified": "^11.0.5"
   },
+  "overrides": {
+    "postcss": "^8.5.18",
+    "sharp": "^0.35.0"
+  },
   "devDependencies": {
-    "@eslint/js": "^9.29.0",
+    "@eslint/js": "^10.0.1",
     "@types/bootstrap": "^5.2.10",
     "@types/node": "^24.1.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@types/react-scroll": "^1.8.10",
     "eslint": "^10.8.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.2.0",
     "typescript": "~5.8.3",
