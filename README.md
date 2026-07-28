@@ -9,6 +9,7 @@ Personal website and blog. Built with Next.js (App Router), deployed on Vercel.
 - **Blog:** Markdown files with gray-matter frontmatter, Disqus comments
 - **Deployment:** Vercel
 - **Contact form:** Resend + Cloudflare Turnstile
+- **Gated pages:** Cloudflare Access *or* self-managed password gate (see [Work Section](#work-section-resume--certifications))
 
 ## Getting Started
 
@@ -56,25 +57,48 @@ Post content here.
 
 Posts are served at `/blog/[year]/[month]/[slug]/`. Tags and categories link to filtered listing pages at `/blog/tag/[tag]/` and `/blog/category/[category]/`.
 
-## Resume
+## Work Section (Resume & Certifications)
 
-The resume lives at `/resume/view` and is protected by Cloudflare Access. The underlying data is stored in `_data/resume.yml`, which is encrypted with [SOPS](https://github.com/getsops/sops) using an [age](https://github.com/FiloSottile/age) keypair.
+The `/work` landing page is public, but the resume and certifications pages behind it are gated. Routes:
+
+- `/work` — public landing page
+- `/work/resume` — interactive web view (gated)
+- `/work/resume/print` — print-optimized layout (gated)
+- `/work/resume/pdf` — downloads a generated PDF via `@react-pdf/renderer` (gated)
+- `/work/certifications` — certifications listing (gated)
+- `/work/unlock` — password login page (used by the self-managed backend)
+
+### Authentication backends
+
+The gate is enforced in `src/middleware.ts` and supports two swappable backends, selected by `CF_ACCESS_ENABLED`:
+
+- **`CF_ACCESS_ENABLED=true`** — Cloudflare Access. The middleware validates the `CF-Access-JWT-Assertion` header against your Access application.
+- **unset / not `true`** — self-managed password gate (the default). Visitors are redirected to `/work/unlock`, which requires a password plus a Cloudflare Turnstile challenge. On success, a signed, session-only cookie is set (via [jose](https://github.com/panva/jose), HS256) and grants access until the browser is closed.
+
+The credential check is isolated in `lib/auth/credentials.ts` so it can later be replaced with a real credential store (time-gated access, usage limits, audit logging) without touching the middleware or routes.
 
 | Variable | Description |
 |---|---|
-| `AGE_SECRET_KEY` | age private key used to decrypt `resume.yml` at build time |
+| `CF_ACCESS_ENABLED` | `true` to use Cloudflare Access; otherwise the password gate is used |
 | `CF_ACCESS_TEAM_DOMAIN` | Cloudflare Access team domain (e.g. `example.cloudflareaccess.com`) |
 | `CF_ACCESS_AUD` | Cloudflare Access application audience tag |
 | `CF_ACCESS_BYPASS` | Set to `true` to skip JWT validation in local development |
+| `SITE_ACCESS_PASSWORD` | Password for the self-managed gate |
+| `AUTH_SESSION_SECRET` | Secret used to sign the session cookie (`openssl rand -base64 32`) |
 
-The build script (`scripts/unlock-resume.sh`) downloads the SOPS binary if needed, then decrypts `resume.yml` in-place before `next build` runs. On Vercel, set `AGE_SECRET_KEY` as an environment variable.
+> The password gate reuses `NEXT_PUBLIC_TURNSTILE_SITE_KEY` / `TURNSTILE_SECRET_KEY` for its captcha.
+
+### Encrypted data (SOPS)
+
+The resume and certifications data (`_data/resume.yml`, `_data/certs.yaml`) is encrypted with [SOPS](https://github.com/getsops/sops) using an [age](https://github.com/FiloSottile/age) keypair.
+
+| Variable | Description |
+|---|---|
+| `AGE_SECRET_KEY` | age private key used to decrypt the data at build time |
+
+The build script (`scripts/unlock.sh`) downloads the SOPS binary if needed, then decrypts the data in-place before `next build` runs. On Vercel, set `AGE_SECRET_KEY` as an environment variable. In development, `sops` must be on the `PATH` for on-demand decryption.
 
 To generate a new keypair locally: `age-keygen`. Add the public key to `.sops.yaml` and the private key to `AGE_SECRET_KEY` in `.env.local`.
-
-Routes:
-- `/resume/view` — interactive web view
-- `/resume/view/print` — print-optimized layout
-- `/resume/pdf` — downloads a generated PDF via `@react-pdf/renderer`
 
 ## Admin Panel
 
