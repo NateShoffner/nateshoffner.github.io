@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
+import { circuitTracesEnabled } from '@/src/config'
 
 const DR = 2;
 
@@ -80,7 +81,14 @@ function calculatePathDistance(pointsStr: string, targetX: number, targetY: numb
   return distance;
 }
 
+// Wrapper keeps the flag check outside the hook-bearing component so the
+// early return does not trip rules-of-hooks.
 export default function NavCircuitTraces() {
+  if (!circuitTracesEnabled) return null
+  return <NavCircuitTracesInner />
+}
+
+function NavCircuitTracesInner() {
   const [bottomTop, setBottomTop] = useState<number | null>(null)
   const animationRefRef = useRef<number | null>(null)
 

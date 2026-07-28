@@ -6,6 +6,7 @@ import {
   isCloudflareAccessEnabled,
 } from '@lib/auth/config'
 import { verifySessionToken } from '@lib/auth/session'
+import { workSectionEnabled } from '@/src/config'
 
 const JWKS = (() => {
   const domain = process.env.CF_ACCESS_TEAM_DOMAIN
@@ -50,6 +51,10 @@ async function passwordGate(req: NextRequest): Promise<NextResponse> {
 }
 
 export async function middleware(req: NextRequest) {
+  // When the work section is hidden, skip auth so the route layer can 404
+  // instead of redirecting to the unlock page first.
+  if (!workSectionEnabled) return NextResponse.next()
+
   return isCloudflareAccessEnabled()
     ? cloudflareAccess(req)
     : passwordGate(req)

@@ -13,6 +13,7 @@ import type { PostMeta } from '@/lib/blog'
 import type { Project } from '@/src/types/Project'
 import type { Profile } from '@/lib/profile'
 import type { CertSummary } from '@/src/types/CertSummary'
+import { workSectionEnabled } from '@/src/config'
 
 export default function HomePage() {
   const [posts, setPosts] = useState<PostMeta[]>([])
@@ -48,10 +49,12 @@ export default function HomePage() {
       .then((data: Profile) => setProfile(data))
       .catch(() => {})
 
-    fetch('/api/certs/summary')
-      .then((r) => r.json())
-      .then((data: CertSummary) => setCertSummary(data))
-      .catch(() => {})
+    if (workSectionEnabled) {
+      fetch('/api/certs/summary')
+        .then((r) => r.json())
+        .then((data: CertSummary) => setCertSummary(data))
+        .catch(() => {})
+    }
   }, [])
 
   return (
@@ -94,13 +97,15 @@ export default function HomePage() {
         </section>
       </Element>
 
-      <Element name="work">
-        <section className="page-section p-4 p-lg-5 d-flex flex-column" id="work">
-          <div className="my-auto">
-            <WorkSection profile={profile} certSummary={certSummary} />
-          </div>
-        </section>
-      </Element>
+      {workSectionEnabled && (
+        <Element name="work">
+          <section className="page-section p-4 p-lg-5 d-flex flex-column" id="work">
+            <div className="my-auto">
+              <WorkSection profile={profile} certSummary={certSummary} />
+            </div>
+          </section>
+        </Element>
+      )}
 
       <Element name="contact">
         <section className="page-section p-4 p-lg-5 d-flex flex-column" id="contact">

@@ -1,3 +1,5 @@
+import { circuitTracesEnabled } from "@/src/config";
+
 const SW = 1.5;
 const DR = 2.5;
 
@@ -6,6 +8,7 @@ function Dot({ cx, cy }: { cx: number; cy: number }) {
 }
 
 export default function CircuitTraces() {
+  if (!circuitTracesEnabled) return null;
   return (
     <div
       style={{

@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXTwitter, faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import NavCircuitTraces from '@components/NavCircuitTraces'
+import { circuitTracesEnabled, workSectionEnabled } from '@/src/config'
 
 type NavItem = { id: string; label: string; route: string; hash: string }
 type SocialItem = { id: string; icon: IconDefinition; url: string }
@@ -18,7 +19,7 @@ const NavItems: NavItem[] = [
   { id: 'projects', label: 'Projects', route: '/projects', hash: '/#projects' },
   { id: 'work', label: 'Work', route: '/work', hash: '/#work' },
   { id: 'contact', label: 'Contact', route: '/contact', hash: '/#contact' },
-]
+].filter((item) => item.id !== 'work' || workSectionEnabled)
 
 const SocialItems: SocialItem[] = [
   { id: 'x', icon: faXTwitter, url: 'https://x.com/NateShoffner' },
@@ -193,7 +194,11 @@ export default function Navbar() {
           <span className="d-block d-lg-none navbar-brand-text">Nate Shoffner</span>
         )}
         <span className="d-none d-lg-block">
-          <div className="circle-border" onMouseEnter={handleCircleEnter} onMouseLeave={handleCircleLeave}>
+          <div
+            className="circle-border"
+            onMouseEnter={circuitTracesEnabled ? handleCircleEnter : undefined}
+            onMouseLeave={circuitTracesEnabled ? handleCircleLeave : undefined}
+          >
             <div className="circle">
               <img
                 className="img-fluid rounded-circle img-profile mx-auto"
@@ -201,16 +206,18 @@ export default function Navbar() {
                 alt="Nate Shoffner"
               />
             </div>
-            <svg className="profile-circuit" viewBox="0 0 200 200" fill="none" aria-hidden="true">
-              <polyline className="pc-trace pc-trace-1" points={traces[0].points} style={traceStyle(0, 0)} />
-              <circle className="pc-node" cx={traces[0].nodeX} cy={traces[0].nodeY} r="2" />
-              <polyline className="pc-trace pc-trace-2" points={traces[1].points} style={traceStyle(1, 0.04)} />
-              <circle className="pc-node" cx={traces[1].nodeX} cy={traces[1].nodeY} r="2" />
-              <polyline className="pc-trace pc-trace-3" points={traces[2].points} style={traceStyle(2, 0.02)} />
-              <circle className="pc-node" cx={traces[2].nodeX} cy={traces[2].nodeY} r="2" />
-              <polyline className="pc-trace pc-trace-4" points={traces[3].points} style={traceStyle(3, 0.06)} />
-              <circle className="pc-node" cx={traces[3].nodeX} cy={traces[3].nodeY} r="2" />
-            </svg>
+            {circuitTracesEnabled && (
+              <svg className="profile-circuit" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+                <polyline className="pc-trace pc-trace-1" points={traces[0].points} style={traceStyle(0, 0)} />
+                <circle className="pc-node" cx={traces[0].nodeX} cy={traces[0].nodeY} r="2" />
+                <polyline className="pc-trace pc-trace-2" points={traces[1].points} style={traceStyle(1, 0.04)} />
+                <circle className="pc-node" cx={traces[1].nodeX} cy={traces[1].nodeY} r="2" />
+                <polyline className="pc-trace pc-trace-3" points={traces[2].points} style={traceStyle(2, 0.02)} />
+                <circle className="pc-node" cx={traces[2].nodeX} cy={traces[2].nodeY} r="2" />
+                <polyline className="pc-trace pc-trace-4" points={traces[3].points} style={traceStyle(3, 0.06)} />
+                <circle className="pc-node" cx={traces[3].nodeX} cy={traces[3].nodeY} r="2" />
+              </svg>
+            )}
           </div>
         </span>
       </NextLink>

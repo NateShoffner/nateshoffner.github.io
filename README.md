@@ -38,6 +38,15 @@ For local development, Cloudflare provides test keys that work on any domain:
 - Site key: `1x00000000000000000000AA`
 - Secret key: `1x0000000000000000000000000000000AA`
 
+## Feature Flags
+
+Build-time flags (`NEXT_PUBLIC_*` variables are inlined at build, so changing them requires a rebuild/redeploy). Both default to enabled; set to `false` to disable.
+
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_CIRCUIT_TRACES` | Decorative circuit-board traces (nav sidebar, profile circle hover, unlock page backdrop) |
+| `NEXT_PUBLIC_WORK_SECTION` | Professional work section: the home page section, the "Work" nav item, and all `/work` pages (which 404 when disabled) |
+
 ## Blog Posts
 
 Posts live in `_posts/` as Markdown files with YAML frontmatter:
