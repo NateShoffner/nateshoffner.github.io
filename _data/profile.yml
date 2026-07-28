@@ -1,6 +1,6 @@
 author: Nate Shoffner
 description:
-  - "Passionate about all things tech, solving interesting problems, and building things as much as breaking them."
+  - "Pythonista at heart, into all things tech: solving interesting problems and building things about as much as breaking them."
 years_experience: 15
 open_to_work: false
 location:
@@ -16,7 +16,7 @@ roles:
     url: https://certified.elastic.co/d2170b39-7c27-4811-952f-3085d6a0dda5
 focus_areas:
   - Full-Stack & API Development
-  - "Observability & Data Engineering (ELK)"
+  - "Search & Observability (ELK)"
   - Mobile Development
   - "Embedded & IoT (ESP32)"
   - Reverse Engineering
