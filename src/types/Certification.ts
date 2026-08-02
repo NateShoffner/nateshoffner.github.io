@@ -6,4 +6,5 @@ export interface Certification {
   expires?: string
   credential_url?: string
   skills?: string[]
+  resume?: boolean
 }

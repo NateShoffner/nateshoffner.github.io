@@ -1,6 +1,8 @@
 import React from 'react'
 import { Document, Page, Text, View, StyleSheet, type TextProps } from '@react-pdf/renderer'
 import type { Resume } from '@lib/resume'
+import { groupExperience } from '@lib/experience'
+import type { Certification } from '@/src/types/Certification'
 
 const DARK_BG = '#2d2d2d'
 const DARK_TEXT = '#e0e0e0'
@@ -32,7 +34,8 @@ const s = StyleSheet.create({
   main: {
     flex: 1,
     padding: 24,
-    paddingTop: 20,
+    paddingTop: 18,
+    paddingBottom: 0,
     backgroundColor: '#fff',
   },
 
@@ -83,6 +86,15 @@ const s = StyleSheet.create({
     lineHeight: 1.5,
   },
 
+  certEntry: {
+    marginBottom: 4,
+  },
+  certName: {
+    fontSize: 8.5,
+    fontFamily: 'Helvetica-Bold',
+    color: LIGHT_TEXT,
+  },
+
   projectEntry: {
     marginBottom: 10,
   },
@@ -110,7 +122,7 @@ const s = StyleSheet.create({
   },
 
   section: {
-    marginBottom: 16,
+    marginBottom: 12,
   },
   sectionHeading: {
     fontSize: 13,
@@ -125,11 +137,11 @@ const s = StyleSheet.create({
   objective: {
     fontSize: 9,
     color: LIGHT_TEXT,
-    lineHeight: 1.65,
+    lineHeight: 1.5,
   },
 
   entry: {
-    marginBottom: 14,
+    marginBottom: 10,
   },
   entryTitle: {
     fontSize: 11,
@@ -148,10 +160,50 @@ const s = StyleSheet.create({
     color: MUTED,
     marginBottom: 5,
   },
+
+  groupCompany: {
+    fontSize: 10.5,
+    fontFamily: 'Helvetica-Bold',
+    color: LIGHT_TEXT,
+    marginBottom: 6,
+  },
+  roleRow: {
+    flexDirection: 'row',
+  },
+  timelineCol: {
+    width: 12,
+    alignItems: 'center',
+  },
+  timelineDot: {
+    width: 5,
+    height: 5,
+    borderRadius: 2.5,
+    backgroundColor: MUTED,
+    marginTop: 3,
+  },
+  timelineLine: {
+    width: 1,
+    flex: 1,
+    backgroundColor: '#cccccc',
+    marginTop: 2,
+  },
+  roleContent: {
+    flex: 1,
+    paddingBottom: 10,
+  },
+  roleContentLast: {
+    flex: 1,
+  },
+  roleTitle: {
+    fontSize: 10,
+    fontFamily: 'Helvetica-Bold',
+    color: LIGHT_TEXT,
+    marginBottom: 1,
+  },
   bullet: {
     fontSize: 9,
     color: LIGHT_TEXT,
-    lineHeight: 1.6,
+    lineHeight: 1.5,
     marginBottom: 2,
     paddingLeft: 10,
   },
@@ -161,8 +213,9 @@ function Bullet({ text, style }: { text: string; style: TextProps['style'] }) {
   return <Text style={style}>{'• ' + text}</Text>
 }
 
-export function ResumePDFDoc({ resume }: { resume: Resume }) {
+export function ResumePDFDoc({ resume, certifications }: { resume: Resume; certifications: Certification[] }) {
   const { contact } = resume
+  const experienceGroups = groupExperience(resume.experience)
   return (
     <Document>
       <Page size="LETTER" style={s.page}>
@@ -197,6 +250,17 @@ export function ResumePDFDoc({ resume }: { resume: Resume }) {
               <Text style={s.languagesText}>{resume.skills.languages.join(', ')}</Text>
             </View>
 
+            {certifications.length > 0 && (
+              <View style={s.sidebarSection}>
+                <Text style={s.sidebarHeading}>Certifications</Text>
+                {certifications.map((cert, i) => (
+                  <View key={i} style={s.certEntry}>
+                    <Text style={s.certName}>{cert.name}</Text>
+                  </View>
+                ))}
+              </View>
+            )}
+
             <View style={s.sidebarSection}>
               <Text style={s.sidebarHeading}>Recent Projects</Text>
               {resume.projects.map((proj, i) => (
@@ -222,19 +286,46 @@ export function ResumePDFDoc({ resume }: { resume: Resume }) {
             <Text style={s.objective}>{resume.objective}</Text>
           </View>
 
-          <View style={s.section}>
-            <Text style={s.sectionHeading}>Work Experience</Text>
-            {resume.experience.map((exp, i) => (
-              <View key={i} style={s.entry}>
-                <Text style={s.entryTitle}>{exp.title}</Text>
-                <Text style={s.entryCompany}>{exp.company}</Text>
-                <Text style={s.entryMeta}>{exp.start} – {exp.end}  ·  {exp.location}</Text>
-                {exp.bullets.map((b, j) => (
-                  <Bullet key={j} text={b} style={s.bullet} />
-                ))}
-              </View>
-            ))}
-          </View>
+          {/* Heading and entries are siblings (not one wrapping View) so
+              react-pdf can break between entries instead of relocating the
+              whole section to the next page. */}
+          <Text style={s.sectionHeading}>Work Experience</Text>
+          {experienceGroups.map((group, i) => (
+            <View
+              key={i}
+              style={i === experienceGroups.length - 1 ? [s.entry, { marginBottom: 0 }] : s.entry}
+            >
+              {group.roles.length > 1 && (
+                <Text style={s.groupCompany}>{group.company}</Text>
+              )}
+              {group.roles.map((exp, j) =>
+                group.roles.length > 1 ? (
+                  <View key={j} style={s.roleRow}>
+                    <View style={s.timelineCol}>
+                      <View style={s.timelineDot} />
+                      {j < group.roles.length - 1 && <View style={s.timelineLine} />}
+                    </View>
+                    <View style={j === group.roles.length - 1 ? s.roleContentLast : s.roleContent}>
+                      <Text style={s.roleTitle}>{exp.title}</Text>
+                      <Text style={s.entryMeta}>{exp.start} – {exp.end}  ·  {exp.location}</Text>
+                      {exp.bullets.map((b, k) => (
+                        <Bullet key={k} text={b} style={s.bullet} />
+                      ))}
+                    </View>
+                  </View>
+                ) : (
+                  <View key={j}>
+                    <Text style={s.entryTitle}>{exp.title}</Text>
+                    <Text style={s.entryCompany}>{exp.company}</Text>
+                    <Text style={s.entryMeta}>{exp.start} – {exp.end}  ·  {exp.location}</Text>
+                    {exp.bullets.map((b, k) => (
+                      <Bullet key={k} text={b} style={s.bullet} />
+                    ))}
+                  </View>
+                )
+              )}
+            </View>
+          ))}
 
         </View>
 

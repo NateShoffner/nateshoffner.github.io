@@ -2,6 +2,7 @@ import React from 'react'
 import { NextResponse } from 'next/server'
 import { renderToBuffer } from '@react-pdf/renderer'
 import { getResume } from '@lib/resume'
+import { getResumeCertifications } from '@lib/certs'
 import { ResumePDFDoc } from '@components/resume/ResumePDFDoc'
 import { workSectionEnabled } from '@/src/config'
 
@@ -11,7 +12,8 @@ export async function GET() {
   // Route handlers bypass the work layout's notFound guard.
   if (!workSectionEnabled) return new NextResponse(null, { status: 404 })
   const resume = getResume()
-  const buffer = await renderToBuffer(<ResumePDFDoc resume={resume} />)
+  const certifications = getResumeCertifications()
+  const buffer = await renderToBuffer(<ResumePDFDoc resume={resume} certifications={certifications} />)
   return new NextResponse(buffer, {
     headers: {
       'Content-Type': 'application/pdf',

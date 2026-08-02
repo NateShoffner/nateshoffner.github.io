@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getResume } from '@lib/resume'
+import { getResumeCertifications } from '@lib/certs'
 import ResumePrint from '@components/resume/ResumePrint'
 
 export const dynamic = 'force-dynamic'
@@ -11,5 +12,6 @@ export const metadata: Metadata = {
 
 export default function ResumePrintPage() {
   const resume = getResume()
-  return <ResumePrint resume={resume} />
+  const certifications = getResumeCertifications()
+  return <ResumePrint resume={resume} certifications={certifications} />
 }

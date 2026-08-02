@@ -21,3 +21,8 @@ export function getAllCertifications(): Certification[] {
   }
   return parsed.certifications
 }
+
+// Entries flagged with `resume: true` in certs.yaml appear on the resume.
+export function getResumeCertifications(): Certification[] {
+  return getAllCertifications().filter(cert => cert.resume)
+}

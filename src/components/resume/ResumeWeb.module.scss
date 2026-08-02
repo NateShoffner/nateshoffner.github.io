@@ -114,6 +114,31 @@
   border-bottom: 1px solid var(--border-color);
 }
 
+.certEntry {
+  margin-bottom: 0.45rem;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.certName {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--body-color);
+  margin: 0;
+
+  // when rendered as <a>
+  &:is(a) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+    color: var(--body-color);
+    transition: color 0.15s ease;
+
+    &:hover { color: var(--link-color); }
+  }
+}
+
 .projectEntry {
   margin-bottom: 1rem;
 
@@ -226,6 +251,68 @@
 
     &:hover { color: var(--link-color); }
   }
+}
+
+// ── LinkedIn-style grouped roles (multiple positions at one company) ─────────
+.groupCompany {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--badge-color);
+  margin: 0 0 0.75rem;
+
+  // when rendered as <a>
+  &:is(a) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+    color: var(--badge-color);
+    transition: color 0.15s ease;
+
+    &:hover { color: var(--link-color); }
+  }
+}
+
+.groupRole {
+  position: relative;
+  padding-left: 1.4rem;
+  padding-bottom: 1.25rem;
+
+  &:last-child { padding-bottom: 0; }
+
+  // timeline dot
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--badge-color);
+  }
+
+  // connector line down to the next role's dot
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 2.5px;
+    top: calc(0.45rem + 11px);
+    bottom: 0.2rem;
+    width: 2px;
+    border-radius: 1px;
+    background: var(--text-muted-color);
+    opacity: 0.35;
+  }
+}
+
+.roleTitle {
+  font-size: 0.98rem !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  color: var(--body-color);
+  margin: 0 0 0.1rem;
 }
 
 .entryMeta {

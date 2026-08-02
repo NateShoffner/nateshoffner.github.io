@@ -1,6 +1,8 @@
 'use client'
 
-import type { Resume } from '@lib/resume'
+import type { Resume, ResumeExperience } from '@lib/resume'
+import { groupExperience } from '@lib/experience'
+import type { Certification } from '@/src/types/Certification'
 import {
   FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaGithub, FaGlobe,
   FaCalendarAlt, FaExternalLinkAlt,
@@ -9,9 +11,46 @@ import styles from './ResumeWeb.module.scss'
 
 interface Props {
   resume: Resume
+  certifications: Certification[]
 }
 
-export default function ResumeWeb({ resume }: Props) {
+function CompanyName({ name, homepage, className }: {
+  name: string
+  homepage?: string
+  className: string
+}) {
+  return homepage ? (
+    <a className={className} href={homepage} target="_blank" rel="noopener noreferrer">
+      {name} <FaExternalLinkAlt className={styles.externalIcon} />
+    </a>
+  ) : (
+    <p className={className}>{name}</p>
+  )
+}
+
+function RoleBody({ exp }: { exp: ResumeExperience }) {
+  return (
+    <>
+      <p className={styles.entryMeta}>
+        <FaCalendarAlt className={styles.metaIcon} />
+        <span>{exp.start} – {exp.end}</span>
+        <FaMapMarkerAlt className={styles.metaIcon} style={{ marginLeft: '0.6rem' }} />
+        <a
+          href={`https://maps.google.com/?q=${encodeURIComponent(exp.location)}`}
+          target="_blank" rel="noopener noreferrer"
+          className={styles.metaLink}
+        >
+          {exp.location}
+        </a>
+      </p>
+      <ul className={styles.bulletList}>
+        {exp.bullets.map((b, j) => <li key={j}>{b}</li>)}
+      </ul>
+    </>
+  )
+}
+
+export default function ResumeWeb({ resume, certifications }: Props) {
   const { contact } = resume
 
   return (
@@ -98,6 +137,27 @@ export default function ResumeWeb({ resume }: Props) {
             </ul>
           </div>
 
+          {certifications.length > 0 && (
+            <div className={styles.card}>
+              <h2 className={styles.cardHeading}>Certifications</h2>
+              {certifications.map((cert, i) => (
+                <div key={i} className={styles.certEntry}>
+                  {cert.credential_url ? (
+                    <a
+                      className={styles.certName}
+                      href={cert.credential_url}
+                      target="_blank" rel="noopener noreferrer"
+                    >
+                      {cert.name} <FaExternalLinkAlt className={styles.externalIcon} />
+                    </a>
+                  ) : (
+                    <p className={styles.certName}>{cert.name}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
           <div className={styles.card}>
             <h2 className={styles.cardHeading}>Recent Projects</h2>
             {resume.projects.map((proj, i) => (
@@ -134,35 +194,33 @@ export default function ResumeWeb({ resume }: Props) {
 
           <div className={styles.section}>
             <h2 className={styles.sectionHeading}>Work Experience</h2>
-            {resume.experience.map((exp, i) => (
+            {groupExperience(resume.experience).map((group, i) => (
               <div key={i} className={styles.entry}>
-                <h3 className={styles.entryTitle}>{exp.title}</h3>
-                {exp.homepage ? (
-                  <a
-                    className={styles.entryCompany}
-                    href={exp.homepage}
-                    target="_blank" rel="noopener noreferrer"
-                  >
-                    {exp.company} <FaExternalLinkAlt className={styles.externalIcon} />
-                  </a>
+                {group.roles.length > 1 ? (
+                  <>
+                    <CompanyName
+                      name={group.company}
+                      homepage={group.homepage}
+                      className={styles.groupCompany}
+                    />
+                    {group.roles.map((exp, j) => (
+                      <div key={j} className={styles.groupRole}>
+                        <h3 className={styles.roleTitle}>{exp.title}</h3>
+                        <RoleBody exp={exp} />
+                      </div>
+                    ))}
+                  </>
                 ) : (
-                  <p className={styles.entryCompany}>{exp.company}</p>
+                  <>
+                    <h3 className={styles.entryTitle}>{group.roles[0].title}</h3>
+                    <CompanyName
+                      name={group.company}
+                      homepage={group.homepage}
+                      className={styles.entryCompany}
+                    />
+                    <RoleBody exp={group.roles[0]} />
+                  </>
                 )}
-                <p className={styles.entryMeta}>
-                  <FaCalendarAlt className={styles.metaIcon} />
-                  <span>{exp.start} – {exp.end}</span>
-                  <FaMapMarkerAlt className={styles.metaIcon} style={{ marginLeft: '0.6rem' }} />
-                  <a
-                    href={`https://maps.google.com/?q=${encodeURIComponent(exp.location)}`}
-                    target="_blank" rel="noopener noreferrer"
-                    className={styles.metaLink}
-                  >
-                    {exp.location}
-                  </a>
-                </p>
-                <ul className={styles.bulletList}>
-                  {exp.bullets.map((b, j) => <li key={j}>{b}</li>)}
-                </ul>
               </div>
             ))}
           </div>
